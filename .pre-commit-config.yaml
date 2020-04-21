@@ -1,0 +1,23 @@
+repos:
+-   repo: local
+    hooks:
+    -   id: isort
+        name: isort
+        language: system
+        entry: poetry run isort --check-only
+        files: \.pyi?$
+    -   id: black
+        name: black
+        language: system
+        entry: poetry run black --check
+        files: \.pyi?$
+    -   id: flake8
+        name: flake8
+        language: system
+        entry: poetry run flake8
+        files: \.pyi?$
+    -   id: mypy
+        name: mypy
+        language: system
+        entry: poetry run mypy
+        types: [python]

@@ -1,0 +1,3 @@
+from .types import ServerVersion
+
+def split_server_version_string(version_string: str) -> ServerVersion: ...
