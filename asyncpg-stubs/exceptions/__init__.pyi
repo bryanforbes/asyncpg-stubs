@@ -1,15 +1,13 @@
 from . import _base
-from ._base import (
-    PostgresError as PostgresError,
-    FatalPostgresError as FatalPostgresError,
-    UnknownPostgresError as UnknownPostgresError,
-    InterfaceError as InterfaceError,
-    InterfaceWarning as InterfaceWarning,
-    PostgresLogMessage as PostgresLogMessage,
-    InternalClientError as InternalClientError,
-    OutdatedSchemaCacheError as OutdatedSchemaCacheError,
-    ProtocolError as ProtocolError,
-)
+from ._base import FatalPostgresError as FatalPostgresError
+from ._base import InterfaceError as InterfaceError
+from ._base import InterfaceWarning as InterfaceWarning
+from ._base import InternalClientError as InternalClientError
+from ._base import OutdatedSchemaCacheError as OutdatedSchemaCacheError
+from ._base import PostgresError as PostgresError
+from ._base import PostgresLogMessage as PostgresLogMessage
+from ._base import ProtocolError as ProtocolError
+from ._base import UnknownPostgresError as UnknownPostgresError
 
 class PostgresWarning(_base.PostgresLogMessage, Warning):
     sqlstate: str = ...

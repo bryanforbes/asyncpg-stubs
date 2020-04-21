@@ -1,5 +1,6 @@
 import asyncio
 import asyncio.protocols
+from codecs import CodecInfo
 from typing import (
     Any,
     Callable,
@@ -15,12 +16,11 @@ from typing import (
     overload,
 )
 from typing_extensions import Protocol as _TEProtocol
-from codecs import CodecInfo
 
 import asyncpg.pgproto.pgproto
 
-from ..pgproto.pgproto import WriteBuffer
 from ..connect_utils import _ConnectionParameters
+from ..pgproto.pgproto import WriteBuffer
 
 BUILTIN_TYPE_NAME_MAP: Dict[str, int]
 BUILTIN_TYPE_OID_MAP: Dict[int, str]

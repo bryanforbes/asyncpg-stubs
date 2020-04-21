@@ -2,8 +2,8 @@ import datetime
 import decimal
 import ipaddress
 import uuid
-from typing import Any
 from codecs import CodecInfo
+from typing import Any
 
 infinity_date: datetime.date
 infinity_datetime: datetime.datetime
