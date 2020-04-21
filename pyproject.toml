@@ -4,8 +4,8 @@ version = "0.20.1+0"
 description = "asyncpg stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
 license = "BSD-3-Clause"
-include = [
-	"asyncpg-stubs/**/*.pyi"
+packages = [
+	{ include = "asyncpg-stubs" }
 ]
 
 [tool.poetry.dependencies]

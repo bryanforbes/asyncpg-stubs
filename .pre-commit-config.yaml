@@ -20,4 +20,5 @@ repos:
         name: mypy
         language: system
         entry: poetry run mypy
-        types: [python]
+        files: \.pyi?$
+        exclude: asyncpg-stubs\/[^\/]*?\.py$
