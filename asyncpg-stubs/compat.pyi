@@ -1,11 +1,16 @@
 from asyncio import AbstractEventLoop, Task
-from os import PathLike
 from pathlib import Path
-from typing import Any, AnyStr, overload
+from typing import Any, AnyStr, TypeVar, overload
+from typing_extensions import Protocol
 
 PY_36: bool
 PY_37: bool
 SYSTEM: str
+
+_T_co = TypeVar('_T_co', covariant=True)
+
+class PathLike(Protocol[_T_co]):
+    def __fspath__(self) -> _T_co: ...
 
 def aiter_compat(func: Any) -> Any: ...
 @overload

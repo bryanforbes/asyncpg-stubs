@@ -1,10 +1,9 @@
 import enum
-from typing import Any, Set, TypeVar
+from typing import Any, Set
+from typing_extensions import Literal
 
 from . import connresource
 from .connection import Connection
-
-_C = TypeVar('_C', bound=Connection)
 
 class TransactionState(enum.Enum):
     NEW: int = ...
@@ -13,11 +12,16 @@ class TransactionState(enum.Enum):
     ROLLEDBACK: int = ...
     FAILED: int = ...
 
+_IsolationLevels = Literal['read_committed', 'serializable', 'repeatable_read']
 ISOLATION_LEVELS: Set[str]
 
-class Transaction(connresource.ConnectionResource[_C]):
+class Transaction(connresource.ConnectionResource):
     def __init__(
-        self, connection: _C, isolation: Any, readonly: Any, deferrable: Any
+        self,
+        connection: Connection,
+        isolation: _IsolationLevels,
+        readonly: bool,
+        deferrable: bool,
     ) -> None: ...
     async def __aenter__(self) -> None: ...
     async def __aexit__(self, extype: Any, ex: Any, tb: Any) -> None: ...

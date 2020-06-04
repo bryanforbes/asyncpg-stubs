@@ -7,58 +7,61 @@ from typing import (
     Generic,
     List,
     Optional,
+    Sequence,
     TypeVar,
 )
 
 from . import connresource
 from .connection import Connection
 from .protocol import Record
+from .protocol.protocol import PreparedStatementState
 
-_C = TypeVar('_C', bound=Connection)
+_Cursor = TypeVar('_Cursor', bound=Cursor[Any])
+_CursorIterator = TypeVar('_CursorIterator', bound=CursorIterator[Any])
+_Record = TypeVar('_Record', bound=Record)
 
-class CursorFactory(
-    connresource.ConnectionResource[_C],
-    AsyncIterable[Record[Any]],
-    Awaitable[Cursor[Any]],
-    Generic[_C],
-):
+class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
     def __init__(
         self,
-        connection: _C,
-        query: Any,
-        state: Any,
-        args: Any,
-        prefetch: Any,
-        timeout: Any,
+        connection: Connection,
+        query: str,
+        state: Optional[PreparedStatementState],
+        args: Sequence[Any],
+        prefetch: Optional[int],
+        timeout: Optional[float],
     ) -> None: ...
-    def __aiter__(self) -> CursorIterator[_C]: ...
-    def __await__(self) -> Generator[Any, None, Cursor[_C]]: ...
+    def __aiter__(self) -> CursorIterator[_Record]: ...
+    def __await__(self) -> Generator[Any, None, Cursor[_Record]]: ...
     def __del__(self) -> None: ...
 
-class BaseCursor(connresource.ConnectionResource[_C]):
-    def __init__(self, connection: _C, query: Any, state: Any, args: Any) -> None: ...
-    def __del__(self) -> None: ...
-
-_CI = TypeVar('_CI', bound=CursorIterator[Any])
-
-class CursorIterator(BaseCursor[_C], AsyncIterator[Record[Any]]):
+class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
     def __init__(
         self,
-        connection: _C,
-        query: Any,
-        state: Any,
-        args: Any,
-        prefetch: Any,
-        timeout: Any,
+        connection: Connection,
+        query: str,
+        state: Optional[PreparedStatementState],
+        args: Sequence[Any],
     ) -> None: ...
-    def __aiter__(self: _CI) -> _CI: ...
-    async def __anext__(self) -> Record[Any]: ...
+    def __del__(self) -> None: ...
 
-class Cursor(BaseCursor[_C]):
+class CursorIterator(BaseCursor[_Record]):
+    def __init__(
+        self,
+        connection: Connection,
+        query: str,
+        state: Optional[PreparedStatementState],
+        args: Sequence[Any],
+        prefetch: int,
+        timeout: Optional[float],
+    ) -> None: ...
+    def __aiter__(self: _CursorIterator) -> _CursorIterator: ...
+    async def __anext__(self) -> _Record: ...
+
+class Cursor(BaseCursor[_Record]):
     async def fetch(
         self, n: int, *, timeout: Optional[float] = ...
-    ) -> List[Record[Any]]: ...
+    ) -> List[_Record]: ...
     async def fetchrow(
         self, *, timeout: Optional[float] = ...
-    ) -> Optional[Record[Any]]: ...
+    ) -> Optional[_Record]: ...
     async def forward(self, n: int, *, timeout: Optional[float] = ...) -> int: ...

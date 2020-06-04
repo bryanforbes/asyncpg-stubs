@@ -1,74 +1,92 @@
-from typing import Any, Optional
+import typing
 
-class PostgresMessageMeta(type):
-    def __new__(metacls: Any, name: Any, bases: Any, dct: Any) -> Any: ...
-    @classmethod
-    def get_message_class_for_sqlstate(metacls: Any, code: str) -> Any: ...
+__all__ = (
+    'PostgresError',
+    'FatalPostgresError',
+    'UnknownPostgresError',
+    'InterfaceError',
+    'InterfaceWarning',
+    'PostgresLogMessage',
+    'InternalClientError',
+    'OutdatedSchemaCacheError',
+    'ProtocolError',
+)
 
-class PostgresMessage:
-    severity: Optional[Any]
-    severity_en: Optional[Any]
-    sqlstate: Optional[Any]
-    message: Optional[Any]
-    detail: Optional[Any]
-    hint: Optional[Any]
-    position: Optional[Any]
-    internal_position: Optional[Any]
-    internal_query: Optional[Any]
-    context: Optional[Any]
-    schema_name: Optional[Any]
-    table_name: Optional[Any]
-    column_name: Optional[Any]
-    data_type_name: Optional[Any]
-    constraint_name: Optional[Any]
-    server_source_filename: Optional[Any]
-    server_source_line: Optional[Any]
-    server_source_function: Optional[Any]
-    def as_dict(self) -> Any: ...
+class PostgresMessageMeta(type): ...
+
+class PostgresMessage(metaclass=PostgresMessageMeta):
+    severity: typing.Optional[str]
+    severity_en: typing.Optional[str]
+    sqlstate: typing.ClassVar[str]
+    message: str
+    detail: typing.Optional[str]
+    hint: typing.Optional[str]
+    position: typing.Optional[str]
+    internal_position: typing.Optional[str]
+    internal_query: typing.Optional[str]
+    context: typing.Optional[str]
+    schema_name: typing.Optional[str]
+    table_name: typing.Optional[str]
+    column_name: typing.Optional[str]
+    data_type_name: typing.Optional[str]
+    constraint_name: typing.Optional[str]
+    server_source_filename: typing.Optional[str]
+    server_source_line: typing.Optional[str]
+    server_source_function: typing.Optional[str]
+    def as_dict(self) -> typing.Dict[str, str]: ...
 
 class PostgresError(PostgresMessage, Exception):
+    def __str__(self) -> str: ...
     @classmethod
-    def new(cls, fields: Any, query: Optional[Any] = ...) -> Any: ...
+    def new(
+        cls, fields: typing.Dict[str, str], query: typing.Optional[str] = ...
+    ) -> PostgresMessage: ...
 
 class FatalPostgresError(PostgresError): ...
 class UnknownPostgresError(FatalPostgresError): ...
 
 class InterfaceMessage:
-    detail: Any = ...
-    hint: Any = ...
     def __init__(
-        self, *, detail: Optional[Any] = ..., hint: Optional[Any] = ...
+        self, *, detail: typing.Optional[str] = ..., hint: typing.Optional[str] = ...
     ) -> None: ...
+    def __str__(self) -> str: ...
 
 class InterfaceError(InterfaceMessage, Exception):
     def __init__(
-        self, msg: Any, *, detail: Optional[Any] = ..., hint: Optional[Any] = ...
+        self,
+        msg: str,
+        *,
+        detail: typing.Optional[str] = ...,
+        hint: typing.Optional[str] = ...,
     ) -> None: ...
 
 class DataError(InterfaceError, ValueError): ...
 
 class InterfaceWarning(InterfaceMessage, UserWarning):
     def __init__(
-        self, msg: Any, *, detail: Optional[Any] = ..., hint: Optional[Any] = ...
+        self,
+        msg: str,
+        *,
+        detail: typing.Optional[str] = ...,
+        hint: typing.Optional[str] = ...,
     ) -> None: ...
 
 class InternalClientError(Exception): ...
 class ProtocolError(InternalClientError): ...
 
 class OutdatedSchemaCacheError(InternalClientError):
-    schema_name: Any = ...
-    data_type_name: Any = ...
-    position: Any = ...
     def __init__(
         self,
-        msg: Any,
+        msg: str,
         *,
-        schema: Optional[Any] = ...,
-        data_type: Optional[Any] = ...,
-        position: Optional[Any] = ...,
+        schema: typing.Optional[str] = ...,
+        data_type: typing.Optional[str] = ...,
+        position: typing.Optional[str] = ...,
     ) -> None: ...
 
 class PostgresLogMessage(PostgresMessage):
-    def __setattr__(self, name: Any, val: Any) -> None: ...
+    def __str__(self) -> str: ...
     @classmethod
-    def new(cls, fields: Any, query: Optional[Any] = ...) -> Any: ...
+    def new(
+        cls, fields: typing.Dict[str, str], query: typing.Optional[str] = ...
+    ) -> PostgresMessage: ...

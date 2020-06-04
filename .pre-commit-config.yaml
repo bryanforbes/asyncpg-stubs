@@ -19,6 +19,7 @@ repos:
     -   id: mypy
         name: mypy
         language: system
-        entry: poetry run mypy
+        entry: poetry run mypy -p asyncpg
         files: \.pyi?$
         exclude: asyncpg-stubs\/[^\/]*?\.py$
+        pass_filenames: false
