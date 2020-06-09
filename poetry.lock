@@ -231,7 +231,7 @@ description = "A framework for managing and maintaining multi-language pre-commi
 name = "pre-commit"
 optional = false
 python-versions = ">=3.6.1"
-version = "2.4.0"
+version = "2.5.0"
 
 [package.dependencies]
 cfgv = ">=2.0.0"
@@ -353,7 +353,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "b57d4487f3e623b15ffd9084e47925b819a9dbe6f7789bde28fe4f34c0c824c7"
+content-hash = "3a0d394cf2c2600b0d97c6cdf614aa400c1618f3b534b15d57bcb99b5c580977"
 python-versions = "^3.6.1"
 
 [metadata.files]
@@ -463,8 +463,8 @@ pathspec = [
     {file = "pathspec-0.8.0.tar.gz", hash = "sha256:da45173eb3a6f2a5a487efba21f050af2b41948be6ab52b6a1e3ff22bb8b7061"},
 ]
 pre-commit = [
-    {file = "pre_commit-2.4.0-py2.py3-none-any.whl", hash = "sha256:5559e09afcac7808933951ffaf4ff9aac524f31efbc3f24d021540b6c579813c"},
-    {file = "pre_commit-2.4.0.tar.gz", hash = "sha256:703e2e34cbe0eedb0d319eff9f7b83e2022bb5a3ab5289a6a8841441076514d0"},
+    {file = "pre_commit-2.5.0-py2.py3-none-any.whl", hash = "sha256:e02328d2a61dc6e0b20a40b6eecda2655b998fed7f561cac5993cbd8bdb3fbde"},
+    {file = "pre_commit-2.5.0.tar.gz", hash = "sha256:3f16110d2e5136de8bae11a32e496cc193a68cf02bcf11dba61d8e6aff06efc5"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.6.0-py2.py3-none-any.whl", hash = "sha256:2295e7b2f6b5bd100585ebcb1f616591b652db8a741695b3d8f5d28bdc934367"},
