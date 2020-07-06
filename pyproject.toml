@@ -18,7 +18,7 @@ black = {version = "^19.10b0", allow-prereleases = true}
 flake8 = "^3.8.3"
 flake8-pyi = "^20.5.0"
 pre-commit = "^2.6.0"
-isort = "^4.3.21"
+isort = "^5.0.4"
 asyncpg = "^0.20.1"
 
 [build-system]
@@ -42,11 +42,7 @@ exclude = '''
 '''
 
 [tool.isort]
-known_standard_library = ["typing_extensions"]
-known_first_party = ["ginomypy"]
+extra_standard_library = ["typing_extensions"]
 virtual_env = ".venv"
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
+profile = "black"
+lines_after_imports = 1
