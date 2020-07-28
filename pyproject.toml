@@ -18,7 +18,7 @@ black = {version = "^19.10b0", allow-prereleases = true}
 flake8 = "^3.8.3"
 flake8-pyi = "^20.5.0"
 pre-commit = "^2.6.0"
-isort = "^5.1.1"
+isort = "^5.2.0"
 asyncpg = "^0.20.1"
 
 [build-system]
