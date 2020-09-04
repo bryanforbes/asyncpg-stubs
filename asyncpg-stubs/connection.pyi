@@ -66,7 +66,9 @@ class _OnRemove(Protocol):
 
 class _Executor(Protocol):
     def __call__(
-        self, __statement: PreparedStatementState, __timeout: Optional[float],
+        self,
+        __statement: PreparedStatementState,
+        __timeout: Optional[float],
     ) -> Any: ...
 
 class ConnectionMeta(type):
