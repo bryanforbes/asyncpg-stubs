@@ -15,7 +15,7 @@ typing-extensions = "^3.7.4"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^20.8b1", allow-prereleases = true}
-flake8 = "^3.8.3"
+flake8 = "^3.8.4"
 flake8-pyi = "^20.5.0"
 pre-commit = "^2.7.1"
 isort = "^5.5.4"
