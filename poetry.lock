@@ -225,7 +225,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pre-commit"
-version = "2.8.1"
+version = "2.8.2"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
@@ -340,7 +340,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.1"
-content-hash = "b44f039f05ed8810fedc386a925b247ef912e1342d93e7501ece45ef5d946401"
+content-hash = "31d09f2b7f21ad1d66f7f00a99a44212bab984e3b38ee9cc9c480c938a8ed42e"
 
 [metadata.files]
 appdirs = [
@@ -458,8 +458,8 @@ pathspec = [
     {file = "pathspec-0.8.0.tar.gz", hash = "sha256:da45173eb3a6f2a5a487efba21f050af2b41948be6ab52b6a1e3ff22bb8b7061"},
 ]
 pre-commit = [
-    {file = "pre_commit-2.8.1-py2.py3-none-any.whl", hash = "sha256:7eadaa7f4547a8a19b83230ce430ba81bbe4797bd41c8d7fb54b246164628d1f"},
-    {file = "pre_commit-2.8.1.tar.gz", hash = "sha256:8fb2037c404ef8c87125e72564f316cf2bc94fc9c1cb184b8352117de747e164"},
+    {file = "pre_commit-2.8.2-py2.py3-none-any.whl", hash = "sha256:22e6aa3bd571debb01eb7d34483f11c01b65237be4eebbf30c3d4fb65762d315"},
+    {file = "pre_commit-2.8.2.tar.gz", hash = "sha256:905ebc9b534b991baec87e934431f2d0606ba27f2b90f7f652985f5a5b8b6ae6"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.6.0-py2.py3-none-any.whl", hash = "sha256:2295e7b2f6b5bd100585ebcb1f616591b652db8a741695b3d8f5d28bdc934367"},
