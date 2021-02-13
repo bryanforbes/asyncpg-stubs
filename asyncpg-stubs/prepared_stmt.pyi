@@ -1,19 +1,27 @@
-from typing import Any, Generic, List, Optional, Tuple, TypeVar
+from typing import Any, Coroutine, Generic, Iterable, List, Optional, Tuple, TypeVar
+from typing_extensions import Protocol
 
 from . import connresource, cursor
 from .connection import Connection
 from .protocol import Record
-from .protocol.protocol import PreparedStatementState
+from .protocol.protocol import BaseProtocol, PreparedStatementState
 from .types import Attribute, Type
 
 _Record = TypeVar('_Record', bound=Record)
+_T_co = TypeVar('_T_co', covariant=True)
+
+class _Executor(Protocol[_T_co]):
+    def __call__(self, __protocol: BaseProtocol[Any]) -> Coroutine[Any, Any, _T_co]: ...
 
 class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     def __init__(
-        self, connection: Connection, query: str, state: PreparedStatementState
+        self,
+        connection: Connection[Any],
+        query: str,
+        state: PreparedStatementState[_Record],
     ) -> None: ...
     def get_query(self) -> str: ...
-    def get_statusmsg(self) -> str: ...
+    def get_statusmsg(self) -> Optional[str]: ...
     def get_parameters(self) -> Tuple[Type, ...]: ...
     def get_attributes(self) -> Tuple[Attribute, ...]: ...
     def cursor(
@@ -29,4 +37,10 @@ class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     async def fetchrow(
         self, *args: Any, timeout: Optional[float] = ...
     ) -> Optional[_Record]: ...
+    async def executemany(
+        self,
+        args: Iterable[Any],
+        *,
+        timeout: Optional[float] = ...,
+    ) -> None: ...
     def __del__(self) -> None: ...

@@ -8,6 +8,7 @@ from ._base import PostgresError as PostgresError
 from ._base import PostgresLogMessage as PostgresLogMessage
 from ._base import ProtocolError as ProtocolError
 from ._base import UnknownPostgresError as UnknownPostgresError
+from ._base import UnsupportedClientFeatureError as UnsupportedClientFeatureError
 
 class PostgresWarning(_base.PostgresLogMessage, Warning): ...
 class DynamicResultSetsReturned(PostgresWarning): ...

@@ -1,6 +1,6 @@
 import enum
-from typing import Any, Set
-from typing_extensions import Literal
+from typing import Any, Dict, Optional, Set
+from typing_extensions import Final, Literal
 
 from . import connresource
 from .connection import Connection
@@ -13,13 +13,14 @@ class TransactionState(enum.Enum):
     FAILED: int = ...
 
 _IsolationLevels = Literal['read_committed', 'serializable', 'repeatable_read']
-ISOLATION_LEVELS: Set[str]
+ISOLATION_LEVELS: Final[Set[_IsolationLevels]]
+ISOLATION_LEVELS_BY_VALUE: Final[Dict[str, _IsolationLevels]]
 
 class Transaction(connresource.ConnectionResource):
     def __init__(
         self,
-        connection: Connection,
-        isolation: _IsolationLevels,
+        connection: Connection[Any],
+        isolation: Optional[_IsolationLevels],
         readonly: bool,
         deferrable: bool,
     ) -> None: ...

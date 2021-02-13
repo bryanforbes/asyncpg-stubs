@@ -13,13 +13,9 @@ class _ConnectionSpec(TypedDict):
     port: str
 
 def platform_exe(name: str) -> str: ...
-def find_available_port(
-    port_range: Tuple[int, int] = ..., max_tries: int = ...
-) -> Optional[int]: ...
+def find_available_port() -> Optional[int]: ...
 
 class ClusterError(Exception): ...
-
-_Connection = TypeVar('_Connection', bound=Connection)
 
 class Cluster:
     def __init__(
@@ -29,47 +25,11 @@ class Cluster:
     def is_managed(self) -> bool: ...
     def get_data_dir(self) -> str: ...
     def get_status(self) -> str: ...
-    @overload
-    def connect(
+    async def connect(
         self,
         loop: Optional[AbstractEventLoop] = ...,
-        *,
-        dsn: Optional[str] = ...,
-        host: Optional[connect_utils._HostType] = ...,
-        port: Optional[connect_utils._PortType] = ...,
-        user: Optional[str] = ...,
-        password: Optional[_PasswordType] = ...,
-        passfile: Optional[str] = ...,
-        database: Optional[str] = ...,
-        timeout: float = ...,
-        statement_cache_size: int = ...,
-        max_cached_statement_lifetime: int = ...,
-        max_cacheable_statement_size: int = ...,
-        command_timeout: Optional[float] = ...,
-        ssl: Optional[connect_utils._SSLType] = ...,
-        server_settings: Optional[Dict[str, str]] = ...,
-    ) -> Connection: ...
-    @overload
-    def connect(
-        self,
-        loop: Optional[AbstractEventLoop] = ...,
-        *,
-        dsn: Optional[str] = ...,
-        host: Optional[connect_utils._HostType] = ...,
-        port: Optional[connect_utils._PortType] = ...,
-        user: Optional[str] = ...,
-        password: Optional[_PasswordType] = ...,
-        passfile: Optional[str] = ...,
-        database: Optional[str] = ...,
-        timeout: float = ...,
-        statement_cache_size: int = ...,
-        max_cached_statement_lifetime: int = ...,
-        max_cacheable_statement_size: int = ...,
-        command_timeout: Optional[float] = ...,
-        ssl: Optional[connect_utils._SSLType] = ...,
-        connection_class: Type[_Connection],
-        server_settings: Optional[Dict[str, str]] = ...,
-    ) -> _Connection: ...
+        **kwargs: Any,
+    ) -> Connection[Any]: ...
     def init(self, **settings: Any) -> str: ...
     def start(
         self, wait: int = ..., *, server_settings: Dict[str, str] = ..., **opts: Any

@@ -1,16 +1,18 @@
 import unittest
 from typing import Any, Callable, Iterator, Optional, TypeVar
 
+from . import fuzzer as fuzzer
+
 _F = TypeVar('_F', bound=Callable[..., Any])
 
 def silence_asyncio_long_exec_warning() -> Iterator[None]: ...
 def with_timeout(timeout: Any) -> Callable[[_F], _F]: ...
 
-class TestCaseMeta:
+class TestCaseMeta(type):
     TEST_TIMEOUT: Any = ...
-    def __new__(cls: Any, name: Any, bases: Any, ns: Any) -> Any: ...
+    def __new__(mcls: Any, name: Any, bases: Any, ns: Any) -> Any: ...
 
-class TestCase(unittest.TestCase):
+class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
     @classmethod
     def setUpClass(cls) -> None: ...
     @classmethod
@@ -33,6 +35,7 @@ def create_pool(
     loop: Optional[Any] = ...,
     pool_class: Any = ...,
     connection_class: Any = ...,
+    record_class: Any = ...,
     **connect_kwargs: Any,
 ) -> Any: ...
 

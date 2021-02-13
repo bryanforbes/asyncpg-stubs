@@ -5,7 +5,7 @@ description = "asyncpg stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
 license = "BSD-3-Clause"
 packages = [
-	{ include = "asyncpg-stubs" }
+  { include = "asyncpg-stubs/**/*.pyi" }
 ]
 
 [tool.poetry.dependencies]
@@ -19,7 +19,7 @@ flake8 = "^3.8.4"
 flake8-pyi = "^20.10.0"
 pre-commit = "^2.10.1"
 isort = "^5.7.0"
-asyncpg = "^0.21.0"
+asyncpg = "^0.22.0"
 
 [tool.black]
 line-length = 88

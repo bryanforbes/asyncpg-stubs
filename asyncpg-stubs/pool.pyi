@@ -1,24 +1,27 @@
 import asyncio
 import typing
+import typing_extensions
 
 from . import connect_utils, connection, cursor, prepared_stmt, transaction, types
 from .protocol import protocol as _cprotocol
 
-_SetupCallback = typing.Callable[
-    [PoolConnectionProxy], typing.Coroutine[typing.Any, typing.Any, None]
-]
-_InitCallback = typing.Callable[
-    [connection.Connection], typing.Coroutine[typing.Any, typing.Any, None]
-]
-
-_Pool = typing.TypeVar('_Pool', bound=Pool)
+_Connection = typing.TypeVar('_Connection', bound=connection.Connection[typing.Any])
+_Pool = typing.TypeVar('_Pool', bound=Pool[typing.Any])
 _Record = typing.TypeVar('_Record', bound=_cprotocol.Record)
+_OtherRecord = typing.TypeVar('_OtherRecord', bound=_cprotocol.Record)
+
+class _SetupCallback(typing_extensions.Protocol[_Record]):
+    async def __call__(self, __proxy: PoolConnectionProxy[_Record]) -> None: ...
+
+class _InitCallback(typing_extensions.Protocol[_Record]):
+    async def __call__(self, __con: connection.Connection[_Record]) -> None: ...
 
 class PoolConnectionProxyMeta(type): ...
 
 class PoolConnectionProxy(
-    connection._ConnectionProxy, metaclass=PoolConnectionProxyMeta, wrap=True
+    connection._ConnectionProxy[_Record], metaclass=PoolConnectionProxyMeta, wrap=True
 ):
+    _holder: PoolConnectionHolder[_Record]
     async def add_listener(
         self, channel: str, callback: connection._Listener
     ) -> None: ...
@@ -27,13 +30,19 @@ class PoolConnectionProxy(
     ) -> None: ...
     def add_log_listener(self, callback: connection._LogListener) -> None: ...
     def remove_log_listener(self, callback: connection._LogListener) -> None: ...
+    def add_termination_listener(
+        self, callback: connection._TerminationListener
+    ) -> None: ...
+    def remove_termination_listener(
+        self, callback: connection._TerminationListener
+    ) -> None: ...
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
     def transaction(
         self,
         *,
-        isolation: transaction._IsolationLevels = ...,
+        isolation: typing.Optional[transaction._IsolationLevels] = ...,
         readonly: bool = ...,
         deferrable: bool = ...,
     ) -> transaction.Transaction: ...
@@ -55,7 +64,8 @@ class PoolConnectionProxy(
         *args: typing.Any,
         prefetch: typing.Optional[int] = ...,
         timeout: typing.Optional[float] = ...,
-    ) -> cursor.CursorFactory[_cprotocol.Record]: ...
+        record_class: None = ...,
+    ) -> cursor.CursorFactory[_Record]: ...
     @typing.overload
     def cursor(
         self,
@@ -63,32 +73,71 @@ class PoolConnectionProxy(
         *args: typing.Any,
         prefetch: typing.Optional[int] = ...,
         timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
-    ) -> cursor.CursorFactory[_Record]: ...
+        record_class: typing.Type[_OtherRecord],
+    ) -> cursor.CursorFactory[_OtherRecord]: ...
     @typing.overload
-    async def prepare(
-        self, query: str, *, timeout: typing.Optional[float] = ...
-    ) -> prepared_stmt.PreparedStatement[_cprotocol.Record]: ...
+    def cursor(
+        self,
+        query: str,
+        *args: typing.Any,
+        prefetch: typing.Optional[int] = ...,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Optional[typing.Type[_OtherRecord]],
+    ) -> typing.Union[
+        cursor.CursorFactory[_Record],
+        cursor.CursorFactory[_OtherRecord],
+    ]: ...
     @typing.overload
     async def prepare(
         self,
         query: str,
         *,
         timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
+        record_class: None = ...,
     ) -> prepared_stmt.PreparedStatement[_Record]: ...
     @typing.overload
-    async def fetch(
-        self, query: str, *args: typing.Any, timeout: typing.Optional[float] = ...
-    ) -> typing.List[_cprotocol.Record]: ...
+    async def prepare(
+        self,
+        query: str,
+        *,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Type[_OtherRecord],
+    ) -> prepared_stmt.PreparedStatement[_OtherRecord]: ...
+    @typing.overload
+    async def prepare(
+        self,
+        query: str,
+        *,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Optional[typing.Type[_OtherRecord]],
+    ) -> typing.Union[
+        prepared_stmt.PreparedStatement[_Record],
+        prepared_stmt.PreparedStatement[_OtherRecord],
+    ]: ...
     @typing.overload
     async def fetch(
         self,
         query: str,
         *args: typing.Any,
         timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
+        record_class: None = ...,
     ) -> typing.List[_Record]: ...
+    @typing.overload
+    async def fetch(
+        self,
+        query: str,
+        *args: typing.Any,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Type[_OtherRecord],
+    ) -> typing.List[_OtherRecord]: ...
+    @typing.overload
+    async def fetch(
+        self,
+        query: str,
+        *args: typing.Any,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Optional[typing.Type[_OtherRecord]],
+    ) -> typing.Union[typing.List[_Record], typing.List[_OtherRecord]]: ...
     async def fetchval(
         self,
         query: str,
@@ -98,21 +147,33 @@ class PoolConnectionProxy(
     ) -> typing.Any: ...
     @typing.overload
     async def fetchrow(
-        self, query: str, *args: typing.Any, timeout: typing.Optional[float] = ...
-    ) -> typing.Optional[_cprotocol.Record]: ...
+        self,
+        query: str,
+        *args: typing.Any,
+        timeout: typing.Optional[float] = ...,
+        record_class: None = ...,
+    ) -> typing.Optional[_Record]: ...
     @typing.overload
     async def fetchrow(
         self,
         query: str,
         *args: typing.Any,
         timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
-    ) -> typing.Optional[_Record]: ...
+        record_class: typing.Type[_OtherRecord],
+    ) -> typing.Optional[_OtherRecord]: ...
+    @typing.overload
+    async def fetchrow(
+        self,
+        query: str,
+        *args: typing.Any,
+        timeout: typing.Optional[float] = ...,
+        record_class: typing.Optional[typing.Type[_OtherRecord]],
+    ) -> typing.Union[typing.Optional[_Record], typing.Optional[_OtherRecord]]: ...
     async def copy_from_table(
         self,
         table_name: str,
         *,
-        output: connection._OutputType[typing.AnyStr],
+        output: connection._OutputType,
         columns: typing.Optional[typing.Iterable[str]] = ...,
         schema_name: typing.Optional[str] = ...,
         timeout: typing.Optional[float] = ...,
@@ -130,7 +191,7 @@ class PoolConnectionProxy(
         self,
         query: str,
         *args: typing.Any,
-        output: connection._OutputType[typing.AnyStr],
+        output: connection._OutputType,
         timeout: typing.Optional[float] = ...,
         format: typing.Optional[connection._CopyFormat] = ...,
         oids: typing.Optional[int] = ...,
@@ -146,7 +207,7 @@ class PoolConnectionProxy(
         self,
         table_name: str,
         *,
-        source: connection._SourceType[typing.AnyStr],
+        source: connection._SourceType,
         columns: typing.Optional[typing.Iterable[str]] = ...,
         schema_name: typing.Optional[str] = ...,
         timeout: typing.Optional[float] = ...,
@@ -196,15 +257,17 @@ class PoolConnectionProxy(
     async def reset(self, *, timeout: typing.Optional[float] = ...) -> None: ...
     async def reload_schema_state(self) -> None: ...
 
-class PoolConnectionHolder:
+class PoolConnectionHolder(typing.Generic[_Record]):
+    _pool: Pool[_Record]
     async def connect(self) -> None: ...
-    async def acquire(self) -> PoolConnectionProxy: ...
+    async def acquire(self) -> PoolConnectionProxy[_Record]: ...
     async def release(self, timeout: typing.Optional[float]) -> None: ...
     async def wait_until_released(self) -> None: ...
     async def close(self) -> None: ...
     def terminate(self) -> None: ...
+    def _release_on_close(self) -> None: ...
 
-class Pool:
+class Pool(typing.Generic[_Record]):
     def set_connect_args(
         self,
         dsn: typing.Optional[str] = ...,
@@ -233,18 +296,9 @@ class Pool:
         *,
         timeout: typing.Optional[float] = ...,
     ) -> None: ...
-    @typing.overload
     async def fetch(
         self, query: str, *args: typing.Any, timeout: typing.Optional[float] = ...
     ) -> typing.List[_cprotocol.Record]: ...
-    @typing.overload
-    async def fetch(
-        self,
-        query: str,
-        *args: typing.Any,
-        timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
-    ) -> typing.List[_Record]: ...
     async def fetchval(
         self,
         query: str,
@@ -252,38 +306,37 @@ class Pool:
         column: int = ...,
         timeout: typing.Optional[float] = ...,
     ) -> typing.Any: ...
-    @typing.overload
     async def fetchrow(
         self, query: str, *args: typing.Any, timeout: typing.Optional[float] = ...
     ) -> typing.Optional[_cprotocol.Record]: ...
-    @typing.overload
-    async def fetchrow(
-        self,
-        query: str,
-        *args: typing.Any,
-        timeout: typing.Optional[float] = ...,
-        return_type: typing.Type[_Record],
-    ) -> typing.Optional[_Record]: ...
     def acquire(
         self, *, timeout: typing.Optional[float] = ...
-    ) -> PoolAcquireContext: ...
+    ) -> PoolAcquireContext[_Record]: ...
     async def release(
-        self, connection: PoolConnectionProxy, *, timeout: typing.Optional[float] = ...
+        self,
+        connection: PoolConnectionProxy[_Record],
+        *,
+        timeout: typing.Optional[float] = ...,
     ) -> None: ...
     async def close(self) -> None: ...
     def terminate(self) -> None: ...
     async def expire_connections(self) -> None: ...
+    def _drop_statement_cache(self) -> None: ...
+    def _drop_type_cache(self) -> None: ...
     def __await__(
         self: _Pool,
     ) -> typing.Generator[typing.Any, None, typing.Optional[_Pool]]: ...
     async def __aenter__(self: _Pool) -> _Pool: ...
     async def __aexit__(self, *exc: typing.Any) -> None: ...
 
-class PoolAcquireContext:
-    async def __aenter__(self) -> PoolConnectionProxy: ...
+class PoolAcquireContext(typing.Generic[_Record]):
+    async def __aenter__(self) -> PoolConnectionProxy[_Record]: ...
     async def __aexit__(self, *exc: typing.Any) -> None: ...
-    def __await__(self) -> typing.Generator[typing.Any, None, PoolConnectionProxy]: ...
+    def __await__(
+        self,
+    ) -> typing.Generator[typing.Any, None, PoolConnectionProxy[_Record]]: ...
 
+@typing.overload
 def create_pool(
     dsn: typing.Optional[str] = ...,
     *,
@@ -291,10 +344,11 @@ def create_pool(
     max_size: int = ...,
     max_queries: int = ...,
     max_inactive_connection_lifetime: float = ...,
-    setup: typing.Optional[_SetupCallback] = ...,
-    init: typing.Optional[_InitCallback] = ...,
+    setup: typing.Optional[_SetupCallback[_cprotocol.Record]] = ...,
+    init: typing.Optional[_InitCallback[_cprotocol.Record]] = ...,
     loop: typing.Optional[asyncio.AbstractEventLoop] = ...,
-    connection_class: typing.Type[connection.Connection] = ...,
+    connection_class: typing.Type[_Connection] = ...,
+    record_class: typing.Optional[typing.Type[_cprotocol.Record]] = ...,
     host: typing.Optional[connect_utils._HostType] = ...,
     port: typing.Optional[connect_utils._PortType] = ...,
     user: typing.Optional[str] = ...,
@@ -308,4 +362,31 @@ def create_pool(
     command_timeout: typing.Optional[float] = ...,
     ssl: typing.Optional[connect_utils._SSLType] = ...,
     server_settings: typing.Optional[typing.Dict[str, str]] = ...,
-) -> Pool: ...
+) -> Pool[_cprotocol.Record]: ...
+@typing.overload
+def create_pool(
+    dsn: typing.Optional[str] = ...,
+    *,
+    min_size: int = ...,
+    max_size: int = ...,
+    max_queries: int = ...,
+    max_inactive_connection_lifetime: float = ...,
+    setup: typing.Optional[_SetupCallback[_Record]] = ...,
+    init: typing.Optional[_InitCallback[_Record]] = ...,
+    loop: typing.Optional[asyncio.AbstractEventLoop] = ...,
+    connection_class: typing.Type[_Connection] = ...,
+    record_class: typing.Type[_Record],
+    host: typing.Optional[connect_utils._HostType] = ...,
+    port: typing.Optional[connect_utils._PortType] = ...,
+    user: typing.Optional[str] = ...,
+    password: typing.Optional[connection._PasswordType] = ...,
+    passfile: typing.Optional[str] = ...,
+    database: typing.Optional[str] = ...,
+    timeout: float = ...,
+    statement_cache_size: int = ...,
+    max_cached_statement_lifetime: int = ...,
+    max_cacheable_statement_size: int = ...,
+    command_timeout: typing.Optional[float] = ...,
+    ssl: typing.Optional[connect_utils._SSLType] = ...,
+    server_settings: typing.Optional[typing.Dict[str, str]] = ...,
+) -> Pool[_Record]: ...
