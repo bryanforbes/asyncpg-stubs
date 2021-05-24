@@ -17,7 +17,7 @@ typing-extensions = "^3.10.0"
 black = {version = "^21.5b1", allow-prereleases = true}
 flake8 = "^3.9.2"
 flake8-pyi = "^20.10.0"
-pre-commit = "^2.12.1"
+pre-commit = "^2.13.0"
 isort = "^5.8.0"
 asyncpg = "^0.22.0"
 
