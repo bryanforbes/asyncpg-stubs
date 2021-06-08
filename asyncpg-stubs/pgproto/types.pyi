@@ -15,7 +15,7 @@ from typing import (
     Union,
     overload,
 )
-from typing_extensions import Literal
+from typing_extensions import Literal, SupportsIndex
 
 _BitString = TypeVar('_BitString', bound=BitString)
 _BitOrderType = Literal['big', 'little']
@@ -51,14 +51,14 @@ class Point(Tuple[float, float]):
         self,
         x: Union[
             SupportsFloat,
-            builtins._SupportsIndex,
+            SupportsIndex,
             Text,
             builtins.bytes,
             builtins.bytearray,
         ],
         y: Union[
             SupportsFloat,
-            builtins._SupportsIndex,
+            SupportsIndex,
             Text,
             builtins.bytes,
             builtins.bytearray,

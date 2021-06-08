@@ -1,10 +1,12 @@
 from asyncio import AbstractEventLoop, Protocol, WriteTransport
+from enum import IntEnum
 from ssl import SSLContext
-from typing import Any, Dict, List, NamedTuple, Optional, Tuple, TypeVar, Union
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple, Type, TypeVar, Union
 from typing_extensions import Final, Literal
 
 _Connection = TypeVar('_Connection')
 _Protocol = TypeVar('_Protocol', bound=Protocol)
+_SSLMode = TypeVar('_SSLMode', bound=SSLMode)
 
 _TPTupleType = Tuple[WriteTransport, _Protocol]
 _AddrType = Union[Tuple[str, int], str]
@@ -18,12 +20,22 @@ _SSLType = Union[_ParsedSSLType, _SSLStringValues, bool]
 
 PGPASSFILE: Final[str]
 
+class SSLMode(IntEnum):
+    disable: int
+    allow: int
+    prefer: int
+    require: int
+    verify_ca: int
+    verify_full: int
+    @classmethod
+    def parse(cls: Type[_SSLMode], sslmode: Union[str, _SSLMode]) -> _SSLMode: ...
+
 class _ConnectionParameters(NamedTuple):
     user: str
     password: Optional[str]
     database: str
     ssl: Optional[_ParsedSSLType]
-    ssl_is_advisory: Optional[bool]
+    sslmode: Optional[SSLMode]
     connect_timeout: Optional[float]
     server_settings: Optional[Dict[str, str]]
 
