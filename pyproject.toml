@@ -19,7 +19,7 @@ black = {version = "^22.1", allow-prereleases = true}
 flake8 = "^4.0.1"
 flake8-pyi = "^20.10.0"
 pre-commit = "^2.14.0"
-isort = "^5.9.3"
+isort = "^5.10.1"
 
 [tool.black]
 line-length = 88
