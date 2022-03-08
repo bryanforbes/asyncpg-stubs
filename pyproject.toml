@@ -12,7 +12,7 @@ packages = [
 python = "^3.6.2"
 asyncpg = "^0.23.0"
 mypy = ">=0.800"
-typing-extensions = "^3.10.0"
+typing-extensions = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^21.7b0", allow-prereleases = true}
