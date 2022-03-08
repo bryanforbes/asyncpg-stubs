@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-asyncpg = "^0.23.0"
+asyncpg = "^0.25.0"
 mypy = ">=0.800"
 typing-extensions = "^4.1.0"
 
