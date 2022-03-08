@@ -23,7 +23,7 @@ from typing import (
 )
 from typing_extensions import Literal, Protocol
 
-from _typeshed import AnyPath
+from _typeshed import StrOrBytesPath
 
 from . import connect_utils
 from .cursor import CursorFactory
@@ -43,8 +43,8 @@ _RecordsType = List[_Record]
 _RecordsExtraType = Tuple[_RecordsType[_Record], bytes, bool]
 _AnyCallable = Callable[..., Any]
 
-_OutputType = Union[AnyPath, BinaryIO, _Writer]
-_SourceType = Union[AnyPath, BinaryIO, AsyncIterable[bytes]]
+_OutputType = Union[StrOrBytesPath, BinaryIO, _Writer]
+_SourceType = Union[StrOrBytesPath, BinaryIO, AsyncIterable[bytes]]
 
 _CopyFormat = Literal['text', 'csv', 'binary']
 _PasswordType = Union[str, Callable[[], str], Callable[[], Coroutine[Any, Any, str]]]
