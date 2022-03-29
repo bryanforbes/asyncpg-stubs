@@ -15,7 +15,7 @@ mypy = ">=0.800"
 typing-extensions = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
-black = {version = "^22.1", allow-prereleases = true}
+black = {version = "^22.3", allow-prereleases = true}
 flake8 = "^4.0.1"
 flake8-pyi = "^20.10.0"
 pre-commit = "^2.17.0"
