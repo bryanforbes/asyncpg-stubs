@@ -1,32 +1,31 @@
 import builtins
-from typing import (
-    Any,
-    Hashable,
-    Iterable,
-    Iterator,
-    Optional,
-    Sequence,
-    Sized,
-    SupportsFloat,
-    Text,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
-from typing_extensions import Literal, SupportsIndex
+import typing
+import typing_extensions
 
-_BitString = TypeVar('_BitString', bound=BitString)
-_BitOrderType = Literal['big', 'little']
+__all__ = (
+    'BitString',
+    'Point',
+    'Path',
+    'Polygon',
+    'Box',
+    'Line',
+    'LineSegment',
+    'Circle',
+)
+
+_BitString = typing.TypeVar('_BitString', bound='BitString')
+_BitOrderType: typing_extensions.TypeAlias = typing_extensions.Literal['big', 'little']
 
 class BitString:
-    def __init__(self, bitstring: Optional[builtins.bytes] = ...) -> None: ...
+    __slots__: typing.Any
+    _bytes: typing.Any
+    _bitlength: int
+    def __init__(self, bitstring: typing.Optional[builtins.bytes] = ...) -> None: ...
     @classmethod
     def frombytes(
-        cls: Type[_BitString],
-        bytes_: Optional[builtins.bytes] = ...,
-        bitlength: Optional[int] = ...,
+        cls: type[_BitString],
+        bytes_: typing.Optional[builtins.bytes] = ...,
+        bitlength: typing.Optional[int] = ...,
     ) -> _BitString: ...
     @property
     def bytes(self) -> builtins.bytes: ...
@@ -34,50 +33,60 @@ class BitString:
     def to_int(self, bitorder: _BitOrderType = ..., *, signed: bool = ...) -> int: ...
     @classmethod
     def from_int(
-        cls: Type[_BitString],
+        cls: type[_BitString],
         x: int,
         length: int,
         bitorder: _BitOrderType = ...,
         *,
         signed: bool = ...,
     ) -> _BitString: ...
+    def __repr__(self) -> str: ...
+    __str__: typing.Callable[[BitString], str]
     def __eq__(self, other: object) -> bool: ...
     def __hash__(self) -> int: ...
+    def _getitem(self, i: int) -> int: ...
     def __getitem__(self, i: int) -> int: ...
     def __len__(self) -> int: ...
 
-class Point(Tuple[float, float]):
-    def __init__(
-        self,
-        x: Union[
-            SupportsFloat,
-            SupportsIndex,
-            Text,
+class Point(typing.Tuple[float, float]):
+    __slots__: typing.Any
+    def __new__(
+        cls,
+        x: typing.Union[
+            typing.SupportsFloat,
+            typing_extensions.SupportsIndex,
+            typing.Text,
             builtins.bytes,
             builtins.bytearray,
         ],
-        y: Union[
-            SupportsFloat,
-            SupportsIndex,
-            Text,
+        y: typing.Union[
+            typing.SupportsFloat,
+            typing_extensions.SupportsIndex,
+            typing.Text,
             builtins.bytes,
             builtins.bytearray,
         ],
-    ) -> None: ...
+    ) -> Point: ...
+    def __repr__(self) -> str: ...
     @property
     def x(self) -> float: ...
     @property
     def y(self) -> float: ...
 
-class Box(Tuple[Point, Point]):
-    def __init__(self, high: Sequence[float], low: Sequence[float]) -> None: ...
+class Box(typing.Tuple[Point, Point]):
+    __slots__: typing.Any
+    def __new__(
+        cls, high: typing.Sequence[float], low: typing.Sequence[float]
+    ) -> Box: ...
+    def __repr__(self) -> str: ...
     @property
     def high(self) -> Point: ...
     @property
     def low(self) -> Point: ...
 
-class Line(Tuple[float, float, float]):
-    def __init__(self, A: float, B: float, C: float) -> None: ...
+class Line(typing.Tuple[float, float, float]):
+    __slots__: typing.Any
+    def __new__(cls, A: float, B: float, C: float) -> Line: ...
     @property
     def A(self) -> float: ...
     @property
@@ -85,35 +94,43 @@ class Line(Tuple[float, float, float]):
     @property
     def C(self) -> float: ...
 
-class LineSegment(Tuple[Point, Point]):
-    def __init__(self, p1: Sequence[float], p2: Sequence[float]) -> None: ...
+class LineSegment(typing.Tuple[Point, Point]):
+    __slots__: typing.Any
+    def __new__(
+        cls, p1: typing.Sequence[float], p2: typing.Sequence[float]
+    ) -> LineSegment: ...
+    def __repr__(self) -> str: ...
     @property
     def p1(self) -> Point: ...
     @property
     def p2(self) -> Point: ...
 
 class Path:
-    points: Tuple[Point, ...]
-    def __init__(self, *points: Sequence[float], is_closed: bool = ...) -> None: ...
+    __slots__: typing.Any
+    points: typing.Tuple[Point, ...]
+    _is_closed: typing.Any
+    def __init__(
+        self, *points: typing.Sequence[float], is_closed: bool = ...
+    ) -> None: ...
     @property
     def is_closed(self) -> bool: ...
     def __eq__(self, other: object) -> bool: ...
     def __hash__(self) -> int: ...
-    def __iter__(self) -> Iterator[Point]: ...
+    def __iter__(self) -> typing.Iterator[Point]: ...
     def __len__(self) -> int: ...
-    @overload
+    @typing.overload
     def __getitem__(self, i: int) -> Point: ...
-    @overload
-    def __getitem__(self, i: slice) -> Tuple[Point, ...]: ...
-    @overload
-    def __getitem__(self, i: Union[int, slice]) -> Union[Point, Tuple[Point, ...]]: ...
+    @typing.overload
+    def __getitem__(self, i: slice) -> typing.Tuple[Point, ...]: ...
     def __contains__(self, point: object) -> bool: ...
 
 class Polygon(Path):
-    def __init__(self, *points: Sequence[float]) -> None: ...
+    __slots__: typing.Any
+    def __init__(self, *points: typing.Sequence[float]) -> None: ...
 
-class Circle(Tuple[Point, float]):
-    def __init__(self, center: Point, radius: float) -> None: ...
+class Circle(typing.Tuple[Point, float]):
+    __slots__: typing.Any
+    def __new__(cls, center: Point, radius: float) -> Circle: ...
     @property
     def center(self) -> Point: ...
     @property

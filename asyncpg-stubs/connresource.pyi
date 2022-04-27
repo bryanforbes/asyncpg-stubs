@@ -1,10 +1,14 @@
-from typing import Any, Callable, TypeVar
+import typing
 
-from .connection import Connection
+from . import connection
 
-_Callable = TypeVar('_Callable', bound=Callable[..., Any])
+_Callable = typing.TypeVar('_Callable', bound=typing.Callable[..., typing.Any])
 
 def guarded(meth: _Callable) -> _Callable: ...
 
 class ConnectionResource:
-    def __init__(self, connection: Connection[Any]) -> None: ...
+    __slots__: typing.Any
+    _connection: connection.Connection[typing.Any]
+    _con_release_ctr: int
+    def __init__(self, connection: connection.Connection[typing.Any]) -> None: ...
+    def _check_conn_validity(self, meth_name: str) -> None: ...

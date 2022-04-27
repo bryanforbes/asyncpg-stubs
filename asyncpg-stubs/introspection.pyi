@@ -1,12 +1,15 @@
-from typing import Any, Tuple
-from typing_extensions import Final, TypedDict
+import typing
+import typing_extensions
 
-from .protocol import Record
+from . import protocol
 
-INTRO_LOOKUP_TYPES: Final[str]
-TYPE_BY_NAME: Final[str]
-TYPE_BY_OID: Final[str]
-SCALAR_TYPE_KINDS: Final[Tuple[bytes, bytes, bytes]]
+_TYPEINFO_13: typing_extensions.Final[str]
+INTRO_LOOKUP_TYPES_13: typing_extensions.Final[str]
+_TYPEINFO: typing_extensions.Final[str]
+INTRO_LOOKUP_TYPES: typing_extensions.Final[str]
+TYPE_BY_NAME: typing_extensions.Final[str]
+TYPE_BY_OID: typing_extensions.Final[str]
+SCALAR_TYPE_KINDS: typing_extensions.Final[typing.Tuple[bytes, bytes, bytes]]
 
-def is_scalar_type(typeinfo: Record) -> bool: ...
-def is_domain_type(typeinfo: Record) -> bool: ...
+def is_scalar_type(typeinfo: protocol.Record) -> bool: ...
+def is_domain_type(typeinfo: protocol.Record) -> bool: ...
