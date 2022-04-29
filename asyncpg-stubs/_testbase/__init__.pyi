@@ -1,5 +1,6 @@
 import unittest
-from typing import Any, Callable, Iterator, Optional, TypeVar
+from collections.abc import Callable, Iterator
+from typing import Any, TypeVar
 
 from . import fuzzer as fuzzer
 
@@ -10,7 +11,7 @@ def with_timeout(timeout: Any) -> Callable[[_F], _F]: ...
 
 class TestCaseMeta(type):
     TEST_TIMEOUT: Any = ...
-    def __new__(mcls: Any, name: Any, bases: Any, ns: Any) -> Any: ...
+    def __new__(cls: Any, name: Any, bases: Any, ns: Any) -> Any: ...
 
 class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
     @classmethod
@@ -24,15 +25,15 @@ class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
     def loop_exception_handler(self, loop: Any, context: Any) -> None: ...
 
 def create_pool(
-    dsn: Optional[Any] = ...,
+    dsn: Any | None = ...,
     *,
     min_size: int = ...,
     max_size: int = ...,
     max_queries: int = ...,
     max_inactive_connection_lifetime: float = ...,
-    setup: Optional[Any] = ...,
-    init: Optional[Any] = ...,
-    loop: Optional[Any] = ...,
+    setup: Any | None = ...,
+    init: Any | None = ...,
+    loop: Any | None = ...,
     pool_class: Any = ...,
     connection_class: Any = ...,
     record_class: Any = ...,

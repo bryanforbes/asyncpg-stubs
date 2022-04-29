@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncpg-stubs"
-version = "0.25.0"
+version = "0.25.1dev0"
 description = "asyncpg stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
 license = "BSD-3-Clause"
@@ -11,13 +11,13 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 asyncpg = "^0.25.0"
-mypy = ">=0.940"
 typing-extensions = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3"
 flake8 = "^4.0.1"
 flake8-pyi = "^22.4.1"
+mypy = ">=0.950"
 pre-commit = "^2.18.0"
 isort = "^5.10.1"
 
@@ -38,10 +38,26 @@ exclude = '''
 '''
 
 [tool.isort]
-extra_standard_library = ["typing_extensions"]
+extra_standard_library = ["_typeshed", "typing_extensions"]
 virtual_env = ".venv"
 profile = "black"
 combine_as_imports = true
+
+[tool.mypy]
+python_version = "3.7"
+incremental = true
+strict = true
+
+[tool.pyright]
+include = ["asyncpg-stubs"]
+
+pythonVersion = "3.7"
+reportUnnecessaryTypeIgnoreComment = "warning"
+typeCheckingMode = "strict"
+reportPrivateUsage = "none"
+reportUnusedImport = "none"
+reportUnusedVariable = "none"
+reportImportCycles = "none"
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

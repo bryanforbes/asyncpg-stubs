@@ -1,15 +1,20 @@
-import asyncio
-import pathlib
-import typing
+from asyncio import AbstractEventLoop, Future, StreamWriter, Task
+from collections.abc import Awaitable
+from pathlib import Path
+from typing import Any, TypeVar
+from typing_extensions import Final
 
-_T = typing.TypeVar('_T')
+_T = TypeVar('_T')
 
-def get_pg_home_directory() -> typing.Optional[pathlib.Path]: ...
+PY_37: Final[bool]
+SYSTEM: Final[str]
+
+def get_pg_home_directory() -> Path | None: ...
 def current_asyncio_task(
-    loop: typing.Optional[asyncio.AbstractEventLoop],
-) -> typing.Optional['asyncio.Task[typing.Any]']: ...
-async def wait_closed(stream: asyncio.StreamWriter) -> None: ...
+    loop: AbstractEventLoop | None,
+) -> Task[Any] | None: ...
+async def wait_closed(stream: StreamWriter) -> None: ...
 async def wait_for(
-    fut: typing.Union['asyncio.Future[_T]', typing.Awaitable[_T]],
-    timeout: typing.Optional[float],
+    fut: Future[_T] | Awaitable[_T],
+    timeout: float | None,
 ) -> _T: ...

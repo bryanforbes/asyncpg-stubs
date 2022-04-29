@@ -2,21 +2,9 @@ import asyncio
 import asyncio.protocols
 import hmac
 from codecs import CodecInfo
+from collections.abc import Callable, Iterable, Iterator
 from hashlib import md5, sha256
-from typing import (
-    Any,
-    Callable,
-    ClassVar,
-    Generic,
-    Iterable,
-    Iterator,
-    NewType,
-    Optional,
-    Text,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import Any, ClassVar, Generic, NewType, Text, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 import asyncpg.pgproto.pgproto
@@ -26,13 +14,14 @@ from ..pgproto.pgproto import WriteBuffer
 from ..types import Attribute, Type
 
 _T = TypeVar("_T")
-_NoTimeoutType = NewType("_NoTimeoutType", object)
-_TimeoutType: TypeAlias = Union[float, None, _NoTimeoutType]  # noqa: Y015
 _Record = TypeVar("_Record", bound=Record)
 _OtherRecord = TypeVar("_OtherRecord", bound=Record)
 _PreparedStatementState = TypeVar(
     "_PreparedStatementState", bound=PreparedStatementState[Any]
 )
+
+_NoTimeoutType = NewType("_NoTimeoutType", object)
+_TimeoutType: TypeAlias = float | None | _NoTimeoutType
 
 BUILTIN_TYPE_NAME_MAP: Final[dict[str, int]]
 BUILTIN_TYPE_OID_MAP: Final[dict[int, str]]
@@ -154,7 +143,7 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         timeout: _TimeoutType,
     ) -> tuple[list[_OtherRecord], bytes, bool]: ...
     @overload
-    async def bind_execute(
+    async def bind_execute(  # pyright: ignore
         self,
         state: PreparedStatementState[_OtherRecord],
         args: Any,
@@ -162,7 +151,7 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         limit: int,
         return_extra: bool,
         timeout: _TimeoutType,
-    ) -> Union[list[_OtherRecord], tuple[list[_OtherRecord], bytes, bool]]: ...
+    ) -> list[_OtherRecord] | tuple[list[_OtherRecord], bytes, bool]: ...
     async def bind_execute_many(
         self,
         state: PreparedStatementState[_OtherRecord],
@@ -171,7 +160,7 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         timeout: _TimeoutType,
     ) -> None: ...
     async def close(self, timeout: _TimeoutType) -> None: ...
-    def _get_timeout(self, timeout: _TimeoutType) -> Optional[float]: ...
+    def _get_timeout(self, timeout: _TimeoutType) -> float | None: ...
     def _is_cancelling(self) -> bool: ...
     async def _wait_for_cancellation(self) -> None: ...
     async def close_statement(
@@ -184,14 +173,14 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
     def is_connected(self, *args: Any, **kwargs: Any) -> Any: ...
     def data_received(self, data: Any) -> None: ...
     def connection_made(self, transport: Any) -> None: ...
-    def connection_lost(self, exc: Optional[Exception]) -> None: ...
+    def connection_lost(self, exc: Exception | None) -> None: ...
     def pause_writing(self, *args: Any, **kwargs: Any) -> Any: ...
     @overload
     async def prepare(
         self,
         stmt_name: str,
         query: str,
-        timeout: Optional[float] = ...,
+        timeout: float | None = ...,
         *,
         state: _PreparedStatementState,
         ignore_custom_codec: bool = ...,
@@ -202,23 +191,12 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         self,
         stmt_name: str,
         query: str,
-        timeout: Optional[float] = ...,
+        timeout: float | None = ...,
         *,
         state: None = ...,
         ignore_custom_codec: bool = ...,
         record_class: type[_OtherRecord],
     ) -> PreparedStatementState[_OtherRecord]: ...
-    @overload
-    async def prepare(
-        self,
-        stmt_name: str,
-        query: str,
-        timeout: Optional[float] = ...,
-        *,
-        state: Optional[_PreparedStatementState] = ...,
-        ignore_custom_codec: bool = ...,
-        record_class: Optional[type[_OtherRecord]],
-    ) -> Union[_PreparedStatementState, PreparedStatementState[_OtherRecord]]: ...
     async def query(self, *args: Any, **kwargs: Any) -> str: ...
     def resume_writing(self, *args: Any, **kwargs: Any) -> Any: ...
     def __reduce__(self) -> Any: ...
@@ -273,9 +251,9 @@ class Protocol(BaseProtocol[_Record], asyncio.protocols.Protocol): ...
 
 class Record:
     @overload
-    def get(self, key: str) -> Optional[Any]: ...
+    def get(self, key: str) -> Any | None: ...
     @overload
-    def get(self, key: str, default: _T) -> Union[Any, _T]: ...
+    def get(self, key: str, default: _T) -> Any | _T: ...
     def items(self) -> Iterator[tuple[str, Any]]: ...
     def keys(self) -> Iterator[str]: ...
     def values(self) -> Iterator[Any]: ...
@@ -290,9 +268,9 @@ class Record:
     def __len__(self) -> int: ...
 
 class Timer:
-    def __init__(self, budget: Optional[float]) -> None: ...
+    def __init__(self, budget: float | None) -> None: ...
     def __enter__(self) -> None: ...
-    def __exit__(self, et: Any, e: Any, tb: Any) -> None: ...
+    def __exit__(self, et: object, e: object, tb: object) -> None: ...
     def get_remaining_budget(self) -> float: ...
     def has_budget_greater_than(self, amount: float) -> bool: ...
 
@@ -305,13 +283,13 @@ class SCRAMAuthentication:
     REQUIREMENTS_CLIENT_PROOF: ClassVar[list[str]]
     SASLPREP_PROHIBITED: ClassVar[tuple[Callable[[Text], bool], ...]]
     authentication_method: bytes
-    authorization_message: Optional[bytes]
+    authorization_message: bytes | None
     client_channel_binding: bytes
-    client_first_message_bare: Optional[bytes]
-    client_nonce: Optional[bytes]
-    client_proof: Optional[bytes]
-    password_salt: Optional[bytes]
+    client_first_message_bare: bytes | None
+    client_nonce: bytes | None
+    client_proof: bytes | None
+    password_salt: bytes | None
     password_iterations: int
-    server_first_message: Optional[bytes]
-    server_key: Optional[hmac.HMAC]
-    server_nonce: Optional[bytes]
+    server_first_message: bytes | None
+    server_key: hmac.HMAC | None
+    server_nonce: bytes | None

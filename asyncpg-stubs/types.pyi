@@ -1,4 +1,4 @@
-import typing
+from typing import Any, Generic, NamedTuple, TypeVar
 
 from asyncpg.pgproto.types import (
     BitString as BitString,
@@ -11,7 +11,7 @@ from asyncpg.pgproto.types import (
     Polygon as Polygon,
 )
 
-_V = typing.TypeVar('_V', bound=_RangeValue)
+_V = TypeVar('_V', bound=_RangeValue)
 
 __all__ = (
     'Type',
@@ -28,17 +28,17 @@ __all__ = (
     'ServerVersion',
 )
 
-class Type(typing.NamedTuple):
+class Type(NamedTuple):
     oid: int
     name: str
     kind: str
     schema: str
 
-class Attribute(typing.NamedTuple):
+class Attribute(NamedTuple):
     name: str
     type: Type
 
-class ServerVersion(typing.NamedTuple):
+class ServerVersion(NamedTuple):
     major: int
     minor: int
     micro: int
@@ -50,42 +50,33 @@ class _RangeValue:
     def __lt__(self, other: _RangeValue) -> bool: ...
     def __gt__(self, other: _RangeValue) -> bool: ...
 
-class Range(typing.Generic[_V]):
-    __slots__: typing.Any
-    _lower: typing.Optional[_V]
-    _upper: typing.Optional[_V]
-    _lower_inc: bool
-    _upper_inc: bool
-    _empty: bool
+class Range(Generic[_V]):
+    __slots__: Any
     def __init__(
         self,
-        lower: typing.Optional[_V] = ...,
-        upper: typing.Optional[_V] = ...,
+        lower: _V | None = ...,
+        upper: _V | None = ...,
         *,
         lower_inc: bool = ...,
         upper_inc: bool = ...,
         empty: bool = ...,
     ) -> None: ...
     @property
-    def lower(self) -> typing.Optional[_V]: ...
+    def lower(self) -> _V | None: ...
     @property
     def lower_inc(self) -> bool: ...
     @property
     def lower_inf(self) -> bool: ...
     @property
-    def upper(self) -> typing.Optional[_V]: ...
+    def upper(self) -> _V | None: ...
     @property
     def upper_inc(self) -> bool: ...
     @property
     def upper_inf(self) -> bool: ...
     @property
     def isempty(self) -> bool: ...
-    def _issubset_lower(self, other: Range[_V]) -> bool: ...
-    def _issubset_upper(self, other: Range[_V]) -> bool: ...
     def issubset(self, other: Range[_V]) -> bool: ...
     def issuperset(self, other: Range[_V]) -> bool: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, other: object) -> bool: ...
     def __hash__(self) -> int: ...
-    def __repr__(self) -> str: ...
-    __str__: typing.Callable[[Range[typing.Any]], str]

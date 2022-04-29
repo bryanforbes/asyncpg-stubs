@@ -1,6 +1,7 @@
-import typing
+from _typeshed import Self
+from typing import Any, ClassVar, TypeVar
 
-__all__ = [
+__all__ = (
     'PostgresError',
     'FatalPostgresError',
     'UnknownPostgresError',
@@ -11,18 +12,16 @@ __all__ = [
     'OutdatedSchemaCacheError',
     'ProtocolError',
     'UnsupportedClientFeatureError',
-]
+)
 
-_PM = typing.TypeVar('_PM', bound=PostgresMessage)
-_PE = typing.TypeVar('_PE', bound=PostgresError)
-_IE = typing.TypeVar('_IE', bound=InterfaceError)
+_PM = TypeVar('_PM', bound=PostgresMessage)
 
 class PostgresMessageMeta(type): ...
 
 class PostgresMessage(metaclass=PostgresMessageMeta):
     severity: str | None
     severity_en: str | None
-    sqlstate: typing.ClassVar[str]
+    sqlstate: ClassVar[str]
     message: str
     detail: str | None
     hint: str | None
@@ -45,19 +44,19 @@ class PostgresMessage(metaclass=PostgresMessageMeta):
     def as_dict(self) -> dict[str, str]: ...
 
 class PostgresError(PostgresMessage, Exception):
-    def __str__(self) -> str: ...
     @classmethod
-    def new(cls: type[_PE], fields: dict[str, str], query: str | None = ...) -> _PE: ...
+    def new(
+        cls: type[Self], fields: dict[str, str], query: str | None = ...
+    ) -> Self: ...
 
 class FatalPostgresError(PostgresError): ...
 class UnknownPostgresError(FatalPostgresError): ...
 
 class InterfaceMessage:
-    args: tuple[typing.Any, ...]
+    args: tuple[Any, ...]
     detail: str | None
     hint: str | None
     def __init__(self, *, detail: str | None = ..., hint: str | None = ...) -> None: ...
-    def __str__(self) -> str: ...
 
 class InterfaceError(InterfaceMessage, Exception):
     def __init__(
@@ -67,7 +66,7 @@ class InterfaceError(InterfaceMessage, Exception):
         detail: str | None = ...,
         hint: str | None = ...,
     ) -> None: ...
-    def with_msg(self: _IE, msg: str) -> _IE: ...
+    def with_msg(self: Self, msg: str) -> Self: ...
 
 class DataError(InterfaceError, ValueError): ...
 class UnsupportedClientFeatureError(InterfaceError): ...
@@ -98,8 +97,7 @@ class OutdatedSchemaCacheError(InternalClientError):
     ) -> None: ...
 
 class PostgresLogMessage(PostgresMessage):
-    def __str__(self) -> str: ...
-    def __setattr__(self, name: str, val: typing.Any) -> None: ...
+    def __setattr__(self, name: str, val: Any) -> None: ...
     @classmethod
     def new(
         cls, fields: dict[str, str], query: str | None = ...

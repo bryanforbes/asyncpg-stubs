@@ -1,123 +1,90 @@
-import typing
+from _typeshed import Self
+from collections.abc import Generator, Sequence
+from typing import Any, Generic, TypeVar, overload
 
 from . import connection as _connection, connresource
 from .protocol import protocol as _cprotocol
 
-_Cursor = typing.TypeVar('_Cursor', bound='Cursor[typing.Any]')
-_CursorIterator = typing.TypeVar('_CursorIterator', bound='CursorIterator[typing.Any]')
-_Record = typing.TypeVar('_Record', bound='_cprotocol.Record')
+_Record = TypeVar('_Record', bound=_cprotocol.Record)
 
-class CursorFactory(connresource.ConnectionResource, typing.Generic[_Record]):
-    __slots__: typing.Any
-    _state: typing.Optional['_cprotocol.PreparedStatementState[_Record]']
-    _args: typing.Sequence[typing.Any]
-    _prefetch: typing.Optional[int]
-    _query: str
-    _timeout: typing.Optional[float]
-    _record_class: typing.Optional[typing.Type[_Record]]
-    @typing.overload
+class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
+    @overload
     def __init__(
         self,
         connection: _connection.Connection[_Record],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
-        prefetch: typing.Optional[int],
-        timeout: typing.Optional[float],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
+        prefetch: int | None,
+        timeout: float | None,
         record_class: None,
     ) -> None: ...
-    @typing.overload
+    @overload
     def __init__(
         self,
-        connection: _connection.Connection[typing.Any],
+        connection: _connection.Connection[Any],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
-        prefetch: typing.Optional[int],
-        timeout: typing.Optional[float],
-        record_class: typing.Type[_Record],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
+        prefetch: int | None,
+        timeout: float | None,
+        record_class: type[_Record],
     ) -> None: ...
     def __aiter__(self) -> CursorIterator[_Record]: ...
-    def __await__(self) -> typing.Generator[typing.Any, None, 'Cursor[_Record]']: ...
+    def __await__(self) -> Generator[Any, None, Cursor[_Record]]: ...
     def __del__(self) -> None: ...
 
-class BaseCursor(connresource.ConnectionResource, typing.Generic[_Record]):
-    __slots__: typing.Any
-    _state: typing.Optional['_cprotocol.PreparedStatementState[_Record]']
-    _args: typing.Sequence[typing.Any]
-    _portal_name: typing.Optional[str]
-    _exhausted: bool
-    _query: str
-    _record_class: typing.Optional[typing.Type[_Record]]
-    @typing.overload
+class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
+    __slots__: Any
+    @overload
     def __init__(
         self,
         connection: _connection.Connection[_Record],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
         record_class: None,
     ) -> None: ...
-    @typing.overload
+    @overload
     def __init__(
         self,
-        connection: _connection.Connection[typing.Any],
+        connection: _connection.Connection[Any],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
-        record_class: typing.Type[_Record],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
+        record_class: type[_Record],
     ) -> None: ...
-    def _check_ready(self) -> None: ...
-    async def _bind_exec(
-        self, n: int, timeout: typing.Optional[float]
-    ) -> typing.Any: ...
-    async def _bind(self, timeout: typing.Optional[float]) -> typing.Any: ...
-    async def _exec(self, n: int, timeout: typing.Optional[float]) -> typing.Any: ...
-    def __repr__(self) -> str: ...
     def __del__(self) -> None: ...
 
 class CursorIterator(BaseCursor[_Record]):
-    __slots__: typing.Any
-    _buffer: typing.Deque[_Record]
-    _prefetch: int
-    _timeout: typing.Optional[float]
-    @typing.overload
+    __slots__: Any
+    @overload
     def __init__(
         self,
         connection: _connection.Connection[_Record],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
         record_class: None,
         prefetch: int,
-        timeout: typing.Optional[float],
+        timeout: float | None,
     ) -> None: ...
-    @typing.overload
+    @overload
     def __init__(
         self,
-        connection: _connection.Connection[typing.Any],
+        connection: _connection.Connection[Any],
         query: str,
-        state: typing.Optional['_cprotocol.PreparedStatementState[_Record]'],
-        args: typing.Sequence[typing.Any],
-        record_class: typing.Type[_Record],
+        state: _cprotocol.PreparedStatementState[_Record] | None,
+        args: Sequence[Any],
+        record_class: type[_Record],
         prefetch: int,
-        timeout: typing.Optional[float],
+        timeout: float | None,
     ) -> None: ...
-    def __aiter__(self: _CursorIterator) -> _CursorIterator: ...
-    _state: typing.Any
+    def __aiter__(self: Self) -> Self: ...
     async def __anext__(self) -> _Record: ...
 
 class Cursor(BaseCursor[_Record]):
-    __slots__: typing.Any
-    _state: typing.Any
-    async def _init(self: _Cursor, timeout: typing.Optional[float]) -> _Cursor: ...
-    _exhausted: bool
-    async def fetch(
-        self, n: int, *, timeout: typing.Optional[float] = ...
-    ) -> typing.List[_Record]: ...
-    async def fetchrow(
-        self, *, timeout: typing.Optional[float] = ...
-    ) -> typing.Optional[_Record]: ...
-    async def forward(
-        self, n: int, *, timeout: typing.Optional[float] = ...
-    ) -> int: ...
+    __slots__: Any
+    async def fetch(self, n: int, *, timeout: float | None = ...) -> list[_Record]: ...
+    async def fetchrow(self, *, timeout: float | None = ...) -> _Record | None: ...
+    async def forward(self, n: int, *, timeout: float | None = ...) -> int: ...
