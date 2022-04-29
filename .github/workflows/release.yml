@@ -1,0 +1,94 @@
+name: Release to pypi
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version segment to bump'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - major
+        - minor
+        - patch
+
+jobs:
+  release:
+    name: Release
+    if: github.actor == 'bryanforbes'
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3
+        with:
+          virtialenvs-create: true
+          virtualenvs-in-project: true
+          virtualenvs-path: .venv
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          cache: poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install -v --no-dev --no-interaction
+
+      - name: Set release version
+        run: |
+          poetry version ${{ github.event.inputs.version }}
+
+      - name: Get release version
+        id: get-release-version
+        run: |
+          RELEASE_VERSION="$(poetry version -s)"
+          echo $RELEASE_VERSION
+          echo "::set-output name=version::$RELEASE_VERSION"
+
+      - name: Commit release version change
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Release ${{ steps.get-release-version.outputs.version }}
+          file_pattern: pyproject.toml
+          tagging_message: 'v${{ steps.get-release-version.outputs.version }}'
+          add_options: '-u'
+
+      - name: Build package
+        run: |
+          poetry build -vvv
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'dist/*'
+          name: 'v${{ steps.get-release-version.outputs.version }}'
+          tag: 'v${{ steps.get-release-version.outputs.version }}'
+
+      - name: Publish to PyPI
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          poetry publish -n
+
+      - name: Set post-release version
+        run: |
+          poetry version pre${{ github.event.inputs.version }}
+
+      - name: Get post-release version
+        id: get-post-release-version
+        run: |
+          POST_RELEASE_VERSION="$(poetry version -s)"
+          echo $POST_RELEASE_VERSION
+          echo "::set-output name=version::$POST_RELEASE_VERSION"
+
+      - name: Commit post-release version change
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Post release version bump
+          file_pattern: pyproject.toml
+          add_options: '-u'
