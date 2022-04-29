@@ -19,16 +19,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v3
-        with:
-          cache: poetry
       - name: Install Poetry
         uses: snok/install-poetry@v1.3
         with:
           virtialenvs-create: true
           virtualenvs-in-project: true
           virtualenvs-path: .venv
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          cache: poetry
       - name: Install dependencies
         run: |
           poetry install -v --remove-untracked --no-interaction
