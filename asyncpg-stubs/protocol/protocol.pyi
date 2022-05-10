@@ -4,7 +4,7 @@ import hmac
 from codecs import CodecInfo
 from collections.abc import Callable, Iterable, Iterator
 from hashlib import md5, sha256
-from typing import Any, ClassVar, Generic, NewType, Text, TypeVar, overload
+from typing import Any, ClassVar, Generic, NewType, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 import asyncpg.pgproto.pgproto
@@ -143,7 +143,7 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         timeout: _TimeoutType,
     ) -> tuple[list[_OtherRecord], bytes, bool]: ...
     @overload
-    async def bind_execute(  # pyright: ignore
+    async def bind_execute(
         self,
         state: PreparedStatementState[_OtherRecord],
         args: Any,
@@ -281,7 +281,7 @@ class SCRAMAuthentication:
     DIGEST = sha256  # noqa: Y026
     REQUIREMENTS_CLIENT_FINAL_MESSAGE: ClassVar[list[str]]
     REQUIREMENTS_CLIENT_PROOF: ClassVar[list[str]]
-    SASLPREP_PROHIBITED: ClassVar[tuple[Callable[[Text], bool], ...]]
+    SASLPREP_PROHIBITED: ClassVar[tuple[Callable[[str], bool], ...]]
     authentication_method: bytes
     authorization_message: bytes | None
     client_channel_binding: bytes

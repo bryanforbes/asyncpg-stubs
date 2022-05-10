@@ -1,7 +1,7 @@
 import builtins
 from _typeshed import Self
 from collections.abc import Iterator, Sequence
-from typing import Any, SupportsFloat, Text, overload
+from typing import Any, SupportsFloat, overload
 from typing_extensions import Literal, SupportsIndex, TypeAlias
 
 __all__ = (
@@ -47,8 +47,8 @@ class BitString:
 class Point(tuple[float, float]):
     def __new__(
         cls: type[Self],
-        x: SupportsFloat | SupportsIndex | Text | builtins.bytes | builtins.bytearray,
-        y: SupportsFloat | SupportsIndex | Text | builtins.bytes | builtins.bytearray,
+        x: SupportsFloat | SupportsIndex | str | builtins.bytes | builtins.bytearray,
+        y: SupportsFloat | SupportsIndex | str | builtins.bytes | builtins.bytearray,
     ) -> Self: ...
     @property
     def x(self) -> float: ...
