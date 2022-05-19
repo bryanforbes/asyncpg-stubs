@@ -113,7 +113,7 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "flake8-pyi"
-version = "22.5.0"
+version = "22.5.1"
 description = "A plugin for flake8 to enable linting .pyi files."
 category = "dev"
 optional = false
@@ -343,7 +343,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "61d5939fba91db31ec664057756fc491b4cb28767bca5bad96ade149b19ef609"
+content-hash = "a5b9c090666844ddf3ef011acecb2deb94e292d278bd520d4b24e51a49c6206d"
 
 [metadata.files]
 appdirs = [
@@ -432,8 +432,8 @@ flake8 = [
     {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
 ]
 flake8-pyi = [
-    {file = "flake8-pyi-22.5.0.tar.gz", hash = "sha256:0f84549c56367b9e580be968e5c8a7cda3b85f63bb06c659b4bdb8e03ad16264"},
-    {file = "flake8_pyi-22.5.0-py37-none-any.whl", hash = "sha256:dda560bee3a26db4bb6c9d85261423a93c4545ffde533c3b51552ae010fc6d59"},
+    {file = "flake8-pyi-22.5.1.tar.gz", hash = "sha256:52152ae25efbd6329c6426a3b29a9073a696ba744502fb3e48581a47426ad4c8"},
+    {file = "flake8_pyi-22.5.1-py37-none-any.whl", hash = "sha256:dfd385389f7bfed6c6666df1bc0a1a70fb03577e4e3ccd79229053d1e2854a96"},
 ]
 identify = [
     {file = "identify-1.5.13-py2.py3-none-any.whl", hash = "sha256:9dfb63a2e871b807e3ba62f029813552a24b5289504f5b071dea9b041aee9fe4"},
