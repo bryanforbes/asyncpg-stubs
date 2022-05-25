@@ -1,4 +1,5 @@
-from typing import Any, Generic, NamedTuple, TypeVar
+from _typeshed import Self
+from typing import Any, Generic, NamedTuple, Protocol, TypeVar, overload
 
 from asyncpg.pgproto.types import (
     BitString as BitString,
@@ -45,18 +46,38 @@ class ServerVersion(NamedTuple):
     releaselevel: str
     serial: int
 
-class _RangeValue:
-    def __eq__(self, other: object) -> bool: ...
-    def __lt__(self, other: _RangeValue) -> bool: ...
-    def __gt__(self, other: _RangeValue) -> bool: ...
+class _RangeValue(Protocol):
+    def __eq__(self, other: object, /) -> bool: ...
+    def __lt__(self, other: Any, /) -> bool: ...
+    def __gt__(self, other: Any, /) -> bool: ...
 
 class Range(Generic[_V]):
     __slots__: Any
+    @overload
     def __init__(
         self,
-        lower: _V | None = ...,
-        upper: _V | None = ...,
+        lower: None = ...,
+        upper: None = ...,
         *,
+        lower_inc: bool = ...,
+        upper_inc: bool = ...,
+        empty: bool = ...,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self,
+        lower: _V,
+        upper: _V = ...,
+        *,
+        lower_inc: bool = ...,
+        upper_inc: bool = ...,
+        empty: bool = ...,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self,
+        *,
+        upper: _V,
         lower_inc: bool = ...,
         upper_inc: bool = ...,
         empty: bool = ...,
