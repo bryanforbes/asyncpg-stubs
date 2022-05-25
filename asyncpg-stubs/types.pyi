@@ -1,4 +1,3 @@
-from _typeshed import Self
 from typing import Any, Generic, NamedTuple, Protocol, TypeVar, overload
 
 from asyncpg.pgproto.types import (
