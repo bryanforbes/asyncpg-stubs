@@ -26,7 +26,7 @@ jobs:
           virtualenvs-in-project: true
           virtualenvs-path: .venv
       - name: Setup Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           cache: poetry
       - name: Install dependencies
