@@ -35,9 +35,6 @@ _OutputType: TypeAlias = PathLike[Any] | BinaryIO | _Writer
 _SourceType: TypeAlias = PathLike[Any] | BinaryIO | AsyncIterable[bytes]
 
 _CopyFormat: TypeAlias = Literal['text', 'csv', 'binary']
-_PasswordType: TypeAlias = (
-    str | Callable[[], str] | Callable[[], Coroutine[Any, Any, str]]
-)
 
 class _Listener(Protocol):
     def __call__(
@@ -290,7 +287,7 @@ async def connect(
     host: connect_utils._HostType | None = ...,
     port: connect_utils._PortType | None = ...,
     user: str | None = ...,
-    password: _PasswordType | None = ...,
+    password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
@@ -300,6 +297,7 @@ async def connect(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: connect_utils._SSLType | None = ...,
+    direct_tls: bool = ...,
     connection_class: type[Connection[_Record]] = ...,
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
@@ -311,7 +309,7 @@ async def connect(  # pyright: ignore
     host: connect_utils._HostType | None = ...,
     port: connect_utils._PortType | None = ...,
     user: str | None = ...,
-    password: _PasswordType | None = ...,
+    password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
@@ -321,6 +319,7 @@ async def connect(  # pyright: ignore
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: connect_utils._SSLType | None = ...,
+    direct_tls: bool = ...,
     connection_class: type[Connection[protocol.Record]] = ...,
     record_class: type[protocol.Record] = ...,
     server_settings: dict[str, str] | None = ...,
@@ -332,7 +331,7 @@ async def connect(
     host: connect_utils._HostType | None = ...,
     port: connect_utils._PortType | None = ...,
     user: str | None = ...,
-    password: _PasswordType | None = ...,
+    password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
@@ -342,6 +341,7 @@ async def connect(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: connect_utils._SSLType | None = ...,
+    direct_tls: bool = ...,
     connection_class: type[_Connection],
     record_class: type[_Record] = ...,
     server_settings: dict[str, str] | None = ...,

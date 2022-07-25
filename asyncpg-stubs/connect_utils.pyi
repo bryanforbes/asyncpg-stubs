@@ -18,6 +18,7 @@ _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
 _SSLType: TypeAlias = _ParsedSSLType | _SSLStringValues | bool
 _HostType: TypeAlias = list[str] | str
 _PortType: TypeAlias = list[int] | int
+_PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]]
 
 PGPASSFILE: Final[str]
 
@@ -33,10 +34,11 @@ class SSLMode(IntEnum):
 
 class _ConnectionParameters(NamedTuple):
     user: str
-    password: str | Callable[[], str] | Callable[[], Awaitable[str]] | None
+    password: _PasswordType | None
     database: str
     ssl: _ParsedSSLType | None
     sslmode: SSLMode | None
+    direct_tls: bool
     connect_timeout: float
     server_settings: dict[str, str] | None
 

@@ -280,7 +280,7 @@ class Pool(Generic[_Record]):
         host: connect_utils._HostType | None = ...,
         port: connect_utils._PortType | None = ...,
         user: str | None = ...,
-        password: connection._PasswordType | None = ...,
+        password: connect_utils._PasswordType | None = ...,
         passfile: str | None = ...,
         database: str | None = ...,
         timeout: float = ...,
@@ -297,9 +297,22 @@ class Pool(Generic[_Record]):
     async def executemany(
         self, command: str, args: Any, *, timeout: float | None = ...
     ) -> None: ...
+    @overload
     async def fetch(
-        self, query: str, *args: Any, timeout: float | None = ...
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: None = ...,
     ) -> list[_Record]: ...
+    @overload
+    async def fetch(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord],
+    ) -> list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
@@ -307,9 +320,22 @@ class Pool(Generic[_Record]):
         column: int = ...,
         timeout: float | None = ...,
     ) -> Any: ...
+    @overload
     async def fetchrow(
-        self, query: str, *args: Any, timeout: float | None = ...
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: None = ...,
     ) -> _Record | None: ...
+    @overload
+    async def fetchrow(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord],
+    ) -> _OtherRecord | None: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -421,7 +447,7 @@ def create_pool(
     host: connect_utils._HostType | None = ...,
     port: connect_utils._PortType | None = ...,
     user: str | None = ...,
-    password: connection._PasswordType | None = ...,
+    password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
     database: str | None = ...,
     timeout: float = ...,
@@ -448,7 +474,7 @@ def create_pool(
     host: connect_utils._HostType | None = ...,
     port: connect_utils._PortType | None = ...,
     user: str | None = ...,
-    password: connection._PasswordType | None = ...,
+    password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
     database: str | None = ...,
     timeout: float = ...,
