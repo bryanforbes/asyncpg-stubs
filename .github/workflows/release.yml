@@ -77,7 +77,7 @@ jobs:
 
       - name: Set post-release version
         run: |
-          poetry version pre${{ github.event.inputs.version }}
+          poetry version prepatch
 
       - name: Get post-release version
         id: get-post-release-version
