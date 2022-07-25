@@ -25,11 +25,11 @@ from . import (
 from .protocol import protocol as _cprotocol
 
 _Connection = TypeVar('_Connection', bound=Connection[Any])
-_Writer = Callable[[bytes], Coroutine[Any, Any, None]]
+_Writer: TypeAlias = Callable[[bytes], Coroutine[Any, Any, None]]
 _Record = TypeVar('_Record', bound=protocol.Record)
 _OtherRecord = TypeVar('_OtherRecord', bound=protocol.Record)
-_RecordsType = list[_Record]
-_RecordsExtraType = tuple[_RecordsType[_Record], bytes, bool]
+_RecordsType: TypeAlias = list[_Record]
+_RecordsExtraType: TypeAlias = tuple[_RecordsType[_Record], bytes, bool]
 
 _OutputType: TypeAlias = PathLike[Any] | BinaryIO | _Writer
 _SourceType: TypeAlias = PathLike[Any] | BinaryIO | AsyncIterable[bytes]
