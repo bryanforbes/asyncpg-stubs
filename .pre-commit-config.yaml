@@ -27,4 +27,4 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.257']
+        additional_dependencies: ['pyright@1.1.263']
