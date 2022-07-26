@@ -1,6 +1,6 @@
-from _typeshed import BytesPath, StrPath
+from _typeshed import StrPath
 from asyncio import AbstractEventLoop
-from typing import Any, overload
+from typing import Any
 from typing_extensions import TypedDict
 
 from . import connection, types
@@ -54,27 +54,16 @@ class Cluster:
     def trust_local_replication_by(self, user: str) -> None: ...
 
 class TempCluster(Cluster):
-    @overload
     def __init__(
         self,
         *,
         data_dir_suffix: str | None = ...,
         data_dir_prefix: str | None = ...,
         data_dir_parent: StrPath | None = ...,
-        pg_config_path: str | None = ...,
-    ) -> None: ...
-    @overload
-    def __init__(
-        self,
-        *,
-        data_dir_suffix: bytes | None = ...,
-        data_dir_prefix: bytes | None = ...,
-        data_dir_parent: BytesPath | None = ...,
         pg_config_path: str | None = ...,
     ) -> None: ...
 
 class HotStandbyCluster(TempCluster):
-    @overload
     def __init__(
         self,
         *,
@@ -83,17 +72,6 @@ class HotStandbyCluster(TempCluster):
         data_dir_suffix: str | None = ...,
         data_dir_prefix: str | None = ...,
         data_dir_parent: StrPath | None = ...,
-        pg_config_path: str | None = ...,
-    ) -> None: ...
-    @overload
-    def __init__(
-        self,
-        *,
-        master: _ConnectionSpec,
-        replication_user: str,
-        data_dir_suffix: bytes | None = ...,
-        data_dir_prefix: bytes | None = ...,
-        data_dir_parent: BytesPath | None = ...,
         pg_config_path: str | None = ...,
     ) -> None: ...
     def init(self, **settings: str) -> str: ...

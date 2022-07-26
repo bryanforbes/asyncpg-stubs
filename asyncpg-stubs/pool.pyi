@@ -89,6 +89,15 @@ class PoolConnectionProxy(
         record_class: type[_OtherRecord],
     ) -> cursor.CursorFactory[_OtherRecord]: ...
     @overload
+    def cursor(
+        self,
+        query: str,
+        *args: Any,
+        prefetch: int | None = ...,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> cursor.CursorFactory[_Record] | cursor.CursorFactory[_OtherRecord]: ...
+    @overload
     async def prepare(
         self,
         query: str,
@@ -107,6 +116,17 @@ class PoolConnectionProxy(
         record_class: type[_OtherRecord],
     ) -> prepared_stmt.PreparedStatement[_OtherRecord]: ...
     @overload
+    async def prepare(
+        self,
+        query: str,
+        *,
+        name: str | None = ...,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> prepared_stmt.PreparedStatement[_Record] | prepared_stmt.PreparedStatement[
+        _OtherRecord
+    ]: ...
+    @overload
     async def fetch(
         self,
         query: str,
@@ -122,6 +142,14 @@ class PoolConnectionProxy(
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetch(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
@@ -145,6 +173,14 @@ class PoolConnectionProxy(
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
+    @overload
+    async def fetchrow(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> _Record | _OtherRecord | None: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -160,7 +196,7 @@ class PoolConnectionProxy(
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_from_query(
@@ -176,7 +212,7 @@ class PoolConnectionProxy(
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_to_table(
@@ -195,9 +231,9 @@ class PoolConnectionProxy(
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
-        force_not_null: bool | None = ...,
-        force_null: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
+        force_not_null: bool | Iterable[str] | None = ...,
+        force_null: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_records_to_table(
@@ -313,6 +349,14 @@ class Pool(Generic[_Record]):
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetch(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
@@ -336,6 +380,14 @@ class Pool(Generic[_Record]):
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
+    @overload
+    async def fetchrow(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> _Record | _OtherRecord | None: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -351,7 +403,7 @@ class Pool(Generic[_Record]):
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_from_query(
@@ -367,7 +419,7 @@ class Pool(Generic[_Record]):
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_to_table(
@@ -386,9 +438,9 @@ class Pool(Generic[_Record]):
         header: bool | None = ...,
         quote: str | None = ...,
         escape: str | None = ...,
-        force_quote: bool | None = ...,
-        force_not_null: bool | None = ...,
-        force_null: bool | None = ...,
+        force_quote: bool | Iterable[str] | None = ...,
+        force_not_null: bool | Iterable[str] | None = ...,
+        force_null: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
     ) -> str: ...
     async def copy_records_to_table(

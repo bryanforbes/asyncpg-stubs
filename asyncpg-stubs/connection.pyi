@@ -136,6 +136,15 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         record_class: type[_OtherRecord],
     ) -> cursor.CursorFactory[_OtherRecord]: ...
     @overload
+    def cursor(
+        self,
+        query: str,
+        *args: Any,
+        prefetch: int | None = ...,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> cursor.CursorFactory[_Record] | cursor.CursorFactory[_OtherRecord]: ...
+    @overload
     async def prepare(
         self,
         query: str,
@@ -154,6 +163,17 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         record_class: type[_OtherRecord],
     ) -> prepared_stmt.PreparedStatement[_OtherRecord]: ...
     @overload
+    async def prepare(
+        self,
+        query: str,
+        *,
+        name: str | None = ...,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> prepared_stmt.PreparedStatement[_Record] | prepared_stmt.PreparedStatement[
+        _OtherRecord
+    ]: ...
+    @overload
     async def fetch(
         self,
         query: str,
@@ -169,6 +189,14 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetch(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
@@ -192,6 +220,14 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
+    @overload
+    async def fetchrow(
+        self,
+        query: str,
+        *args: Any,
+        timeout: float | None = ...,
+        record_class: type[_OtherRecord] | None,
+    ) -> _Record | _OtherRecord | None: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -298,32 +334,9 @@ async def connect(
     command_timeout: float | None = ...,
     ssl: connect_utils._SSLType | None = ...,
     direct_tls: bool = ...,
-    connection_class: type[Connection[_Record]] = ...,
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
 ) -> Connection[_Record]: ...
-@overload
-async def connect(  # pyright: ignore
-    dsn: str | None = ...,
-    *,
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
-    user: str | None = ...,
-    password: connect_utils._PasswordType | None = ...,
-    passfile: str | None = ...,
-    database: str | None = ...,
-    loop: AbstractEventLoop | None = ...,
-    timeout: float = ...,
-    statement_cache_size: int = ...,
-    max_cached_statement_lifetime: int = ...,
-    max_cacheable_statement_size: int = ...,
-    command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
-    direct_tls: bool = ...,
-    connection_class: type[Connection[protocol.Record]] = ...,
-    record_class: type[protocol.Record] = ...,
-    server_settings: dict[str, str] | None = ...,
-) -> Connection[protocol.Record]: ...
 @overload
 async def connect(
     dsn: str | None = ...,
@@ -346,6 +359,26 @@ async def connect(
     record_class: type[_Record] = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> _Connection: ...
+@overload
+async def connect(
+    dsn: str | None = ...,
+    *,
+    host: connect_utils._HostType | None = ...,
+    port: connect_utils._PortType | None = ...,
+    user: str | None = ...,
+    password: connect_utils._PasswordType | None = ...,
+    passfile: str | None = ...,
+    database: str | None = ...,
+    loop: AbstractEventLoop | None = ...,
+    timeout: float = ...,
+    statement_cache_size: int = ...,
+    max_cached_statement_lifetime: int = ...,
+    max_cacheable_statement_size: int = ...,
+    command_timeout: float | None = ...,
+    ssl: connect_utils._SSLType | None = ...,
+    direct_tls: bool = ...,
+    server_settings: dict[str, str] | None = ...,
+) -> Connection[protocol.Record]: ...
 
 class _ConnectionProxy(Generic[_Record]):
     __slots__: Any
