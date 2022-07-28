@@ -17,7 +17,8 @@ _SSLStringValues: TypeAlias = Literal[
 _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
 _SSLType: TypeAlias = _ParsedSSLType | _SSLStringValues | bool
 _HostType: TypeAlias = list[str] | str
-_PortType: TypeAlias = list[int] | int
+_PortListType: TypeAlias = list[int | str] | list[int] | list[str]
+_PortType: TypeAlias = _PortListType | int | str
 _PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]]
 
 PGPASSFILE: Final[str]
