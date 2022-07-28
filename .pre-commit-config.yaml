@@ -16,15 +16,59 @@ repos:
         language: system
         entry: poetry run flake8
         files: \.pyi?$
-    -   id: mypy
-        name: mypy
+    -   id: mypy37
+        name: mypy (3.7)
         language: system
         entry: poetry run mypy
+        args: [--python-version=3.7]
         files: \.pyi?$
-    -   id: pyright
-        name: pyright
+    -   id: mypy38
+        name: mypy (3.8)
+        language: system
+        entry: poetry run mypy
+        args: [--python-version=3.8]
+        files: \.pyi?$
+    -   id: mypy39
+        name: mypy (3.9)
+        language: system
+        entry: poetry run mypy
+        args: [--python-version=3.10]
+        files: \.pyi?$
+    -   id: mypy310
+        name: mypy (3.10)
+        language: system
+        entry: poetry run mypy
+        args: [--python-version=3.10]
+        files: \.pyi?$
+    -   id: pyright37
+        name: pyright (3.7)
         entry: pyright
+        args: [--pythonversion=3.7]
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.263']
+        additional_dependencies: ['pyright@1.1.264']
+    -   id: pyright38
+        name: pyright (3.8)
+        entry: pyright
+        args: [--pythonversion=3.8]
+        language: node
+        pass_filenames: false
+        files: \.pyi?$
+        additional_dependencies: ['pyright@1.1.264']
+    -   id: pyright39
+        name: pyright (3.9)
+        entry: pyright
+        args: [--pythonversion=3.9]
+        language: node
+        pass_filenames: false
+        files: \.pyi?$
+        additional_dependencies: ['pyright@1.1.264']
+    -   id: pyright310
+        name: pyright (3.10)
+        entry: pyright
+        args: [--pythonversion=3.10]
+        language: node
+        pass_filenames: false
+        files: \.pyi?$
+        additional_dependencies: ['pyright@1.1.264']
