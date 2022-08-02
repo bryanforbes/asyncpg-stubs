@@ -22,7 +22,7 @@ typing-extensions = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6"
-flake8 = "^4.0.1"
+flake8 = "^5.0.3"
 flake8-pyi = "^22.7.0"
 isort = "^5.10.1"
 pre-commit = "^2.20.0"
