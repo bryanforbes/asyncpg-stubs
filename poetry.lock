@@ -113,7 +113,7 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "flake8-pyi"
-version = "22.7.0"
+version = "22.8.1"
 description = "A plugin for flake8 to enable linting .pyi files."
 category = "dev"
 optional = false
@@ -121,7 +121,7 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 ast-decompiler = {version = "<1.0", markers = "python_version < \"3.9\""}
-flake8 = ">=3.2.1"
+flake8 = ">=3.2.1,<6.0.0"
 pyflakes = ">=2.1.1"
 
 [[package]]
@@ -225,8 +225,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-docs = ["Sphinx (>=4)", "furo (>=2021.7.5b38)", "proselint (>=0.10.2)", "sphinx-autodoc-typehints (>=1.12)"]
-test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)"]
+test = ["pytest-mock (>=3.6)", "pytest-cov (>=2.7)", "pytest (>=6)", "appdirs (==1.4.4)"]
+docs = ["sphinx-autodoc-typehints (>=1.12)", "proselint (>=0.10.2)", "furo (>=2021.7.5b38)", "Sphinx (>=4)"]
 
 [[package]]
 name = "pre-commit"
@@ -343,7 +343,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "4c837c41756cc7b68cc3662dead136793f282b0c2c69de77f5615ae9efa12343"
+content-hash = "cf7e9b2c7e776fcada3fc6fe22b2d139c598c1ebe3cf6cc47a1e1a6764842351"
 
 [metadata.files]
 appdirs = [
@@ -432,8 +432,8 @@ flake8 = [
     {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
 ]
 flake8-pyi = [
-    {file = "flake8-pyi-22.7.0.tar.gz", hash = "sha256:f610d80ebebc33ed118b08ec36a12067b36cf7578c49b7cad577b2b965738595"},
-    {file = "flake8_pyi-22.7.0-py37-none-any.whl", hash = "sha256:edfdf31c38a9e50a56be99075f75f20217d2c49fe5f5bd71938126f1a1e0c22e"},
+    {file = "flake8-pyi-22.8.1.tar.gz", hash = "sha256:6364a6c3e0ad5b7882391b28ebbf19f70e59d84466cb716b2185fabc55ed9855"},
+    {file = "flake8_pyi-22.8.1-py37-none-any.whl", hash = "sha256:064c4c19814e15abfb24b602c7f342c91774e562658e32dcd2e587c42d81d0e7"},
 ]
 identify = [
     {file = "identify-1.5.13-py2.py3-none-any.whl", hash = "sha256:9dfb63a2e871b807e3ba62f029813552a24b5289504f5b071dea9b041aee9fe4"},
