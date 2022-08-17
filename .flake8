@@ -1,11 +1,7 @@
 [flake8]
 max-line-length = 88
-ignore = E203, E266, E501, W503
-select = B,C,E,F,W,T4,B9,Y0
-exclude =
-    .git,
-    __pycache__,
-    .venv,
+extend-exclude =
+    .venv*,
     external
 per-file-ignores =
-    *.pyi: F401, F403, F405, F811, E127, E128, E203, E266, E301, E302, E305, E501, E701, E704, E741, B303, W503, W504
+    *.pyi: E301, E302, E305, E501, E701, E741, F401, F403, F405, F811, F822
