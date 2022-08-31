@@ -32,7 +32,7 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: |
-          poetry install -v --remove-untracked --no-interaction
+          poetry install -v --sync --no-interaction
       - name: Lint
         run: |
           poetry run pre-commit run --all-files
