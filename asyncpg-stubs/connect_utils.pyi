@@ -1,24 +1,12 @@
 from _typeshed import Self
-from asyncio import AbstractEventLoop, Future, Protocol, WriteTransport
+from asyncio import AbstractEventLoop, Future, Protocol
 from collections.abc import Awaitable, Callable
 from enum import IntEnum
 from ssl import SSLContext
-from typing import NamedTuple, TypeVar
+from typing import NamedTuple
 from typing_extensions import Final, Literal, TypeAlias
 
-_AsyncProtocol = TypeVar('_AsyncProtocol', bound=Protocol)
-
-_TPTupleType: TypeAlias = tuple[WriteTransport, _AsyncProtocol]
-_AddrTupleType: TypeAlias = tuple[str, int]
-_AddrType: TypeAlias = _AddrTupleType | str
-_SSLStringValues: TypeAlias = Literal[
-    'disable', 'prefer', 'allow', 'require', 'verify-ca', 'verify-full'
-]
 _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
-_SSLType: TypeAlias = _ParsedSSLType | _SSLStringValues | bool
-_HostType: TypeAlias = list[str] | str
-_PortListType: TypeAlias = list[int | str] | list[int] | list[str]
-_PortType: TypeAlias = _PortListType | int | str
 _PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]]
 
 PGPASSFILE: Final[str]

@@ -28,8 +28,14 @@ _Connection = TypeVar('_Connection', bound=Connection[Any])
 _Writer: TypeAlias = Callable[[bytes], Coroutine[Any, Any, None]]
 _Record = TypeVar('_Record', bound=protocol.Record)
 _OtherRecord = TypeVar('_OtherRecord', bound=protocol.Record)
-_RecordsType: TypeAlias = list[_Record]
-_RecordsExtraType: TypeAlias = tuple[_RecordsType[_Record], bytes, bool]
+
+_SSLStringValues: TypeAlias = Literal[
+    'disable', 'prefer', 'allow', 'require', 'verify-ca', 'verify-full'
+]
+_SSLType: TypeAlias = connect_utils._ParsedSSLType | _SSLStringValues | bool
+_HostType: TypeAlias = list[str] | str
+_PortListType: TypeAlias = list[int | str] | list[int] | list[str]
+_PortType: TypeAlias = _PortListType | int | str
 
 _OutputType: TypeAlias = PathLike[Any] | BinaryIO | _Writer
 _SourceType: TypeAlias = PathLike[Any] | BinaryIO | AsyncIterable[bytes]
@@ -320,8 +326,8 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
 async def connect(
     dsn: str | None = ...,
     *,
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
+    host: _HostType | None = ...,
+    port: _PortType | None = ...,
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
@@ -332,7 +338,7 @@ async def connect(
     max_cached_statement_lifetime: int = ...,
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
+    ssl: _SSLType | None = ...,
     direct_tls: bool = ...,
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
@@ -341,8 +347,8 @@ async def connect(
 async def connect(
     dsn: str | None = ...,
     *,
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
+    host: _HostType | None = ...,
+    port: _PortType | None = ...,
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
@@ -353,7 +359,7 @@ async def connect(
     max_cached_statement_lifetime: int = ...,
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
+    ssl: _SSLType | None = ...,
     direct_tls: bool = ...,
     connection_class: type[_Connection],
     record_class: type[_Record] = ...,
@@ -363,8 +369,8 @@ async def connect(
 async def connect(
     dsn: str | None = ...,
     *,
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
+    host: _HostType | None = ...,
+    port: _PortType | None = ...,
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
@@ -375,7 +381,7 @@ async def connect(
     max_cached_statement_lifetime: int = ...,
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
+    ssl: _SSLType | None = ...,
     direct_tls: bool = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Connection[protocol.Record]: ...

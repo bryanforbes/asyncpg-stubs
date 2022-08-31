@@ -313,8 +313,8 @@ class Pool(Generic[_Record]):
         self,
         dsn: str | None = ...,
         *,
-        host: connect_utils._HostType | None = ...,
-        port: connect_utils._PortType | None = ...,
+        host: connection._HostType | None = ...,
+        port: connection._PortType | None = ...,
         user: str | None = ...,
         password: connect_utils._PasswordType | None = ...,
         passfile: str | None = ...,
@@ -324,7 +324,7 @@ class Pool(Generic[_Record]):
         max_cached_statement_lifetime: int = ...,
         max_cacheable_statement_size: int = ...,
         command_timeout: float | None = ...,
-        ssl: connect_utils._SSLType | None = ...,
+        ssl: connection._SSLType | None = ...,
         server_settings: dict[str, str] | None = ...,
     ) -> None: ...
     async def execute(
@@ -496,8 +496,8 @@ def create_pool(
     loop: AbstractEventLoop | None = ...,
     connection_class: type[connection.Connection[protocol.Record]] = ...,
     record_class: type[protocol.Record] = ...,
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
+    host: connection._HostType | None = ...,
+    port: connection._PortType | None = ...,
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
@@ -507,7 +507,7 @@ def create_pool(
     max_cached_statement_lifetime: int = ...,
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
+    ssl: connection._SSLType | None = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[protocol.Record]: ...
 @overload
@@ -523,8 +523,8 @@ def create_pool(
     loop: AbstractEventLoop | None = ...,
     connection_class: type[_Connection] = ...,
     record_class: type[_Record],
-    host: connect_utils._HostType | None = ...,
-    port: connect_utils._PortType | None = ...,
+    host: connection._HostType | None = ...,
+    port: connection._PortType | None = ...,
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
@@ -534,6 +534,6 @@ def create_pool(
     max_cached_statement_lifetime: int = ...,
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
-    ssl: connect_utils._SSLType | None = ...,
+    ssl: connection._SSLType | None = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[_Record]: ...
