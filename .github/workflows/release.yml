@@ -76,10 +76,8 @@ jobs:
           poetry publish -n
 
       - name: Set post-release version
-        env:
-          RELEASE_VERSION: ${{ steps.get-release-version.outputs.version }}
         run: |
-          poetry version "${RELEASE_VERSION}.dev0"
+          poetry version "$(poetry version patch --dry-run -s).dev0"
 
       - name: Get post-release version
         id: get-post-release-version
