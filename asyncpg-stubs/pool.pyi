@@ -61,12 +61,12 @@ class PoolConnectionProxy(
     ) -> transaction.Transaction: ...
     def is_in_transaction(self) -> bool: ...
     async def execute(
-        self, query: str, *args: Any, timeout: float | None = ...
+        self, query: str, *args: object, timeout: float | None = ...
     ) -> str: ...
     async def executemany(
         self,
         command: str,
-        args: Iterable[Sequence[Any]],
+        args: Iterable[Sequence[object]],
         *,
         timeout: float | None = ...,
     ) -> None: ...
@@ -74,7 +74,7 @@ class PoolConnectionProxy(
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: None = ...,
@@ -83,7 +83,7 @@ class PoolConnectionProxy(
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
@@ -92,7 +92,7 @@ class PoolConnectionProxy(
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
@@ -130,7 +130,7 @@ class PoolConnectionProxy(
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> list[_Record]: ...
@@ -138,7 +138,7 @@ class PoolConnectionProxy(
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
@@ -146,14 +146,14 @@ class PoolConnectionProxy(
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         column: int = ...,
         timeout: float | None = ...,
     ) -> Any: ...
@@ -161,7 +161,7 @@ class PoolConnectionProxy(
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> _Record | None: ...
@@ -169,7 +169,7 @@ class PoolConnectionProxy(
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
@@ -177,7 +177,7 @@ class PoolConnectionProxy(
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
@@ -202,7 +202,7 @@ class PoolConnectionProxy(
     async def copy_from_query(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         output: connection._OutputType,
         timeout: float | None = ...,
         format: connection._CopyFormat | None = ...,
@@ -240,7 +240,7 @@ class PoolConnectionProxy(
         self,
         table_name: str,
         *,
-        records: Iterable[Sequence[Any]] | AsyncIterable[Sequence[Any]],
+        records: Iterable[Sequence[object]] | AsyncIterable[Sequence[object]],
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,
@@ -293,7 +293,7 @@ class Pool(Generic[_Record]):
     __slots__: Any
     def __init__(
         self,
-        *connect_args: Any,
+        *connect_args: object,
         min_size: int,
         max_size: int,
         max_queries: int,
@@ -303,7 +303,7 @@ class Pool(Generic[_Record]):
         loop: AbstractEventLoop | None,
         connection_class: type[_Connection],
         record_class: type[_Record],
-        **connect_kwargs: Any,
+        **connect_kwargs: object,
     ) -> None: ...
     def get_size(self) -> int: ...
     def get_min_size(self) -> int: ...
@@ -328,16 +328,16 @@ class Pool(Generic[_Record]):
         server_settings: dict[str, str] | None = ...,
     ) -> None: ...
     async def execute(
-        self, query: str, *args: Any, timeout: float | None = ...
+        self, query: str, *args: object, timeout: float | None = ...
     ) -> str: ...
     async def executemany(
-        self, command: str, args: Any, *, timeout: float | None = ...
+        self, command: str, args: object, *, timeout: float | None = ...
     ) -> None: ...
     @overload
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> list[_Record]: ...
@@ -345,7 +345,7 @@ class Pool(Generic[_Record]):
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
@@ -353,14 +353,14 @@ class Pool(Generic[_Record]):
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         column: int = ...,
         timeout: float | None = ...,
     ) -> Any: ...
@@ -368,7 +368,7 @@ class Pool(Generic[_Record]):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> _Record | None: ...
@@ -376,7 +376,7 @@ class Pool(Generic[_Record]):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
@@ -384,7 +384,7 @@ class Pool(Generic[_Record]):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
@@ -409,7 +409,7 @@ class Pool(Generic[_Record]):
     async def copy_from_query(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         output: connection._OutputType,
         timeout: float | None = ...,
         format: connection._CopyFormat | None = ...,
@@ -447,7 +447,7 @@ class Pool(Generic[_Record]):
         self,
         table_name: str,
         *,
-        records: Iterable[Sequence[Any]] | AsyncIterable[Sequence[Any]],
+        records: Iterable[Sequence[object]] | AsyncIterable[Sequence[object]],
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,

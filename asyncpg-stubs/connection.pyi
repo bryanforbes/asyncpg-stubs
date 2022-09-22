@@ -48,7 +48,7 @@ class _Listener(Protocol):
         con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
         pid: int,
         channel: str,
-        payload: Any,
+        payload: object,
         /,
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
@@ -83,13 +83,13 @@ class _Executor(Protocol[_Record]):
     ) -> Any: ...
 
 class ConnectionMeta(type):
-    def __instancecheck__(cls, instance: Any) -> bool: ...
+    def __instancecheck__(cls, instance: object) -> bool: ...
 
 class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def __init__(
         self,
         protocol: _cprotocol.BaseProtocol[_Record],
-        transport: Any,
+        transport: object,
         loop: AbstractEventLoop,
         addr: tuple[str, int] | str,
         config: connect_utils._ClientConfiguration,
@@ -114,12 +114,12 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     ) -> transaction.Transaction: ...
     def is_in_transaction(self) -> bool: ...
     async def execute(
-        self, query: str, *args: Any, timeout: float | None = ...
+        self, query: str, *args: object, timeout: float | None = ...
     ) -> str: ...
     async def executemany(
         self,
         command: str,
-        args: Iterable[Sequence[Any]],
+        args: Iterable[Sequence[object]],
         *,
         timeout: float | None = ...,
     ) -> None: ...
@@ -127,7 +127,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: None = ...,
@@ -136,7 +136,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
@@ -145,7 +145,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def cursor(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
@@ -183,7 +183,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> list[_Record]: ...
@@ -191,7 +191,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> list[_OtherRecord]: ...
@@ -199,14 +199,14 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetch(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> list[_Record] | list[_OtherRecord]: ...
     async def fetchval(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         column: int = ...,
         timeout: float | None = ...,
     ) -> Any: ...
@@ -214,7 +214,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: None = ...,
     ) -> _Record | None: ...
@@ -222,7 +222,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord],
     ) -> _OtherRecord | None: ...
@@ -230,7 +230,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def fetchrow(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
@@ -255,7 +255,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     async def copy_from_query(
         self,
         query: str,
-        *args: Any,
+        *args: object,
         output: _OutputType,
         timeout: float | None = ...,
         format: _CopyFormat | None = ...,
@@ -293,7 +293,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         self,
         table_name: str,
         *,
-        records: Iterable[Sequence[Any]] | AsyncIterable[Sequence[Any]],
+        records: Iterable[Sequence[object]] | AsyncIterable[Sequence[object]],
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,

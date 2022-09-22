@@ -14,7 +14,7 @@ class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
         connection: _connection.Connection[_Record],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         prefetch: int | None,
         timeout: float | None,
         record_class: None,
@@ -25,7 +25,7 @@ class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
         connection: _connection.Connection[Any],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         prefetch: int | None,
         timeout: float | None,
         record_class: type[_Record],
@@ -42,7 +42,7 @@ class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
         connection: _connection.Connection[_Record],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         record_class: None,
     ) -> None: ...
     @overload
@@ -51,7 +51,7 @@ class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
         connection: _connection.Connection[Any],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         record_class: type[_Record],
     ) -> None: ...
     def __del__(self) -> None: ...
@@ -64,7 +64,7 @@ class CursorIterator(BaseCursor[_Record]):
         connection: _connection.Connection[_Record],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         record_class: None,
         prefetch: int,
         timeout: float | None,
@@ -75,7 +75,7 @@ class CursorIterator(BaseCursor[_Record]):
         connection: _connection.Connection[Any],
         query: str,
         state: _cprotocol.PreparedStatementState[_Record] | None,
-        args: Sequence[Any],
+        args: Sequence[object],
         record_class: type[_Record],
         prefetch: int,
         timeout: float | None,
