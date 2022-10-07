@@ -11,7 +11,8 @@ from asyncpg.pgproto.types import (
     Polygon as Polygon,
 )
 
-_V = TypeVar('_V', bound=_RangeValue)
+_T_contra = TypeVar('_T_contra', contravariant=True)
+_V = TypeVar('_V', bound=_RangeValue[Any])
 
 __all__ = (
     'Type',
@@ -45,10 +46,10 @@ class ServerVersion(NamedTuple):
     releaselevel: str
     serial: int
 
-class _RangeValue(Protocol):
+class _RangeValue(Protocol[_T_contra]):
     def __eq__(self, __other: object) -> bool: ...
-    def __lt__(self, __other: object) -> bool: ...
-    def __gt__(self, __other: object) -> bool: ...
+    def __lt__(self, __other: _T_contra) -> bool: ...
+    def __gt__(self, __other: _T_contra) -> bool: ...
 
 class Range(Generic[_V]):
     __slots__ = '_lower', '_upper', '_lower_inc', '_upper_inc', '_empty'
