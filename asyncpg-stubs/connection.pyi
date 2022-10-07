@@ -81,6 +81,31 @@ class ConnectionMeta(type):
     def __instancecheck__(cls, instance: object) -> bool: ...
 
 class Connection(Generic[_Record], metaclass=ConnectionMeta):
+    __slots__ = (
+        '_protocol',
+        '_transport',
+        '_loop',
+        '_top_xact',
+        '_aborted',
+        '_pool_release_ctr',
+        '_stmt_cache',
+        '_stmts_to_close',
+        '_listeners',
+        '_server_version',
+        '_server_caps',
+        '_intro_query',
+        '_reset_query',
+        '_proxy',
+        '_stmt_exclusive_section',
+        '_config',
+        '_params',
+        '_addr',
+        '_log_listeners',
+        '_termination_listeners',
+        '_cancellations',
+        '_source_traceback',
+        '__weakref__',
+    )
     def __init__(
         self,
         protocol: _cprotocol.BaseProtocol[_Record],
@@ -382,7 +407,7 @@ async def connect(
 ) -> Connection[protocol.Record]: ...
 
 class _ConnectionProxy(Generic[_Record]):
-    __slots__: Any
+    __slots__ = ()
 
 class ServerCapabilities(NamedTuple):
     advisory_locks: bool

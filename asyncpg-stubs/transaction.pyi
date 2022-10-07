@@ -18,7 +18,16 @@ ISOLATION_LEVELS: Final[set[_IsolationLevels]]
 ISOLATION_LEVELS_BY_VALUE: Final[dict[str, _IsolationLevels]]
 
 class Transaction(connresource.ConnectionResource):
-    __slots__: Any
+    __slots__ = (
+        '_connection',
+        '_isolation',
+        '_readonly',
+        '_deferrable',
+        '_state',
+        '_nested',
+        '_id',
+        '_managed',
+    )
     def __init__(
         self,
         connection: _connection.Connection[Any],

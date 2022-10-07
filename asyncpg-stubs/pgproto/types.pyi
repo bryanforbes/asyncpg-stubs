@@ -18,7 +18,7 @@ __all__ = (
 _BitOrderType: TypeAlias = Literal['big', 'little']
 
 class BitString:
-    __slots__: Any
+    __slots__ = ('_bytes', '_bitlength')
     def __init__(self, bitstring: builtins.bytes | None = ...) -> None: ...
     @classmethod
     def frombytes(
@@ -45,6 +45,7 @@ class BitString:
     def __len__(self) -> int: ...
 
 class Point(tuple[float, float]):
+    __slots__ = ()
     def __new__(
         cls: type[Self],
         x: SupportsFloat | SupportsIndex | str | builtins.bytes | builtins.bytearray,
@@ -56,7 +57,7 @@ class Point(tuple[float, float]):
     def y(self) -> float: ...
 
 class Box(tuple[Point, Point]):
-    __slots__: Any
+    __slots__ = ()
     def __new__(
         cls: type[Self], high: Sequence[float], low: Sequence[float]
     ) -> Self: ...
@@ -66,7 +67,7 @@ class Box(tuple[Point, Point]):
     def low(self) -> Point: ...
 
 class Line(tuple[float, float, float]):
-    __slots__: Any
+    __slots__ = ()
     def __new__(cls: type[Self], A: float, B: float, C: float) -> Self: ...
     @property
     def A(self) -> float: ...
@@ -76,6 +77,7 @@ class Line(tuple[float, float, float]):
     def C(self) -> float: ...
 
 class LineSegment(tuple[Point, Point]):
+    __slots__ = ()
     def __new__(cls: type[Self], p1: Sequence[float], p2: Sequence[float]) -> Self: ...
     @property
     def p1(self) -> Point: ...
@@ -83,7 +85,7 @@ class LineSegment(tuple[Point, Point]):
     def p2(self) -> Point: ...
 
 class Path:
-    __slots__: Any
+    __slots__ = ('_is_closed', 'points')
     points: tuple[Point, ...]
     def __init__(self, *points: Sequence[float], is_closed: bool = ...) -> None: ...
     @property
@@ -99,11 +101,11 @@ class Path:
     def __contains__(self, point: object) -> bool: ...
 
 class Polygon(Path):
-    __slots__: Any
+    __slots__ = ()
     def __init__(self, *points: Sequence[float]) -> None: ...
 
 class Circle(tuple[Point, float]):
-    __slots__: Any
+    __slots__ = ()
     def __new__(cls: type[Self], center: Point, radius: float) -> Self: ...
     @property
     def center(self) -> Point: ...

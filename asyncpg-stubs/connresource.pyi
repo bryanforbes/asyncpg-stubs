@@ -8,5 +8,5 @@ _Callable = TypeVar('_Callable', bound=Callable[..., Any])
 def guarded(meth: _Callable) -> _Callable: ...
 
 class ConnectionResource:
-    __slots__: Any
+    __slots__ = ('_connection', '_con_release_ctr')
     def __init__(self, connection: connection.Connection[Any]) -> None: ...

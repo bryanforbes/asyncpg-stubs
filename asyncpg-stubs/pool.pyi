@@ -29,6 +29,7 @@ class PoolConnectionProxyMeta(type): ...
 class PoolConnectionProxy(
     connection._ConnectionProxy[_Record], metaclass=PoolConnectionProxyMeta
 ):
+    __slots__ = ('_con', '_holder')
     _holder: PoolConnectionHolder[_Record]
     def __init__(
         self,
@@ -270,7 +271,19 @@ class PoolConnectionProxy(
     async def reload_schema_state(self) -> None: ...
 
 class PoolConnectionHolder(Generic[_Record]):
-    __slots__: Any
+    __slots__ = (
+        '_con',
+        '_pool',
+        '_loop',
+        '_proxy',
+        '_max_queries',
+        '_setup',
+        '_max_inactive_time',
+        '_in_use',
+        '_inactive_callback',
+        '_timeout',
+        '_generation',
+    )
     _pool: Pool[_Record]
     def __init__(
         self,
@@ -290,7 +303,29 @@ class PoolConnectionHolder(Generic[_Record]):
     def terminate(self) -> None: ...
 
 class Pool(Generic[_Record]):
-    __slots__: Any
+    __slots__ = (
+        '_queue',
+        '_loop',
+        '_minsize',
+        '_maxsize',
+        '_init',
+        '_connect_args',
+        '_connect_kwargs',
+        '_working_addr',
+        '_working_config',
+        '_working_params',
+        '_holders',
+        '_initialized',
+        '_initializing',
+        '_closing',
+        '_closed',
+        '_connection_class',
+        '_record_class',
+        '_generation',
+        '_setup',
+        '_max_queries',
+        '_max_inactive_connection_lifetime',
+    )
     def __init__(
         self,
         *connect_args: object,
@@ -469,7 +504,7 @@ class Pool(Generic[_Record]):
     async def __aexit__(self, *exc: object) -> None: ...
 
 class PoolAcquireContext(Generic[_Record]):
-    __slots__: Any
+    __slots__ = ('timeout', 'connection', 'done', 'pool')
     timeout: float | None
     connection: PoolConnectionProxy[_Record] | None
     done: bool

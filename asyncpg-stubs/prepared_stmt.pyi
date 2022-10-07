@@ -14,7 +14,7 @@ class _Executor(Protocol[_T_co]):
     ) -> Coroutine[Any, Any, _T_co]: ...
 
 class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
-    __slots__: Any
+    __slots__ = ('_state', '_query', '_last_status')
     def __init__(
         self,
         connection: _connection.Connection[Any],

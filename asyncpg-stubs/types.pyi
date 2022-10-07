@@ -51,7 +51,7 @@ class _RangeValue(Protocol):
     def __gt__(self, __other: object) -> bool: ...
 
 class Range(Generic[_V]):
-    __slots__: Any
+    __slots__ = '_lower', '_upper', '_lower_inc', '_upper_inc', '_empty'
     @overload
     def __init__(
         self,

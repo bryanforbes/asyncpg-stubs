@@ -8,6 +8,14 @@ from .protocol import protocol as _cprotocol
 _Record = TypeVar('_Record', bound=_cprotocol.Record)
 
 class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
+    __slots__ = (
+        '_state',
+        '_args',
+        '_prefetch',
+        '_query',
+        '_timeout',
+        '_record_class',
+    )
     @overload
     def __init__(
         self,
@@ -35,7 +43,14 @@ class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
     def __del__(self) -> None: ...
 
 class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
-    __slots__: Any
+    __slots__ = (
+        '_state',
+        '_args',
+        '_portal_name',
+        '_exhausted',
+        '_query',
+        '_record_class',
+    )
     @overload
     def __init__(
         self,
@@ -57,7 +72,7 @@ class BaseCursor(connresource.ConnectionResource, Generic[_Record]):
     def __del__(self) -> None: ...
 
 class CursorIterator(BaseCursor[_Record]):
-    __slots__: Any
+    __slots__ = ('_buffer', '_prefetch', '_timeout')
     @overload
     def __init__(
         self,
@@ -84,7 +99,7 @@ class CursorIterator(BaseCursor[_Record]):
     async def __anext__(self) -> _Record: ...
 
 class Cursor(BaseCursor[_Record]):
-    __slots__: Any
+    __slots__ = ()
     async def fetch(self, n: int, *, timeout: float | None = ...) -> list[_Record]: ...
     async def fetchrow(self, *, timeout: float | None = ...) -> _Record | None: ...
     async def forward(self, n: int, *, timeout: float | None = ...) -> int: ...
