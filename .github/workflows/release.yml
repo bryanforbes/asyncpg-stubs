@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install -v --no-dev --no-interaction
+          poetry install -v --only main --no-interaction
 
       - name: Set release version
         run: |
