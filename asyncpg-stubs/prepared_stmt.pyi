@@ -10,8 +10,7 @@ _T_co = TypeVar('_T_co', covariant=True)
 class _Executor(Protocol[_T_co]):
     def __call__(
         self,
-        protocol: _cprotocol.BaseProtocol[Any],
-        /,
+        __protocol: _cprotocol.BaseProtocol[Any],
     ) -> Coroutine[Any, Any, _T_co]: ...
 
 class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):

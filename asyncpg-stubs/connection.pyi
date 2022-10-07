@@ -45,41 +45,36 @@ _CopyFormat: TypeAlias = Literal['text', 'csv', 'binary']
 class _Listener(Protocol):
     def __call__(
         self,
-        con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
-        pid: int,
-        channel: str,
-        payload: object,
-        /,
+        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
+        __pid: int,
+        __channel: str,
+        __payload: object,
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _LogListener(Protocol):
     def __call__(
         self,
-        con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
-        message: exceptions.PostgresLogMessage,
-        /,
+        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
+        __message: exceptions.PostgresLogMessage,
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _TerminationListener(Protocol):
     def __call__(
         self,
-        con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
-        /,
+        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _OnRemove(Protocol[_Record]):
     def __call__(
         self,
-        statement: _cprotocol.PreparedStatementState[_Record],
-        /,
+        __statement: _cprotocol.PreparedStatementState[_Record],
     ) -> None: ...
 
 class _Executor(Protocol[_Record]):
     def __call__(
         self,
-        statement: _cprotocol.PreparedStatementState[_Record],
-        timeout: float | None,
-        /,
+        __statement: _cprotocol.PreparedStatementState[_Record],
+        __timeout: float | None,
     ) -> Any: ...
 
 class ConnectionMeta(type):
