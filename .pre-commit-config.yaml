@@ -47,7 +47,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.272']
+        additional_dependencies: ['pyright@1.1.274']
     -   id: pyright38
         name: pyright (3.8)
         entry: pyright
@@ -55,7 +55,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.272']
+        additional_dependencies: ['pyright@1.1.274']
     -   id: pyright39
         name: pyright (3.9)
         entry: pyright
@@ -63,7 +63,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.272']
+        additional_dependencies: ['pyright@1.1.274']
     -   id: pyright310
         name: pyright (3.10)
         entry: pyright
@@ -71,4 +71,4 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.272']
+        additional_dependencies: ['pyright@1.1.274']
