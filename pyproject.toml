@@ -57,7 +57,7 @@ incremental = true
 strict = true
 
 [tool.pyright]
-include = ["asyncpg-stubs"]
+include = ["asyncpg-stubs", "tests"]
 
 pythonVersion = "3.7"
 reportUnnecessaryTypeIgnoreComment = "warning"
