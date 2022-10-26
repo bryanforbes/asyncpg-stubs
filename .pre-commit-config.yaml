@@ -40,6 +40,12 @@ repos:
         entry: poetry run mypy
         args: [--python-version=3.10]
         files: \.pyi?$
+    -   id: mypy311
+        name: mypy (3.11)
+        language: system
+        entry: poetry run mypy
+        args: [--python-version=3.11]
+        files: \.pyi?$
     -   id: pyright37
         name: pyright (3.7)
         entry: pyright
@@ -47,7 +53,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.276']
+        additional_dependencies: ['pyright@1.1.277']
     -   id: pyright38
         name: pyright (3.8)
         entry: pyright
@@ -55,7 +61,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.276']
+        additional_dependencies: ['pyright@1.1.277']
     -   id: pyright39
         name: pyright (3.9)
         entry: pyright
@@ -63,7 +69,7 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.276']
+        additional_dependencies: ['pyright@1.1.277']
     -   id: pyright310
         name: pyright (3.10)
         entry: pyright
@@ -71,4 +77,12 @@ repos:
         language: node
         pass_filenames: false
         files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.276']
+        additional_dependencies: ['pyright@1.1.277']
+    -   id: pyright311
+        name: pyright (3.11)
+        entry: pyright
+        args: [--pythonversion=3.11]
+        language: node
+        pass_filenames: false
+        files: \.pyi?$
+        additional_dependencies: ['pyright@1.1.277']
