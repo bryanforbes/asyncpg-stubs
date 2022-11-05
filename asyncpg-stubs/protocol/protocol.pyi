@@ -2,7 +2,7 @@ import asyncio
 import asyncio.protocols
 import hmac
 from codecs import CodecInfo
-from collections.abc import Callable, Iterable, Iterator, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence, Mapping
 from hashlib import md5, sha256
 from typing import Any, ClassVar, Generic, NewType, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
@@ -249,7 +249,7 @@ class DataCodecConfig:
 
 class Protocol(BaseProtocol[_Record], asyncio.protocols.Protocol): ...
 
-class Record:
+class Record(Mapping[str, Any]):
     @overload
     def get(self, key: str) -> Any | None: ...
     @overload
