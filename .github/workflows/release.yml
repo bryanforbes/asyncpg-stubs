@@ -48,7 +48,7 @@ jobs:
         run: |
           RELEASE_VERSION="$(poetry version -s)"
           echo $RELEASE_VERSION
-          echo "::set-output name=version::$RELEASE_VERSION"
+          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit release version change
         uses: stefanzweifel/git-auto-commit-action@v4
@@ -84,7 +84,7 @@ jobs:
         run: |
           POST_RELEASE_VERSION="$(poetry version -s)"
           echo $POST_RELEASE_VERSION
-          echo "::set-output name=version::$POST_RELEASE_VERSION"
+          echo "version=$POST_RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit post-release version change
         uses: stefanzweifel/git-auto-commit-action@v4
