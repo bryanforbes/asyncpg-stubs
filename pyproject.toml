@@ -21,7 +21,7 @@ asyncpg = ">=0.27,<0.28"
 typing-extensions = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.12"
+black = ">=22.12,<24.0"
 flake8 = "^5.0"
 flake8-pyi = "^23.1.0"
 isort = "^5.11.4"
