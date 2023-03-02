@@ -21,12 +21,12 @@ asyncpg = ">=0.27,<0.28"
 typing-extensions = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
-black = ">=22.12,<24.0"
+black = "^23.1"
 flake8 = "^5.0"
 flake8-pyi = "^23.1.0"
-isort = "^5.11.4"
+isort = "~5.11.5"
 pre-commit = "^2.21.0"
-mypy = ">=0.991"
+mypy = "^1.0.0"
 
 [tool.black]
 line-length = 88
