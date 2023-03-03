@@ -53,7 +53,7 @@ class PoolConnectionProxy(
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
-    def transaction(
+    def transaction(  # noqa: F811
         self,
         *,
         isolation: transaction._IsolationLevels | None = ...,
@@ -72,7 +72,7 @@ class PoolConnectionProxy(
         timeout: float | None = ...,
     ) -> None: ...
     @overload
-    def cursor(
+    def cursor(  # noqa: F811
         self,
         query: str,
         *args: object,
@@ -526,37 +526,10 @@ def create_pool(
     max_size: int = ...,
     max_queries: int = ...,
     max_inactive_connection_lifetime: float = ...,
-    setup: _SetupCallback[protocol.Record] | None = ...,
-    init: _InitCallback[protocol.Record] | None = ...,
-    loop: AbstractEventLoop | None = ...,
-    connection_class: type[connection.Connection[protocol.Record]] = ...,
-    record_class: type[protocol.Record] = ...,
-    host: connection._HostType | None = ...,
-    port: connection._PortType | None = ...,
-    user: str | None = ...,
-    password: connect_utils._PasswordType | None = ...,
-    passfile: str | None = ...,
-    database: str | None = ...,
-    timeout: float = ...,
-    statement_cache_size: int = ...,
-    max_cached_statement_lifetime: int = ...,
-    max_cacheable_statement_size: int = ...,
-    command_timeout: float | None = ...,
-    ssl: connection._SSLType | None = ...,
-    server_settings: dict[str, str] | None = ...,
-) -> Pool[protocol.Record]: ...
-@overload
-def create_pool(
-    dsn: str | None = ...,
-    *,
-    min_size: int = ...,
-    max_size: int = ...,
-    max_queries: int = ...,
-    max_inactive_connection_lifetime: float = ...,
     setup: _SetupCallback[_Record] | None = ...,
     init: _InitCallback[_Record] | None = ...,
     loop: AbstractEventLoop | None = ...,
-    connection_class: type[_Connection] = ...,
+    connection_class: type[connection.Connection[_Record]] = ...,
     record_class: type[_Record],
     host: connection._HostType | None = ...,
     port: connection._PortType | None = ...,
@@ -572,3 +545,29 @@ def create_pool(
     ssl: connection._SSLType | None = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[_Record]: ...
+@overload
+def create_pool(
+    dsn: str | None = ...,
+    *,
+    min_size: int = ...,
+    max_size: int = ...,
+    max_queries: int = ...,
+    max_inactive_connection_lifetime: float = ...,
+    setup: _SetupCallback[protocol.Record] | None = ...,
+    init: _InitCallback[protocol.Record] | None = ...,
+    loop: AbstractEventLoop | None = ...,
+    connection_class: type[connection.Connection[protocol.Record]] = ...,
+    host: connection._HostType | None = ...,
+    port: connection._PortType | None = ...,
+    user: str | None = ...,
+    password: connect_utils._PasswordType | None = ...,
+    passfile: str | None = ...,
+    database: str | None = ...,
+    timeout: float = ...,
+    statement_cache_size: int = ...,
+    max_cached_statement_lifetime: int = ...,
+    max_cacheable_statement_size: int = ...,
+    command_timeout: float | None = ...,
+    ssl: connection._SSLType | None = ...,
+    server_settings: dict[str, str] | None = ...,
+) -> Pool[protocol.Record]: ...

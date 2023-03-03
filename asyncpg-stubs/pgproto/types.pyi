@@ -1,7 +1,7 @@
 import builtins
 from _typeshed import Self
 from collections.abc import Iterator, Sequence
-from typing import Any, SupportsFloat, overload
+from typing import SupportsFloat, overload
 from typing_extensions import Literal, SupportsIndex, TypeAlias
 
 __all__ = (

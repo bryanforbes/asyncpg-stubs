@@ -27,7 +27,7 @@ BUILTIN_TYPE_NAME_MAP: Final[dict[str, int]]
 BUILTIN_TYPE_OID_MAP: Final[dict[int, str]]
 NO_TIMEOUT: Final[_NoTimeoutType]
 
-hashlib_md5 = md5  # noqa: Y026
+hashlib_md5 = md5
 
 @final
 class ConnectionSettings(asyncpg.pgproto.pgproto.CodecContext):
@@ -278,7 +278,7 @@ class Timer:
 class SCRAMAuthentication:
     AUTHENTICATION_METHODS: ClassVar[list[str]]
     DEFAULT_CLIENT_NONCE_BYTES: ClassVar[int]
-    DIGEST = sha256  # noqa: Y026
+    DIGEST = sha256
     REQUIREMENTS_CLIENT_FINAL_MESSAGE: ClassVar[list[str]]
     REQUIREMENTS_CLIENT_PROOF: ClassVar[list[str]]
     SASLPREP_PROHIBITED: ClassVar[tuple[Callable[[str], bool], ...]]
