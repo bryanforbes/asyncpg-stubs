@@ -226,14 +226,14 @@ test = ["flake8-docstrings"]
 
 [[package]]
 name = "flake8-pyi"
-version = "23.3.0"
+version = "23.3.1"
 description = "A plugin for flake8 to enable linting .pyi stub files."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "flake8_pyi-23.3.0-py3-none-any.whl", hash = "sha256:30789ae75b95537e51de9cb091d91f7a15dcc431531b9da453a7c95477251009"},
-    {file = "flake8_pyi-23.3.0.tar.gz", hash = "sha256:59e030e4412e78a8a16cc5bbb9e17d4f41e640fc8e230f09144b362a07b7c41d"},
+    {file = "flake8_pyi-23.3.1-py3-none-any.whl", hash = "sha256:1364bffce1a2578002fd4ce98753be7e92522200b986170b1a3146a1a695c6d3"},
+    {file = "flake8_pyi-23.3.1.tar.gz", hash = "sha256:1dff9766a68306ed04679bafeeed5096bd570b78367c042e13593d0f0e2589cf"},
 ]
 
 [package.dependencies]
