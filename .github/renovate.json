@@ -18,6 +18,18 @@
       "matchDepTypes": ["dev-dependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "dev dependencies (non-major)"
+    },
+    {
+      "matchPackageNames": ["flake8"],
+      "allowedVersions": "<6.0"
+    },
+    {
+      "matchPackageNames": ["isort"],
+      "allowedVersions": "<5.12"
+    },
+    {
+      "matchPackageNames": ["pre-commit"],
+      "allowedVersions": "<3.0"
     }
   ],
   "lockFileMaintenance": {
