@@ -1,88 +1,71 @@
 repos:
--   repo: local
+  - repo: local
     hooks:
-    -   id: isort
-        name: isort
-        language: system
-        entry: poetry run isort --check-only
-        files: \.pyi?$
-    -   id: black
-        name: black
-        language: system
-        entry: poetry run black --check
-        files: \.pyi?$
-    -   id: flake8
-        name: flake8
-        language: system
-        entry: poetry run flake8
-        files: \.pyi?$
-    -   id: mypy37
-        name: mypy (3.7)
-        language: system
-        entry: poetry run mypy
-        args: [--python-version=3.7]
-        files: \.pyi?$
-    -   id: mypy38
-        name: mypy (3.8)
-        language: system
-        entry: poetry run mypy
-        args: [--python-version=3.8]
-        files: \.pyi?$
-    -   id: mypy39
-        name: mypy (3.9)
-        language: system
-        entry: poetry run mypy
-        args: [--python-version=3.10]
-        files: \.pyi?$
-    -   id: mypy310
-        name: mypy (3.10)
-        language: system
-        entry: poetry run mypy
-        args: [--python-version=3.10]
-        files: \.pyi?$
-    -   id: mypy311
-        name: mypy (3.11)
-        language: system
-        entry: poetry run mypy
-        args: [--python-version=3.11]
-        files: \.pyi?$
-    -   id: pyright37
-        name: pyright (3.7)
-        entry: pyright
-        args: [--pythonversion=3.7]
-        language: node
-        pass_filenames: false
-        files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.298']
-    -   id: pyright38
-        name: pyright (3.8)
-        entry: pyright
-        args: [--pythonversion=3.8]
-        language: node
-        pass_filenames: false
-        files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.298']
-    -   id: pyright39
-        name: pyright (3.9)
-        entry: pyright
-        args: [--pythonversion=3.9]
-        language: node
-        pass_filenames: false
-        files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.298']
-    -   id: pyright310
-        name: pyright (3.10)
-        entry: pyright
-        args: [--pythonversion=3.10]
-        language: node
-        pass_filenames: false
-        files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.298']
-    -   id: pyright311
-        name: pyright (3.11)
-        entry: pyright
-        args: [--pythonversion=3.11]
-        language: node
-        pass_filenames: false
-        files: \.pyi?$
-        additional_dependencies: ['pyright@1.1.298']
+    - id: isort
+      name: isort
+      language: system
+      entry: poetry run isort --check-only
+      files: \.pyi?$
+    - id: black
+      name: black
+      language: system
+      entry: poetry run black --check
+      files: \.pyi?$
+    - id: flake8
+      name: flake8
+      language: system
+      entry: poetry run flake8
+      files: \.pyi?$
+    - id: mypy37
+      name: mypy (3.7)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.7]
+      files: \.pyi?$
+    - id: mypy38
+      name: mypy (3.8)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.8]
+      files: \.pyi?$
+    - id: mypy39
+      name: mypy (3.9)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.10]
+      files: \.pyi?$
+    - id: mypy310
+      name: mypy (3.10)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.10]
+      files: \.pyi?$
+    - id: mypy311
+      name: mypy (3.11)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.11]
+      files: \.pyi?$
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.298
+    hooks:
+    - id: pyright
+      name: pyright (3.7)
+      args: [--pythonversion=3.7]
+      files: \.pyi?$
+    - id: pyright
+      name: pyright (3.8)
+      args: [--pythonversion=3.8]
+      files: \.pyi?$
+    - id: pyright
+      name: pyright (3.9)
+      args: [--pythonversion=3.9]
+      files: \.pyi?$
+    - id: pyright
+      name: pyright (3.10)
+      args: [--pythonversion=3.10]
+      files: \.pyi?$
+    - id: pyright
+      name: pyright (3.11)
+      args: [--pythonversion=3.11]
+      files: \.pyi?$

@@ -59,6 +59,8 @@ strict = true
 
 [tool.pyright]
 include = ["asyncpg-stubs", "tests"]
+venvPath = "."
+venv = ".venv"
 
 pythonVersion = "3.7"
 reportUnnecessaryTypeIgnoreComment = "warning"
