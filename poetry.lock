@@ -226,14 +226,14 @@ test = ["flake8-docstrings"]
 
 [[package]]
 name = "flake8-pyi"
-version = "23.3.1"
+version = "23.4.0"
 description = "A plugin for flake8 to enable linting .pyi stub files."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "flake8_pyi-23.3.1-py3-none-any.whl", hash = "sha256:1364bffce1a2578002fd4ce98753be7e92522200b986170b1a3146a1a695c6d3"},
-    {file = "flake8_pyi-23.3.1.tar.gz", hash = "sha256:1dff9766a68306ed04679bafeeed5096bd570b78367c042e13593d0f0e2589cf"},
+    {file = "flake8_pyi-23.4.0-py3-none-any.whl", hash = "sha256:82c4c85fdd4bf732819064ec5f879fd73cdba826dbd2a65f6a02daf1443d2671"},
+    {file = "flake8_pyi-23.4.0.tar.gz", hash = "sha256:bbd77cc87ecf3f042992e9097a72d1b7b4468cf6155dc4096c0880c07908b8d2"},
 ]
 
 [package.dependencies]
@@ -242,7 +242,7 @@ flake8 = ">=3.2.1,<7.0.0"
 pyflakes = ">=2.1.1"
 
 [package.extras]
-dev = ["black (==23.1.0)", "flake8-bugbear (==23.2.13)", "flake8-noqa (==1.3.0)", "isort (==5.12.0)", "mypy (==1.1.1)", "pre-commit-hooks (==4.4.0)", "pytest (==7.2.2)", "types-pyflakes (<4)"]
+dev = ["black (==23.3.0)", "flake8-bugbear (==23.2.13)", "flake8-noqa (==1.3.0)", "isort (==5.12.0)", "mypy (==1.1.1)", "pre-commit-hooks (==4.4.0)", "pytest (==7.2.2)", "types-pyflakes (<4)"]
 
 [[package]]
 name = "identify"
@@ -637,4 +637,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "2b6926123f0ba72258d950163c84c890a0ad547c0cac310883e85ad49a41ddce"
+content-hash = "8e82713a47731c776d0998411106e498d4e70e5d86ff72e9710ac123fab44141"
