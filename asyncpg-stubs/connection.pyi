@@ -125,7 +125,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
-    def transaction(  # noqa: F811
+    def transaction(
         self,
         *,
         isolation: transaction._IsolationLevels | None = ...,
@@ -144,7 +144,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         timeout: float | None = ...,
     ) -> None: ...
     @overload
-    def cursor(  # noqa: F811
+    def cursor(
         self,
         query: str,
         *args: object,

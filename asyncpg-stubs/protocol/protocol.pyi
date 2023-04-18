@@ -13,14 +13,14 @@ from ..connect_utils import _ConnectionParameters
 from ..pgproto.pgproto import WriteBuffer
 from ..types import Attribute, Type
 
-_T = TypeVar("_T")
-_Record = TypeVar("_Record", bound=Record)
-_OtherRecord = TypeVar("_OtherRecord", bound=Record)
+_T = TypeVar('_T')
+_Record = TypeVar('_Record', bound=Record)
+_OtherRecord = TypeVar('_OtherRecord', bound=Record)
 _PreparedStatementState = TypeVar(
-    "_PreparedStatementState", bound=PreparedStatementState[Any]
+    '_PreparedStatementState', bound=PreparedStatementState[Any]
 )
 
-_NoTimeoutType = NewType("_NoTimeoutType", object)
+_NoTimeoutType = NewType('_NoTimeoutType', object)
 _TimeoutType: TypeAlias = float | None | _NoTimeoutType
 
 BUILTIN_TYPE_NAME_MAP: Final[dict[str, int]]

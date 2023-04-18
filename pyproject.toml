@@ -22,12 +22,9 @@ typing-extensions = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "23.3.0"
-flake8 = "5.0.4"
-flake8-noqa = "1.3.1"
-flake8-pyi = "23.5.0"
-isort = "5.11.5"
 pre-commit = "2.21.0"
 mypy = "1.3.0"
+ruff = "0.0.265"
 
 [tool.black]
 line-length = 88
@@ -45,12 +42,36 @@ exclude = '''
 )/
 '''
 
-[tool.isort]
-known_first_party = ["asyncpg"]
-extra_standard_library = ["_typeshed", "typing_extensions"]
-virtual_env = ".venv"
-profile = "black"
-combine_as_imports = true
+[tool.ruff]
+select = [
+  "ANN", "B", "B9", "BLE", "C", "C4", "E", "EXE", "F", "G",
+  "I", "I002", "ISC", "INP", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "Q", "RET",
+  "RSE", "S", "SIM", "T10", "T20", "TCH", "TID251", "TRY", "UP", "W", "RUF"
+]
+ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "PLR2004", "TRY003"]
+extend-exclude = [".venv*"]
+line-length = 88
+target-version = "py37"
+
+[tool.ruff.per-file-ignores]
+"*.pyi" = ["E501", "E701", "E741", "F401", "F403", "F405", "F811"]
+"tests/*.py" = ["PGH003", "PLR0912", "S101"]
+
+[tool.ruff.isort]
+extra-standard-library = ["typing_extensions", "_types", "_typeshed"]
+known-first-party = ["asyncpg"]
+combine-as-imports = true
+
+[tool.ruff.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+parametrize-names-type = "csv"
+
+[tool.ruff.flake8-quotes]
+inline-quotes = "single"
 
 [tool.mypy]
 python_version = "3.7"

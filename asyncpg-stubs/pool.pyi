@@ -16,7 +16,7 @@ from .protocol import protocol as _cprotocol
 
 _Connection = TypeVar('_Connection', bound=connection.Connection[Any])
 _Record = TypeVar('_Record', bound=protocol.Record)
-_OtherRecord = TypeVar("_OtherRecord", bound=protocol.Record)
+_OtherRecord = TypeVar('_OtherRecord', bound=protocol.Record)
 
 class _SetupCallback(Protocol[_Record]):
     async def __call__(self, __proxy: PoolConnectionProxy[_Record]) -> None: ...
@@ -53,7 +53,7 @@ class PoolConnectionProxy(
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
-    def transaction(  # noqa: F811
+    def transaction(
         self,
         *,
         isolation: transaction._IsolationLevels | None = ...,
@@ -72,7 +72,7 @@ class PoolConnectionProxy(
         timeout: float | None = ...,
     ) -> None: ...
     @overload
-    def cursor(  # noqa: F811
+    def cursor(
         self,
         query: str,
         *args: object,
