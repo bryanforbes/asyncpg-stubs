@@ -888,7 +888,7 @@ __all__ = (
     'ImplicitZeroBitPadding',
     'InFailedSQLTransactionError',
     'InappropriateAccessModeForBranchTransactionError',
-    'InappropriateIsolationLevelForBranchTransactionError',  # noqa: Y053
+    'InappropriateIsolationLevelForBranchTransactionError',
     'IndeterminateCollationError',
     'IndeterminateDatatypeError',
     'IndexCorruptedError',
@@ -994,7 +994,7 @@ __all__ = (
     'PrivilegeNotGranted',
     'PrivilegeNotRevoked',
     'ProgramLimitExceededError',
-    'ProhibitedExternalRoutineSQLStatementAttemptedError',  # noqa: Y053
+    'ProhibitedExternalRoutineSQLStatementAttemptedError',
     'ProhibitedSQLStatementAttemptedError',
     'ProtocolViolationError',
     'QueryCanceledError',
@@ -1018,7 +1018,7 @@ __all__ = (
     'SingletonSQLJsonItemRequiredError',
     'SnapshotTooOldError',
     'SrfProtocolViolatedError',
-    'StackedDiagnosticsAccessedWithoutActiveHandlerError',  # noqa: Y053
+    'StackedDiagnosticsAccessedWithoutActiveHandlerError',
     'StatementCompletionUnknownError',
     'StatementTooComplexError',
     'StringDataLengthMismatchError',

@@ -1,20 +1,15 @@
 repos:
   - repo: local
     hooks:
-    - id: isort
-      name: isort
+    - id: ruff
+      name: ruff
       language: system
-      entry: poetry run isort --check-only
+      entry: poetry run ruff check --force-exclude
       files: \.pyi?$
     - id: black
       name: black
       language: system
       entry: poetry run black --check
-      files: \.pyi?$
-    - id: flake8
-      name: flake8
-      language: system
-      entry: poetry run flake8
       files: \.pyi?$
     - id: mypy37
       name: mypy (3.7)
