@@ -12,6 +12,7 @@ __all__ = (
     'OutdatedSchemaCacheError',
     'ProtocolError',
     'UnsupportedClientFeatureError',
+    'TargetServerAttributeNotMatched',
 )
 
 _PM = TypeVar('_PM', bound=PostgresMessage)
@@ -82,6 +83,7 @@ class InterfaceWarning(InterfaceMessage, UserWarning):
 
 class InternalClientError(Exception): ...
 class ProtocolError(InternalClientError): ...
+class TargetServerAttributeNotMatched(InternalClientError): ...
 
 class OutdatedSchemaCacheError(InternalClientError):
     schema_name: str | None

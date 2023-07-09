@@ -362,6 +362,7 @@ async def connect(
     direct_tls: bool = ...,
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
+    target_session_attrs: connect_utils.SessionAttribute | None = ...,
 ) -> Connection[_Record]: ...
 @overload
 async def connect(
@@ -384,6 +385,7 @@ async def connect(
     connection_class: type[_Connection],
     record_class: type[_Record] = ...,
     server_settings: dict[str, str] | None = ...,
+    target_session_attrs: connect_utils.SessionAttribute | None = ...,
 ) -> _Connection: ...
 @overload
 async def connect(
@@ -404,6 +406,7 @@ async def connect(
     ssl: _SSLType | None = ...,
     direct_tls: bool = ...,
     server_settings: dict[str, str] | None = ...,
+    target_session_attrs: connect_utils.SessionAttribute | None = ...,
 ) -> Connection[protocol.Record]: ...
 
 class _ConnectionProxy(Generic[_Record]):

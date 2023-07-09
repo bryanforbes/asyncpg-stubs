@@ -1,10 +1,12 @@
 from _typeshed import Self
 from asyncio import AbstractEventLoop, Future, Protocol
 from collections.abc import Awaitable, Callable
-from enum import IntEnum
+from enum import Enum, IntEnum
 from ssl import SSLContext
-from typing import NamedTuple
+from typing import Any, NamedTuple
 from typing_extensions import Final, Literal, TypeAlias
+
+from . import connection
 
 _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
 _PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]]
@@ -30,6 +32,7 @@ class _ConnectionParameters(NamedTuple):
     direct_tls: bool
     connect_timeout: float
     server_settings: dict[str, str] | None
+    target_session_attrs: SessionAttribute
 
 class _ClientConfiguration(NamedTuple):
     command_timeout: float | None
@@ -53,3 +56,15 @@ class TLSUpgradeProto(Protocol):
     ) -> None: ...
     def data_received(self, data: bytes) -> None: ...
     def connection_lost(self, exc: Exception | None) -> None: ...
+
+class SessionAttribute(str, Enum):
+    any: str
+    primary: str
+    standby: str
+    prefer_standby: str
+    read_write: str
+    read_only: str
+
+target_attrs_check: Final[
+    dict[SessionAttribute, Callable[[connection.Connection[Any]], Any]]
+]

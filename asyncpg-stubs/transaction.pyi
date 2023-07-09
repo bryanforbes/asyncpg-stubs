@@ -12,7 +12,7 @@ class TransactionState(Enum):
     FAILED: int
 
 _IsolationLevels: TypeAlias = Literal[
-    'read_committed', 'serializable', 'repeatable_read'
+    'read_committed', 'read_uncommitted', 'serializable', 'repeatable_read'
 ]
 ISOLATION_LEVELS: Final[set[_IsolationLevels]]
 ISOLATION_LEVELS_BY_VALUE: Final[dict[str, _IsolationLevels]]
