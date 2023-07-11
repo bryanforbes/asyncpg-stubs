@@ -15,6 +15,10 @@
     {
       "matchPackageNames": ["pre-commit"],
       "allowedVersions": "<3.0"
+    },
+    {
+      "matchPackageNames": ["black"],
+      "allowedVersions": "<23.7.0"
     }
   ]
 }
