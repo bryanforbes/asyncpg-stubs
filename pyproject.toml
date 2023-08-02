@@ -24,7 +24,7 @@ typing-extensions = "^4.2.0"
 black = "23.3.0"
 pre-commit = "2.21.0"
 mypy = "1.4.1"
-ruff = "0.0.280"
+ruff = "0.0.282"
 
 [tool.black]
 line-length = 88
