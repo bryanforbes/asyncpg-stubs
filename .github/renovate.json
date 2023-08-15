@@ -19,6 +19,10 @@
     {
       "matchPackageNames": ["black"],
       "allowedVersions": "<23.7.0"
+    },
+    {
+      "matchPackageNames": ["mypy"],
+      "allowedVersions": "<1.5.0"
     }
   ]
 }
