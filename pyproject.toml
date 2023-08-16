@@ -21,9 +21,9 @@ asyncpg = ">=0.28,<0.29"
 typing-extensions = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "23.3.0"
+black = "23.7.0"
 pre-commit = "2.21.0"
-mypy = "1.4.1"
+mypy = "1.5.1"
 ruff = "0.0.284"
 
 [tool.black]
