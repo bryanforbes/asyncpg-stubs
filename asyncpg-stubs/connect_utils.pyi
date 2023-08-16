@@ -3,8 +3,8 @@ from asyncio import AbstractEventLoop, Future, Protocol
 from collections.abc import Awaitable, Callable
 from enum import Enum, IntEnum
 from ssl import SSLContext
-from typing import Any, NamedTuple
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Any, Final, NamedTuple
+from typing_extensions import Literal, TypeAlias
 
 from . import connection
 

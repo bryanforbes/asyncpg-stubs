@@ -1,5 +1,5 @@
 from re import Pattern
-from typing_extensions import Final
+from typing import Final
 
 from .types import ServerVersion
 

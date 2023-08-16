@@ -1,8 +1,7 @@
 from asyncio import Future, StreamWriter
 from collections.abc import Awaitable
 from pathlib import Path
-from typing import TypeVar
-from typing_extensions import Final
+from typing import Final, TypeVar
 
 _T = TypeVar('_T')
 

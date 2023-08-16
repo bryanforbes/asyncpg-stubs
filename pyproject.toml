@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncpg-stubs"
-version = "0.28.1.dev0"
+version = "0.28.99.dev0"
 description = "asyncpg stubs"
 homepage = "https://github.com/bryanforbes/asyncpg-stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 asyncpg = ">=0.28,<0.29"
 typing-extensions = "^4.2.0"
 
@@ -28,7 +28,7 @@ ruff = "0.0.284"
 
 [tool.black]
 line-length = 88
-target-version = ["py37"]
+target-version = ["py38"]
 skip-string-normalization = true
 include = '\.pyi?$'
 exclude = '''
@@ -51,7 +51,7 @@ select = [
 ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "PLR2004", "TRY003"]
 extend-exclude = [".venv*"]
 line-length = 88
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.per-file-ignores]
 "*.pyi" = ["E501", "E701", "E741", "F401", "F403", "F405", "F811"]
@@ -74,7 +74,7 @@ parametrize-names-type = "csv"
 inline-quotes = "single"
 
 [tool.mypy]
-python_version = "3.7"
+python_version = "3.8"
 incremental = true
 strict = true
 
@@ -83,7 +83,7 @@ include = ["asyncpg-stubs", "tests"]
 venvPath = "."
 venv = ".venv"
 
-pythonVersion = "3.7"
+pythonVersion = "3.8"
 reportUnnecessaryTypeIgnoreComment = "warning"
 typeCheckingMode = "strict"
 reportPrivateUsage = "none"

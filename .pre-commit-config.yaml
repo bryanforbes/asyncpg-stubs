@@ -11,12 +11,6 @@ repos:
       language: system
       entry: poetry run black --check
       files: \.pyi?$
-    - id: mypy37
-      name: mypy (3.7)
-      language: system
-      entry: poetry run mypy
-      args: [--python-version=3.7]
-      files: \.pyi?$
     - id: mypy38
       name: mypy (3.8)
       language: system
@@ -44,10 +38,6 @@ repos:
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.322
     hooks:
-    - id: pyright
-      name: pyright (3.7)
-      args: [--pythonversion=3.7]
-      files: \.pyi?$
     - id: pyright
       name: pyright (3.8)
       args: [--pythonversion=3.8]
