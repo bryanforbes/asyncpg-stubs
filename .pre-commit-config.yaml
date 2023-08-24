@@ -36,7 +36,7 @@ repos:
       args: [--python-version=3.11]
       files: \.pyi?$
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.323
+    rev: v1.1.324
     hooks:
     - id: pyright
       name: pyright (3.8)
