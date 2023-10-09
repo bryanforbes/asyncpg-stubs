@@ -35,6 +35,12 @@ repos:
       entry: poetry run mypy
       args: [--python-version=3.11]
       files: \.pyi?$
+    - id: mypy312
+      name: mypy (3.12)
+      language: system
+      entry: poetry run mypy
+      args: [--python-version=3.12]
+      files: \.pyi?$
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.330
     hooks:
@@ -53,4 +59,8 @@ repos:
     - id: pyright
       name: pyright (3.11)
       args: [--pythonversion=3.11]
+      files: \.pyi?$
+    - id: pyright
+      name: pyright (3.12)
+      args: [--pythonversion=3.12]
       files: \.pyi?$
