@@ -1,6 +1,14 @@
+import contextlib
 from _typeshed import Self
 from asyncio import AbstractEventLoop
-from collections.abc import AsyncIterable, Callable, Generator, Iterable, Sequence
+from collections.abc import (
+    AsyncIterable,
+    Callable,
+    Generator,
+    Iterable,
+    Iterator,
+    Sequence,
+)
 from typing import Any, Generic, Protocol, TypeVar, overload
 
 from . import (
@@ -50,6 +58,8 @@ class PoolConnectionProxy(
     def remove_termination_listener(
         self, callback: connection._TerminationListener
     ) -> None: ...
+    def add_query_logger(self, callback: connection._QueryLogger) -> None: ...
+    def remove_query_logger(self, callback: connection._QueryLogger) -> None: ...
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
@@ -236,6 +246,7 @@ class PoolConnectionProxy(
         force_not_null: bool | Iterable[str] | None = ...,
         force_null: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     async def copy_records_to_table(
         self,
@@ -245,6 +256,7 @@ class PoolConnectionProxy(
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     async def set_type_codec(
         self,
@@ -269,6 +281,8 @@ class PoolConnectionProxy(
     def terminate(self) -> None: ...
     async def reset(self, *, timeout: float | None = ...) -> None: ...
     async def reload_schema_state(self) -> None: ...
+    @contextlib.contextmanager
+    def query_logger(self, callback: connection._QueryLogger) -> Iterator[None]: ...
 
 class PoolConnectionHolder(Generic[_Record]):
     __slots__ = (
@@ -311,9 +325,6 @@ class Pool(Generic[_Record]):
         '_init',
         '_connect_args',
         '_connect_kwargs',
-        '_working_addr',
-        '_working_config',
-        '_working_params',
         '_holders',
         '_initialized',
         '_initializing',
@@ -478,6 +489,7 @@ class Pool(Generic[_Record]):
         force_not_null: bool | Iterable[str] | None = ...,
         force_null: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     async def copy_records_to_table(
         self,
@@ -487,6 +499,7 @@ class Pool(Generic[_Record]):
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     def acquire(
         self, *, timeout: float | None = ...

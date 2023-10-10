@@ -1,3 +1,4 @@
+import contextlib
 from asyncio import AbstractEventLoop
 from collections.abc import (
     AsyncIterable,
@@ -6,6 +7,7 @@ from collections.abc import (
     Coroutine,
     Generator,
     Iterable,
+    Iterator,
     Sequence,
 )
 from os import PathLike
@@ -33,7 +35,7 @@ _SSLStringValues: TypeAlias = Literal[
     'disable', 'prefer', 'allow', 'require', 'verify-ca', 'verify-full'
 ]
 _SSLType: TypeAlias = connect_utils._ParsedSSLType | _SSLStringValues | bool
-_HostType: TypeAlias = list[str] | str
+_HostType: TypeAlias = list[str] | tuple[str] | str
 _PortListType: TypeAlias = list[int | str] | list[int] | list[str]
 _PortType: TypeAlias = _PortListType | int | str
 
@@ -77,6 +79,11 @@ class _Executor(Protocol[_Record]):
         __timeout: float | None,
     ) -> Any: ...
 
+class _QueryLogger(Protocol):
+    def __call__(
+        self, __record: LoggedQuery
+    ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
+
 class ConnectionMeta(type):
     def __instancecheck__(cls, instance: object) -> bool: ...
 
@@ -90,6 +97,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         '_pool_release_ctr',
         '_stmt_cache',
         '_stmts_to_close',
+        '_stmt_cache_enabled',
         '_listeners',
         '_server_version',
         '_server_caps',
@@ -104,6 +112,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         '_termination_listeners',
         '_cancellations',
         '_source_traceback',
+        '_query_loggers',
         '__weakref__',
     )
     def __init__(
@@ -122,6 +131,8 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def remove_log_listener(self, callback: _LogListener) -> None: ...
     def add_termination_listener(self, callback: _TerminationListener) -> None: ...
     def remove_termination_listener(self, callback: _TerminationListener) -> None: ...
+    def add_query_logger(self, callback: _QueryLogger) -> None: ...
+    def remove_query_logger(self, callback: _QueryLogger) -> None: ...
     def get_server_pid(self) -> int: ...
     def get_server_version(self) -> types.ServerVersion: ...
     def get_settings(self) -> _cprotocol.ConnectionSettings: ...
@@ -308,6 +319,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         force_not_null: bool | Iterable[str] | None = ...,
         force_null: bool | Iterable[str] | None = ...,
         encoding: str | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     async def copy_records_to_table(
         self,
@@ -341,6 +353,8 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def terminate(self) -> None: ...
     async def reset(self, *, timeout: float | None = ...) -> None: ...
     async def reload_schema_state(self) -> None: ...
+    @contextlib.contextmanager
+    def query_logger(self, callback: _QueryLogger) -> Iterator[None]: ...
 
 @overload
 async def connect(
@@ -412,9 +426,20 @@ async def connect(
 class _ConnectionProxy(Generic[_Record]):
     __slots__ = ()
 
+class LoggedQuery(NamedTuple):
+    query: str
+    args: Any
+    timeout: float | None
+    elapsed: float
+    exception: BaseException | None
+    conn_addr: tuple[str, int] | str
+    conn_params: connect_utils._ConnectionParameters
+
 class ServerCapabilities(NamedTuple):
     advisory_locks: bool
     notifications: bool
     plpgsql: bool
     sql_reset: bool
     sql_close_all: bool
+    sql_copy_from_where: bool
+    jit: bool

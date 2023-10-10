@@ -30,7 +30,6 @@ class _ConnectionParameters(NamedTuple):
     ssl: _ParsedSSLType | None
     sslmode: SSLMode | None
     direct_tls: bool
-    connect_timeout: float
     server_settings: dict[str, str] | None
     target_session_attrs: SessionAttribute
 

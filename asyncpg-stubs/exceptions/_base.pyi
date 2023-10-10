@@ -8,11 +8,13 @@ __all__ = (
     'InterfaceError',
     'InterfaceWarning',
     'PostgresLogMessage',
+    'ClientConfigurationError',
     'InternalClientError',
     'OutdatedSchemaCacheError',
     'ProtocolError',
     'UnsupportedClientFeatureError',
     'TargetServerAttributeNotMatched',
+    'UnsupportedServerFeatureError',
 )
 
 _PM = TypeVar('_PM', bound=PostgresMessage)
@@ -69,8 +71,10 @@ class InterfaceError(InterfaceMessage, Exception):
     ) -> None: ...
     def with_msg(self: Self, msg: str) -> Self: ...
 
+class ClientConfigurationError(InterfaceError, ValueError): ...
 class DataError(InterfaceError, ValueError): ...
 class UnsupportedClientFeatureError(InterfaceError): ...
+class UnsupportedServerFeatureError(InterfaceError): ...
 
 class InterfaceWarning(InterfaceMessage, UserWarning):
     def __init__(

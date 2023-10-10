@@ -38,6 +38,7 @@ class ConnectionSettings(asyncpg.pgproto.pgproto.CodecContext):
         typeoid: int,
         typename: str,
         typeschema: str,
+        typeinfos: Iterable[object],
         typekind: str,
         encoder: Callable[[Any], Any],
         decoder: Callable[[Any], Any],
@@ -67,6 +68,7 @@ class ConnectionSettings(asyncpg.pgproto.pgproto.CodecContext):
 @final
 class PreparedStatementState(Generic[_Record]):
     closed: bool
+    prepared: bool
     name: str
     query: str
     refs: int
@@ -88,6 +90,7 @@ class PreparedStatementState(Generic[_Record]):
     def attach(self) -> None: ...
     def detach(self) -> None: ...
     def mark_closed(self) -> None: ...
+    def mark_unprepared(self) -> None: ...
     def __reduce__(self) -> Any: ...
 
 class CoreProtocol:
@@ -197,6 +200,7 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
         ignore_custom_codec: bool = ...,
         record_class: type[_OtherRecord],
     ) -> PreparedStatementState[_OtherRecord]: ...
+    async def close_portal(self, portal_name: str, timeout: _TimeoutType) -> None: ...
     async def query(self, *args: object, **kwargs: object) -> str: ...
     def resume_writing(self, *args: object, **kwargs: object) -> Any: ...
     def __reduce__(self) -> Any: ...
@@ -204,16 +208,6 @@ class BaseProtocol(CoreProtocol, Generic[_Record]):
 @final
 class Codec:
     __pyx_vtable__: Any
-    def __init__(
-        self,
-        name: str,
-        schema: str,
-        kind: str,
-        type: int,
-        format: int,
-        xformat: int,
-        c_encoder: object,
-    ) -> None: ...
     def __reduce__(self) -> Any: ...
 
 class DataCodecConfig:
@@ -225,6 +219,7 @@ class DataCodecConfig:
         typename: str,
         typeschema: str,
         typekind: str,
+        typeinfos: Iterable[object],
         encoder: Callable[[ConnectionSettings, WriteBuffer, object], object],
         decoder: Callable[..., object],
         format: object,
