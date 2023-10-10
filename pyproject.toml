@@ -24,7 +24,7 @@ async-timeout = { version = ">=4.0.3", python = "<3.12" }
 [tool.poetry.group.dev.dependencies]
 black = "23.9.1"
 pre-commit = "3.4.0"
-mypy = "1.5.1"
+mypy = "1.6.0"
 ruff = "0.0.292"
 
 [tool.black]
