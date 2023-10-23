@@ -22,10 +22,10 @@ typing-extensions = "^4.2.0"
 async-timeout = { version = ">=4.0.3", python = "<3.12" }
 
 [tool.poetry.group.dev.dependencies]
-black = "23.10.0"
+black = "23.10.1"
 pre-commit = "3.5.0"
 mypy = "1.6.1"
-ruff = "0.1.0"
+ruff = "0.1.1"
 
 [tool.black]
 line-length = 88
