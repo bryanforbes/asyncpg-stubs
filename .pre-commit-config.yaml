@@ -42,7 +42,7 @@ repos:
       args: [--python-version=3.12]
       files: \.pyi?$
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.333
+    rev: v1.1.334
     hooks:
     - id: pyright
       name: pyright (3.8)
