@@ -1,6 +1,6 @@
-from _typeshed import Self
 from collections.abc import Generator, Sequence
 from typing import Any, Generic, TypeVar, overload
+from typing_extensions import Self
 
 from . import connection as _connection, connresource
 from .protocol import protocol as _cprotocol
@@ -95,7 +95,7 @@ class CursorIterator(BaseCursor[_Record]):
         prefetch: int,
         timeout: float | None,
     ) -> None: ...
-    def __aiter__(self: Self) -> Self: ...
+    def __aiter__(self) -> Self: ...
     async def __anext__(self) -> _Record: ...
 
 class Cursor(BaseCursor[_Record]):

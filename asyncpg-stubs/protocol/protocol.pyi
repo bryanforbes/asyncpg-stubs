@@ -4,8 +4,18 @@ import hmac
 from codecs import CodecInfo
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from hashlib import md5, sha256
-from typing import Any, ClassVar, Final, Generic, NewType, TypeVar, final, overload
-from typing_extensions import Literal, TypeAlias
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal,
+    NewType,
+    TypeVar,
+    final,
+    overload,
+)
+from typing_extensions import TypeAlias
 
 import asyncpg.pgproto.pgproto
 

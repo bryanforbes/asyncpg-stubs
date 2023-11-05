@@ -1,6 +1,6 @@
 from enum import Enum
-from typing import Any, Final
-from typing_extensions import Literal, TypeAlias
+from typing import Any, Final, Literal
+from typing_extensions import TypeAlias
 
 from . import connection as _connection, connresource
 

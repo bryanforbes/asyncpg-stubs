@@ -1,8 +1,7 @@
 import builtins
-from _typeshed import Self
 from collections.abc import Iterator, Sequence
-from typing import SupportsFloat, overload
-from typing_extensions import Literal, SupportsIndex, TypeAlias
+from typing import Literal, SupportsFloat, SupportsIndex, overload
+from typing_extensions import Self, TypeAlias
 
 __all__ = (
     'BitString',
@@ -22,7 +21,7 @@ class BitString:
     def __init__(self, bitstring: builtins.bytes | None = ...) -> None: ...
     @classmethod
     def frombytes(
-        cls: type[Self],
+        cls,
         bytes_: builtins.bytes | None = ...,
         bitlength: int | None = ...,
     ) -> Self: ...
@@ -32,7 +31,7 @@ class BitString:
     def to_int(self, bitorder: _BitOrderType = ..., *, signed: bool = ...) -> int: ...
     @classmethod
     def from_int(
-        cls: type[Self],
+        cls,
         x: int,
         length: int,
         bitorder: _BitOrderType = ...,
@@ -47,7 +46,7 @@ class BitString:
 class Point(tuple[float, float]):
     __slots__ = ()
     def __new__(
-        cls: type[Self],
+        cls,
         x: SupportsFloat | SupportsIndex | str | builtins.bytes | builtins.bytearray,
         y: SupportsFloat | SupportsIndex | str | builtins.bytes | builtins.bytearray,
     ) -> Self: ...
@@ -58,9 +57,7 @@ class Point(tuple[float, float]):
 
 class Box(tuple[Point, Point]):
     __slots__ = ()
-    def __new__(
-        cls: type[Self], high: Sequence[float], low: Sequence[float]
-    ) -> Self: ...
+    def __new__(cls, high: Sequence[float], low: Sequence[float]) -> Self: ...
     @property
     def high(self) -> Point: ...
     @property
@@ -68,7 +65,7 @@ class Box(tuple[Point, Point]):
 
 class Line(tuple[float, float, float]):
     __slots__ = ()
-    def __new__(cls: type[Self], A: float, B: float, C: float) -> Self: ...
+    def __new__(cls, A: float, B: float, C: float) -> Self: ...
     @property
     def A(self) -> float: ...
     @property
@@ -78,7 +75,7 @@ class Line(tuple[float, float, float]):
 
 class LineSegment(tuple[Point, Point]):
     __slots__ = ()
-    def __new__(cls: type[Self], p1: Sequence[float], p2: Sequence[float]) -> Self: ...
+    def __new__(cls, p1: Sequence[float], p2: Sequence[float]) -> Self: ...
     @property
     def p1(self) -> Point: ...
     @property
@@ -106,7 +103,7 @@ class Polygon(Path):
 
 class Circle(tuple[Point, float]):
     __slots__ = ()
-    def __new__(cls: type[Self], center: Point, radius: float) -> Self: ...
+    def __new__(cls, center: Point, radius: float) -> Self: ...
     @property
     def center(self) -> Point: ...
     @property

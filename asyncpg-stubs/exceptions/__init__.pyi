@@ -296,6 +296,9 @@ class TooManyJsonObjectMembersError(DataError):
 class SQLJsonScalarRequiredError(DataError):
     sqlstate: ClassVar[str]
 
+class SQLJsonItemCannotBeCastToTargetTypeError(DataError):
+    sqlstate: ClassVar[str]
+
 class IntegrityConstraintViolationError(_base.PostgresError):
     sqlstate: ClassVar[str]
 
@@ -789,10 +792,13 @@ __all__ = (
     'InterfaceError',
     'InterfaceWarning',
     'PostgresLogMessage',
+    'ClientConfigurationError',
     'InternalClientError',
     'OutdatedSchemaCacheError',
     'ProtocolError',
     'UnsupportedClientFeatureError',
+    'TargetServerAttributeNotMatched',
+    'UnsupportedServerFeatureError',
     # End from _base.pyi
     'ActiveSQLTransactionError',
     'AdminShutdownError',
@@ -1005,6 +1011,7 @@ __all__ = (
     'ReservedNameError',
     'RestrictViolationError',
     'SQLJsonArrayNotFoundError',
+    'SQLJsonItemCannotBeCastToTargetTypeError',
     'SQLJsonMemberNotFoundError',
     'SQLJsonNumberNotFoundError',
     'SQLJsonObjectNotFoundError',

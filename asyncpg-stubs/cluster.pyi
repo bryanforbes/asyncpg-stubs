@@ -1,7 +1,6 @@
 from _typeshed import StrPath
 from asyncio import AbstractEventLoop
-from typing import Any
-from typing_extensions import TypedDict
+from typing import Any, TypedDict
 
 from . import connection, types
 

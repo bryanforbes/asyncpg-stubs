@@ -11,8 +11,17 @@ from collections.abc import (
     Sequence,
 )
 from os import PathLike
-from typing import Any, BinaryIO, Generic, NamedTuple, Protocol, TypeVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing import (
+    Any,
+    BinaryIO,
+    Generic,
+    Literal,
+    NamedTuple,
+    Protocol,
+    TypeVar,
+    overload,
+)
+from typing_extensions import TypeAlias
 
 from . import (
     connect_utils,
@@ -329,6 +338,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         columns: Iterable[str] | None = ...,
         schema_name: str | None = ...,
         timeout: float | None = ...,
+        where: str | None = ...,
     ) -> str: ...
     async def set_type_codec(
         self,

@@ -1,10 +1,9 @@
-from _typeshed import Self
 from asyncio import AbstractEventLoop, Future, Protocol
 from collections.abc import Awaitable, Callable
 from enum import Enum, IntEnum
 from ssl import SSLContext
-from typing import Any, Final, NamedTuple
-from typing_extensions import Literal, TypeAlias
+from typing import Any, Final, Literal, NamedTuple
+from typing_extensions import Self, TypeAlias
 
 from . import connection
 
@@ -21,7 +20,7 @@ class SSLMode(IntEnum):
     verify_ca: int
     verify_full: int
     @classmethod
-    def parse(cls: Self, sslmode: str | Self) -> Self: ...
+    def parse(cls, sslmode: str | Self) -> Self: ...
 
 class _ConnectionParameters(NamedTuple):
     user: str
