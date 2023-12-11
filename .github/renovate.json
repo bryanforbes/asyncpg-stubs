@@ -2,5 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>bryanforbes/python-workflows:library"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["pre-commit"],
+      "allowedVersions": "<3.6.0"
+    }
   ]
 }
