@@ -134,9 +134,10 @@ class PoolConnectionProxy(
         name: str | None = ...,
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
-    ) -> prepared_stmt.PreparedStatement[_Record] | prepared_stmt.PreparedStatement[
-        _OtherRecord
-    ]: ...
+    ) -> (
+        prepared_stmt.PreparedStatement[_Record]
+        | prepared_stmt.PreparedStatement[_OtherRecord]
+    ): ...
     @overload
     async def fetch(
         self,
