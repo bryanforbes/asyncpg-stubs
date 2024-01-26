@@ -8,12 +8,10 @@ from asyncpg.pool import PoolConnectionProxy
 from asyncpg.prepared_stmt import PreparedStatement
 
 
-class MyRecord(asyncpg.Record):
-    ...
+class MyRecord(asyncpg.Record): ...
 
 
-class MyOtherRecord(asyncpg.Record):
-    ...
+class MyOtherRecord(asyncpg.Record): ...
 
 
 async def main(record_class: type[MyRecord] | None) -> None:

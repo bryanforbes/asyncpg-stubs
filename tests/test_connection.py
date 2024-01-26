@@ -7,16 +7,13 @@ from asyncpg.cursor import Cursor
 from asyncpg.prepared_stmt import PreparedStatement
 
 
-class MyRecord(asyncpg.Record):
-    ...
+class MyRecord(asyncpg.Record): ...
 
 
-class MyOtherRecord(asyncpg.Record):
-    ...
+class MyOtherRecord(asyncpg.Record): ...
 
 
-class MyConnection(asyncpg.Connection[MyOtherRecord]):
-    ...
+class MyConnection(asyncpg.Connection[MyOtherRecord]): ...
 
 
 async def main(record_class: type[MyRecord] | None) -> None:
