@@ -1,17 +1,10 @@
-from collections.abc import Coroutine, Iterable
-from typing import Any, Generic, Protocol, TypeVar
+from collections.abc import Iterable
+from typing import Any, Generic, TypeVar
 
 from . import connection as _connection, connresource, cursor, types
 from .protocol import protocol as _cprotocol
 
 _Record = TypeVar('_Record', bound=_cprotocol.Record)
-_T_co = TypeVar('_T_co', covariant=True)
-
-class _Executor(Protocol[_T_co]):
-    def __call__(
-        self,
-        __protocol: _cprotocol.BaseProtocol[Any],
-    ) -> Coroutine[Any, Any, _T_co]: ...
 
 class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     __slots__ = ('_state', '_query', '_last_status')

@@ -75,19 +75,6 @@ class _TerminationListener(Protocol):
         __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
-class _OnRemove(Protocol[_Record]):
-    def __call__(
-        self,
-        __statement: _cprotocol.PreparedStatementState[_Record],
-    ) -> None: ...
-
-class _Executor(Protocol[_Record]):
-    def __call__(
-        self,
-        __statement: _cprotocol.PreparedStatementState[_Record],
-        __timeout: float | None,
-    ) -> Any: ...
-
 class _QueryLogger(Protocol):
     def __call__(
         self, __record: LoggedQuery
