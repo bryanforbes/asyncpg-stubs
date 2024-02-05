@@ -44,34 +44,36 @@ exclude = '''
 '''
 
 [tool.ruff]
+extend-exclude = [".venv*"]
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
 select = [
   "ANN", "B", "B9", "BLE", "C", "C4", "E", "EXE", "F", "G",
   "I", "I002", "ISC", "INP", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "Q", "RET",
   "RSE", "S", "SIM", "T10", "T20", "TCH", "TID251", "TRY", "UP", "W", "RUF"
 ]
 ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "PLR2004", "TRY003"]
-extend-exclude = [".venv*"]
-line-length = 88
-target-version = "py38"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["E501", "E701", "E741", "F401", "F403", "F405", "F811"]
 "tests/*.py" = ["PGH003", "PLR0912", "S101"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 extra-standard-library = ["typing_extensions", "_types", "_typeshed"]
 known-first-party = ["asyncpg"]
 combine-as-imports = true
 
-[tool.ruff.flake8-annotations]
+[tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = true
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 parametrize-names-type = "csv"
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 
 [tool.mypy]
