@@ -375,6 +375,7 @@ async def connect(
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
+    krbsrvname: str | None = ...,
 ) -> Connection[_Record]: ...
 @overload
 async def connect(
@@ -398,6 +399,7 @@ async def connect(
     record_class: type[_Record] = ...,
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
+    krbsrvname: str | None = ...,
 ) -> _Connection: ...
 @overload
 async def connect(
@@ -419,6 +421,7 @@ async def connect(
     direct_tls: bool = ...,
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
+    krbsrvname: str | None = ...,
 ) -> Connection[protocol.Record]: ...
 
 class _ConnectionProxy(Generic[_Record]):

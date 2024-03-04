@@ -31,6 +31,7 @@ class _ConnectionParameters(NamedTuple):
     direct_tls: bool
     server_settings: dict[str, str] | None
     target_session_attrs: SessionAttribute
+    krbsrvname: str | None
 
 class _ClientConfiguration(NamedTuple):
     command_timeout: float | None
