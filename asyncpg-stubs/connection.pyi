@@ -52,6 +52,7 @@ _OutputType: TypeAlias = PathLike[Any] | BinaryIO | _Writer
 _SourceType: TypeAlias = PathLike[Any] | BinaryIO | AsyncIterable[bytes]
 
 _CopyFormat: TypeAlias = Literal['text', 'csv', 'binary']
+_GSSLibType: TypeAlias = Literal['gssapi', 'sspi']
 
 class _Listener(Protocol):
     def __call__(
@@ -376,6 +377,7 @@ async def connect(
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
     krbsrvname: str | None = ...,
+    gsslib: _GSSLibType | None = ...,
 ) -> Connection[_Record]: ...
 @overload
 async def connect(
@@ -400,6 +402,7 @@ async def connect(
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
     krbsrvname: str | None = ...,
+    gsslib: _GSSLibType | None = ...,
 ) -> _Connection: ...
 @overload
 async def connect(
@@ -422,6 +425,7 @@ async def connect(
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
     krbsrvname: str | None = ...,
+    gsslib: _GSSLibType | None = ...,
 ) -> Connection[protocol.Record]: ...
 
 class _ConnectionProxy(Generic[_Record]):

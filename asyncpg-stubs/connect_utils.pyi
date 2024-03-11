@@ -32,6 +32,7 @@ class _ConnectionParameters(NamedTuple):
     server_settings: dict[str, str] | None
     target_session_attrs: SessionAttribute
     krbsrvname: str | None
+    gsslib: connection._GSSLibType | None
 
 class _ClientConfiguration(NamedTuple):
     command_timeout: float | None
