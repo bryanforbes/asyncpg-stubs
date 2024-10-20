@@ -32,6 +32,33 @@ class _SetupCallback(Protocol[_Record]):
 class _InitCallback(Protocol[_Record]):
     async def __call__(self, __con: connection.Connection[_Record]) -> None: ...
 
+class _Connect(Protocol[_Record]):
+    async def __call__(
+        self,
+        dsn: str | None = ...,
+        *,
+        host: connection._HostType | None = ...,
+        port: connection._PortType | None = ...,
+        user: str | None = ...,
+        password: connect_utils._PasswordType | None = ...,
+        passfile: str | None = ...,
+        database: str | None = ...,
+        loop: AbstractEventLoop | None = ...,
+        timeout: float = ...,
+        statement_cache_size: int = ...,
+        max_cached_statement_lifetime: int = ...,
+        max_cacheable_statement_size: int = ...,
+        command_timeout: float | None = ...,
+        ssl: connection._SSLType | None = ...,
+        direct_tls: bool | None = ...,
+        connection_class: type[connection.Connection[_Record]],
+        record_class: type[_Record] = ...,
+        server_settings: dict[str, str] | None = ...,
+        target_session_attrs: connect_utils.SessionAttribute | None = ...,
+        krbsrvname: str | None = ...,
+        gsslib: connection._GSSLibType | None = ...,
+    ) -> connection.Connection[_Record]: ...
+
 class PoolConnectionProxyMeta(type): ...
 
 class PoolConnectionProxy(
@@ -193,6 +220,33 @@ class PoolConnectionProxy(
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: None = ...,
+    ) -> list[_Record]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord],
+    ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record | _OtherRecord]: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -324,6 +378,8 @@ class Pool(Generic[_Record]):
         '_minsize',
         '_maxsize',
         '_init',
+        '_connect',
+        '_reset',
         '_connect_args',
         '_connect_kwargs',
         '_holders',
@@ -345,8 +401,10 @@ class Pool(Generic[_Record]):
         max_size: int,
         max_queries: int,
         max_inactive_connection_lifetime: float,
+        connect: _Connect[_Record] | None = None,
         setup: _SetupCallback[_Record] | None,
         init: _InitCallback[_Record] | None,
+        reset: Callable[[_Connection], None] | None = None,
         loop: AbstractEventLoop | None,
         connection_class: type[_Connection],
         record_class: type[_Record],
@@ -436,6 +494,33 @@ class Pool(Generic[_Record]):
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: None = ...,
+    ) -> list[_Record]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord],
+    ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record | _OtherRecord]: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -544,6 +629,8 @@ def create_pool(
     setup: _SetupCallback[_Record] | None = ...,
     init: _InitCallback[_Record] | None = ...,
     loop: AbstractEventLoop | None = ...,
+    connect: _Connect[_Record] | None = None,
+    reset: Callable[[connection.Connection[_Record]], None] | None = None,
     connection_class: type[connection.Connection[_Record]] = ...,
     record_class: type[_Record],
     host: connection._HostType | None = ...,
@@ -569,7 +656,9 @@ def create_pool(
     max_queries: int = ...,
     max_inactive_connection_lifetime: float = ...,
     setup: _SetupCallback[protocol.Record] | None = ...,
+    connect: _Connect[protocol.Record] | None = None,
     init: _InitCallback[protocol.Record] | None = ...,
+    reset: Callable[[connection.Connection[protocol.Record]], None] | None = None,
     loop: AbstractEventLoop | None = ...,
     connection_class: type[connection.Connection[protocol.Record]] = ...,
     host: connection._HostType | None = ...,

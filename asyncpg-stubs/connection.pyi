@@ -263,6 +263,33 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         timeout: float | None = ...,
         record_class: type[_OtherRecord] | None,
     ) -> _Record | _OtherRecord | None: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: None = ...,
+    ) -> list[_Record]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord],
+    ) -> list[_OtherRecord]: ...
+    @overload
+    async def fetchmany(
+        self,
+        query: str,
+        args: Iterable[Any],
+        *,
+        timeout: float | None = None,
+        record_class: type[_OtherRecord] | None,
+    ) -> list[_Record | _OtherRecord]: ...
     async def copy_from_table(
         self,
         table_name: str,
@@ -350,7 +377,9 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
     def is_closed(self) -> bool: ...
     async def close(self, *, timeout: float | None = ...) -> None: ...
     def terminate(self) -> None: ...
+    async def _reset(self) -> None: ...
     async def reset(self, *, timeout: float | None = ...) -> None: ...
+    def get_reset_query(self) -> str: ...
     async def reload_schema_state(self) -> None: ...
     @contextlib.contextmanager
     def query_logger(self, callback: _QueryLogger) -> Iterator[None]: ...
@@ -372,7 +401,7 @@ async def connect(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: _SSLType | None = ...,
-    direct_tls: bool = ...,
+    direct_tls: bool | None = ...,
     record_class: type[_Record],
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
@@ -396,7 +425,7 @@ async def connect(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: _SSLType | None = ...,
-    direct_tls: bool = ...,
+    direct_tls: bool | None = ...,
     connection_class: type[_Connection],
     record_class: type[_Record] = ...,
     server_settings: dict[str, str] | None = ...,
@@ -421,7 +450,7 @@ async def connect(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: _SSLType | None = ...,
-    direct_tls: bool = ...,
+    direct_tls: bool | None = ...,
     server_settings: dict[str, str] | None = ...,
     target_session_attrs: connect_utils.SessionAttribute | None = ...,
     krbsrvname: str | None = ...,

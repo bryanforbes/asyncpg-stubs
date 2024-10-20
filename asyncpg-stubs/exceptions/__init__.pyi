@@ -89,6 +89,9 @@ class DiagnosticsError(_base.PostgresError):
 class StackedDiagnosticsAccessedWithoutActiveHandlerError(DiagnosticsError):
     sqlstate: ClassVar[str]
 
+class InvalidArgumentForXqueryError(_base.PostgresError):
+    sqlstate: ClassVar[str]
+
 class CaseNotFoundError(_base.PostgresError):
     sqlstate: ClassVar[str]
 
@@ -359,6 +362,9 @@ class InFailedSQLTransactionError(InvalidTransactionStateError):
     sqlstate: ClassVar[str]
 
 class IdleInTransactionSessionTimeoutError(InvalidTransactionStateError):
+    sqlstate: ClassVar[str]
+
+class TransactionTimeoutError(InvalidTransactionStateError):
     sqlstate: ClassVar[str]
 
 class InvalidSQLStatementNameError(_base.PostgresError):
@@ -670,6 +676,9 @@ class UndefinedFileError(PostgresSystemError):
 class DuplicateFileError(PostgresSystemError):
     sqlstate: ClassVar[str]
 
+class FileNameTooLongError(PostgresSystemError):
+    sqlstate: ClassVar[str]
+
 class SnapshotTooOldError(_base.PostgresError):
     sqlstate: ClassVar[str]
 
@@ -884,6 +893,7 @@ __all__: tuple[str, ...] = (
     'FDWUnableToCreateReplyError',
     'FDWUnableToEstablishConnectionError',
     'FeatureNotSupportedError',
+    'FileNameTooLongError',
     'ForeignKeyViolationError',
     'FunctionExecutedNoReturnStatementError',
     'GeneratedAlwaysError',
@@ -910,6 +920,7 @@ __all__: tuple[str, ...] = (
     'InvalidArgumentForPowerFunctionError',
     'InvalidArgumentForSQLJsonDatetimeFunctionError',
     'InvalidArgumentForWidthBucketFunctionError',
+    'InvalidArgumentForXqueryError',
     'InvalidAuthorizationSpecificationError',
     'InvalidBinaryRepresentationError',
     'InvalidCachedStatementError',
@@ -1042,6 +1053,7 @@ __all__: tuple[str, ...] = (
     'TransactionIntegrityConstraintViolationError',
     'TransactionResolutionUnknownError',
     'TransactionRollbackError',
+    'TransactionTimeoutError',
     'TriggerProtocolViolatedError',
     'TriggeredActionError',
     'TriggeredDataChangeViolationError',

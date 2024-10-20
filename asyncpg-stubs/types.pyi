@@ -1,18 +1,16 @@
-from typing import Any, Generic, NamedTuple, Protocol, TypeVar, overload
+from typing import Generic, NamedTuple, Protocol, TypeVar
+from typing_extensions import Self
 
 from asyncpg.pgproto.types import (
-    BitString as BitString,
-    Box as Box,
-    Circle as Circle,
-    Line as Line,
-    LineSegment as LineSegment,
-    Path as Path,
-    Point as Point,
-    Polygon as Polygon,
+    BitString,
+    Box,
+    Circle,
+    Line,
+    LineSegment,
+    Path,
+    Point,
+    Polygon,
 )
-
-_T_contra = TypeVar('_T_contra', contravariant=True)
-_V = TypeVar('_V', bound=_RangeValue[Any])
 
 __all__ = (
     'Type',
@@ -46,58 +44,47 @@ class ServerVersion(NamedTuple):
     releaselevel: str
     serial: int
 
-class _RangeValue(Protocol[_T_contra]):
-    def __eq__(self, __other: object) -> bool: ...
-    def __lt__(self, __other: _T_contra) -> bool: ...
-    def __gt__(self, __other: _T_contra) -> bool: ...
+class _RangeValue(Protocol):
+    def __eq__(self, __value: object) -> bool: ...
+    def __lt__(self, __other: Self, /) -> bool: ...
+    def __gt__(self, __other: Self, /) -> bool: ...
 
-class Range(Generic[_V]):
+_RV = TypeVar('_RV', bound=_RangeValue)
+
+class Range(Generic[_RV]):
     __slots__ = '_lower', '_upper', '_lower_inc', '_upper_inc', '_empty'
-    @overload
+
+    _lower: _RV | None
+    _upper: _RV | None
+    _lower_inc: bool
+    _upper_inc: bool
+    _empty: bool
+
     def __init__(
         self,
-        lower: None = ...,
-        upper: None = ...,
+        lower: _RV | None = None,
+        upper: _RV | None = None,
         *,
-        lower_inc: bool = ...,
-        upper_inc: bool = ...,
-        empty: bool = ...,
-    ) -> None: ...
-    @overload
-    def __init__(
-        self,
-        lower: _V,
-        upper: _V = ...,
-        *,
-        lower_inc: bool = ...,
-        upper_inc: bool = ...,
-        empty: bool = ...,
-    ) -> None: ...
-    @overload
-    def __init__(
-        self,
-        *,
-        upper: _V,
-        lower_inc: bool = ...,
-        upper_inc: bool = ...,
-        empty: bool = ...,
+        lower_inc: bool = True,
+        upper_inc: bool = False,
+        empty: bool = False,
     ) -> None: ...
     @property
-    def lower(self) -> _V | None: ...
+    def lower(self) -> _RV | None: ...
     @property
     def lower_inc(self) -> bool: ...
     @property
     def lower_inf(self) -> bool: ...
     @property
-    def upper(self) -> _V | None: ...
+    def upper(self) -> _RV | None: ...
     @property
     def upper_inc(self) -> bool: ...
     @property
     def upper_inf(self) -> bool: ...
     @property
     def isempty(self) -> bool: ...
-    def issubset(self, other: Range[_V]) -> bool: ...
-    def issuperset(self, other: Range[_V]) -> bool: ...
+    def issubset(self, other: Self) -> bool: ...
+    def issuperset(self, other: Self) -> bool: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, other: object) -> bool: ...
     def __hash__(self) -> int: ...
