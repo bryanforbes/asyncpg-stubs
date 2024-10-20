@@ -38,6 +38,9 @@ class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     async def fetchrow(
         self, *args: object, timeout: float | None = ...
     ) -> _Record | None: ...
+    async def fetchmany(
+        self, query: str, args: Iterable[Any], *, timeout: float | None = None
+    ) -> list[_Record]: ...
     async def executemany(
         self,
         args: Iterable[object],

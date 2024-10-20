@@ -28,7 +28,7 @@ class _ConnectionParameters(NamedTuple):
     database: str
     ssl: _ParsedSSLType | None
     sslmode: SSLMode | None
-    direct_tls: bool
+    ssl_negotiation: bool
     server_settings: dict[str, str] | None
     target_session_attrs: SessionAttribute
     krbsrvname: str | None
