@@ -23,14 +23,10 @@ TYPE_BY_OID: Final[str] = ...
 # 'b' for a base type, 'd' for a domain, 'e' for enum.
 SCALAR_TYPE_KINDS: Final[tuple[bytes, bytes, bytes]] = ...
 
-
-def is_scalar_type(typeinfo: protocol.Record) -> bool:
-    ...
-
-
-def is_domain_type(typeinfo: protocol.Record) -> bool:
-    ...  # type: ignore[no-any-return]
-
-
-def is_composite_type(typeinfo: protocol.Record) -> bool:
-    ...  # type: ignore[no-any-return]
+def is_scalar_type(typeinfo: protocol.Record) -> bool: ...
+def is_domain_type(
+    typeinfo: protocol.Record,
+) -> bool: ...  # type: ignore[no-any-return]
+def is_composite_type(
+    typeinfo: protocol.Record,
+) -> bool: ...  # type: ignore[no-any-return]

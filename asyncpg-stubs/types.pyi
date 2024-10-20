@@ -44,14 +44,9 @@ class ServerVersion(NamedTuple):
     serial: int
 
 class _RangeValue(Protocol):
-    def __eq__(self, __value: object) -> bool:
-        ...
-
-    def __lt__(self, __other: _RangeValue) -> bool:
-        ...
-
-    def __gt__(self, __other: _RangeValue) -> bool:
-        ...
+    def __eq__(self, __value: object) -> bool: ...
+    def __lt__(self, __other: _RangeValue) -> bool: ...
+    def __gt__(self, __other: _RangeValue) -> bool: ...
 
 _RV = TypeVar('_RV', bound=_RangeValue)
 
@@ -71,7 +66,7 @@ class Range(Generic[_RV]):
         *,
         lower_inc: bool = True,
         upper_inc: bool = False,
-        empty: bool = False
+        empty: bool = False,
     ) -> None: ...
     @property
     def lower(self) -> _RV | None: ...
