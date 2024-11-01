@@ -5,8 +5,16 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["pre-commit"],
+      "matchPackageNames": [
+        "pre-commit"
+      ],
       "allowedVersions": "<3.6.0"
+    },
+    {
+      "matchPackageNames": [
+        "black"
+      ],
+      "allowedVersions": "<24.10.0"
     }
   ]
 }
