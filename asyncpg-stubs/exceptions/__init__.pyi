@@ -784,7 +784,7 @@ class DataCorruptedError(InternalServerError):
 class IndexCorruptedError(InternalServerError):
     sqlstate: ClassVar[str]
 
-__all__ = (
+__all__: tuple[str, ...] = (
     # From _base.pyi
     'PostgresError',
     'FatalPostgresError',
