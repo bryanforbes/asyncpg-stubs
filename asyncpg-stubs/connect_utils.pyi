@@ -5,6 +5,8 @@ from ssl import SSLContext
 from typing import Any, Final, Literal, NamedTuple
 from typing_extensions import Self, TypeAlias
 
+from asyncpg import compat
+
 from . import connection
 
 _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
@@ -22,13 +24,17 @@ class SSLMode(IntEnum):
     @classmethod
     def parse(cls, sslmode: str | Self) -> Self: ...
 
+class SSLNegotiation(compat.StrEnum):
+    postgres: str
+    direct: str
+
 class _ConnectionParameters(NamedTuple):
     user: str
     password: _PasswordType | None
     database: str
     ssl: _ParsedSSLType | None
     sslmode: SSLMode | None
-    ssl_negotiation: bool
+    ssl_negotiation: SSLNegotiation
     server_settings: dict[str, str] | None
     target_session_attrs: SessionAttribute
     krbsrvname: str | None

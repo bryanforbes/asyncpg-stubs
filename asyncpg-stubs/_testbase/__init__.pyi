@@ -31,6 +31,7 @@ def create_pool(
     max_size: int = ...,
     max_queries: int = ...,
     max_inactive_connection_lifetime: float = ...,
+    connect: Any | None = ...,
     setup: Any | None = ...,
     init: Any | None = ...,
     loop: Any | None = ...,

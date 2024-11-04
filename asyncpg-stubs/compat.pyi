@@ -1,7 +1,8 @@
+import enum
 import sys
 from asyncio import StreamWriter
 from pathlib import Path
-from typing import Final
+from typing import Any, Final
 
 SYSTEM: Final[str]
 
@@ -10,10 +11,20 @@ async def wait_closed(stream: StreamWriter) -> None: ...
 
 if sys.version_info < (3, 12):
     from ._asyncio_compat import wait_for as wait_for
+
+    def markcoroutinefunction(c: Any) -> None: ...
+
 else:
     from asyncio import wait_for as wait_for
+    from inspect import markcoroutinefunction
 
 if sys.version_info < (3, 11):
     from async_timeout import timeout as timeout_ctx
 else:
     from asyncio import timeout as timeout_ctx
+
+if sys.version_info < (3, 11):
+    class StrEnum(str, enum.Enum): ...
+
+else:
+    from enum import StrEnum as StrEnum
