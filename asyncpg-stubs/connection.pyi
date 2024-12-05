@@ -57,28 +57,29 @@ _GSSLibType: TypeAlias = Literal['gssapi', 'sspi']
 class _Listener(Protocol):
     def __call__(
         self,
-        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
-        __pid: int,
-        __channel: str,
-        __payload: object,
+        con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
+        pid: int,
+        channel: str,
+        payload: object,
+        /,
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _LogListener(Protocol):
     def __call__(
         self,
-        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
-        __message: exceptions.PostgresLogMessage,
+        con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
+        message: exceptions.PostgresLogMessage,
+        /,
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _TerminationListener(Protocol):
     def __call__(
-        self,
-        __con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
+        self, con_ref: Connection[Any] | pool.PoolConnectionProxy[Any], /
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class _QueryLogger(Protocol):
     def __call__(
-        self, __record: LoggedQuery
+        self, record: LoggedQuery, /
     ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
 
 class ConnectionMeta(type):

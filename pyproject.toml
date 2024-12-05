@@ -54,7 +54,7 @@ select = [
   "I", "I002", "ISC", "INP", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "Q", "RET",
   "RSE", "S", "SIM", "T10", "T20", "TCH", "TID251", "TRY", "UP", "W", "RUF"
 ]
-ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "PLR2004", "TRY003"]
+ignore = ["ANN401", "PLR0913", "PLR2004", "TRY003", "RUF022", "RUF023"]
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["E501", "E701", "E741", "F401", "F403", "F405", "F811"]
