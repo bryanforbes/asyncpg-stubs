@@ -21,11 +21,11 @@ asyncpg = ">=0.30,<0.31"
 typing-extensions = "^4.7.0"
 
 [tool.poetry.group.dev.dependencies]
-async-timeout = "5.0.0"
+async-timeout = "5.0.1"
 black = "24.8.0"
 pre-commit = "3.5.0"
 mypy = "1.13.0"
-ruff = "0.7.2"
+ruff = "0.8.2"
 
 [tool.black]
 line-length = 88
@@ -54,7 +54,7 @@ select = [
   "I", "I002", "ISC", "INP", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "Q", "RET",
   "RSE", "S", "SIM", "T10", "T20", "TCH", "TID251", "TRY", "UP", "W", "RUF"
 ]
-ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "PLR2004", "TRY003"]
+ignore = ["ANN401", "PLR0913", "PLR2004", "TRY003", "RUF022", "RUF023"]
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["E501", "E701", "E741", "F401", "F403", "F405", "F811"]
