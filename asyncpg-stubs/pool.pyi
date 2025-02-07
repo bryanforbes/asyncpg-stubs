@@ -8,8 +8,8 @@ from collections.abc import (
     Iterator,
     Sequence,
 )
-from typing import Any, Generic, Protocol, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Generic, Protocol, overload
+from typing_extensions import Self, TypeVar
 
 from . import (
     connect_utils,
@@ -23,7 +23,7 @@ from . import (
 from .protocol import protocol as _cprotocol
 
 _Connection = TypeVar('_Connection', bound=connection.Connection[Any])
-_Record = TypeVar('_Record', bound=protocol.Record)
+_Record = TypeVar('_Record', bound=protocol.Record, default=protocol.Record)
 _OtherRecord = TypeVar('_OtherRecord', bound=protocol.Record)
 
 class _SetupCallback(Protocol[_Record]):
