@@ -620,7 +620,7 @@ class PoolAcquireContext(Generic[_Record]):
     ) -> Generator[Any, None, PoolConnectionProxy[_Record]]: ...
 
 @overload
-def create_pool(
+async def create_pool(
     dsn: str | None = ...,
     *,
     min_size: int = ...,
@@ -649,7 +649,7 @@ def create_pool(
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[_Record]: ...
 @overload
-def create_pool(
+async def create_pool(
     dsn: str | None = ...,
     *,
     min_size: int = ...,
