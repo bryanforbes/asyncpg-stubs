@@ -5,11 +5,11 @@ from typing_extensions import TypeAlias
 from . import connection as _connection, connresource
 
 class TransactionState(Enum):
-    NEW: int
-    STARTED: int
-    COMMITTED: int
-    ROLLEDBACK: int
-    FAILED: int
+    NEW = 0
+    STARTED = 1
+    COMMITTED = 2
+    ROLLEDBACK = 3
+    FAILED = 4
 
 _IsolationLevels: TypeAlias = Literal[
     'read_committed', 'read_uncommitted', 'serializable', 'repeatable_read'

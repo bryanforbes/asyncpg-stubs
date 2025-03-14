@@ -15,18 +15,18 @@ _PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]
 PGPASSFILE: Final[str]
 
 class SSLMode(IntEnum):
-    disable: int
-    allow: int
-    prefer: int
-    require: int
-    verify_ca: int
-    verify_full: int
+    disable = 0
+    allow = 1
+    prefer = 2
+    require = 3
+    verify_ca = 4
+    verify_full = 5
     @classmethod
     def parse(cls, sslmode: str | Self) -> Self: ...
 
 class SSLNegotiation(compat.StrEnum):
-    postgres: str
-    direct: str
+    postgres = 'postgres'  # noqa: PYI052
+    direct = 'direct'  # noqa: PYI052
 
 class _ConnectionParameters(NamedTuple):
     user: str
@@ -64,12 +64,12 @@ class TLSUpgradeProto(Protocol):
     def connection_lost(self, exc: Exception | None) -> None: ...
 
 class SessionAttribute(str, Enum):
-    any: str
-    primary: str
-    standby: str
-    prefer_standby: str
-    read_write: str
-    read_only: str
+    any = 'any'
+    primary = 'primary'
+    standby = 'standby'
+    prefer_standby = 'prefer-standby'
+    read_write = 'read-write'
+    read_only = 'read-only'
 
 target_attrs_check: Final[
     dict[SessionAttribute, Callable[[connection.Connection[Any]], Any]]

@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, TypeVar
+from typing import Any, ClassVar
 from typing_extensions import Self
 
 __all__ = (
@@ -16,8 +16,6 @@ __all__ = (
     'TargetServerAttributeNotMatched',
     'UnsupportedServerFeatureError',
 )
-
-_PM = TypeVar('_PM', bound=PostgresMessage)
 
 class PostgresMessageMeta(type): ...
 
@@ -42,8 +40,8 @@ class PostgresMessage(metaclass=PostgresMessageMeta):
     server_source_function: str | None
     @classmethod
     def _make_constructor(
-        cls: type[_PM], fields: dict[str, str], query: str | None = ...
-    ) -> tuple[type[_PM], str, dict[str, str]]: ...
+        cls, fields: dict[str, str], query: str | None = ...
+    ) -> tuple[Self, str, dict[str, str]]: ...
     def as_dict(self) -> dict[str, str]: ...
 
 class PostgresError(PostgresMessage, Exception):

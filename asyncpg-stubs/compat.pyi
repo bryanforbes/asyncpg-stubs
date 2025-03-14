@@ -24,4 +24,4 @@ else:
 if sys.version_info >= (3, 11):
     from enum import StrEnum as StrEnum
 else:
-    class StrEnum(str, enum.Enum): ...
+    class StrEnum(str, enum.Enum): ...  # type: ignore[misc]
