@@ -24,8 +24,8 @@ typing-extensions = "^4.7.0"
 async-timeout = "5.0.1"
 black = "24.8.0"
 pre-commit = "3.5.0"
-mypy = "1.13.0"
-ruff = "0.8.3"
+mypy = "1.14.0"
+ruff = "0.11.0"
 
 [tool.black]
 line-length = 88
@@ -87,6 +87,7 @@ venvPath = "."
 venv = ".venv"
 
 pythonVersion = "3.8"
+enableTypeIgnoreComments = "false"
 reportUnnecessaryTypeIgnoreComment = "warning"
 typeCheckingMode = "strict"
 reportPrivateUsage = "none"
