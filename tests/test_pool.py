@@ -16,13 +16,13 @@ class MyOtherRecord(asyncpg.Record): ...
 
 async def main(record_class: type[MyRecord] | None) -> None:
     pool = await asyncpg.create_pool()
-    assert_type(pool, 'asyncpg.Pool[asyncpg.Record] | None')
+    assert_type(pool, 'asyncpg.Pool[asyncpg.Record]')
     assert pool is not None
-    assert_type(await pool, 'asyncpg.Pool[asyncpg.Record] | None')
+    assert_type(await pool, 'asyncpg.Pool[asyncpg.Record]')
 
     assert_type(
         await asyncpg.create_pool(record_class=MyRecord),
-        'asyncpg.Pool[MyRecord] | None',
+        'asyncpg.Pool[MyRecord]',
     )
 
     async with asyncpg.create_pool() as record_pool:
