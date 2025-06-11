@@ -51,7 +51,7 @@ jobs:
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit release version change
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: Release ${{ steps.get-release-version.outputs.version }}
           file_pattern: pyproject.toml
@@ -87,7 +87,7 @@ jobs:
           echo "version=$POST_RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit post-release version change
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: Post release version bump
           file_pattern: pyproject.toml
