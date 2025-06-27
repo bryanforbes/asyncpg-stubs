@@ -18,7 +18,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 asyncpg = ">=0.30,<0.31"
-typing-extensions = "^4.7.0"
+typing-extensions = "^4.13.0"
 
 [tool.poetry.group.dev.dependencies]
 async-timeout = "5.0.1"

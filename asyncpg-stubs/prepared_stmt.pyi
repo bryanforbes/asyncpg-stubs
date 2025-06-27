@@ -1,10 +1,11 @@
 from collections.abc import Iterable
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic
+from typing_extensions import TypeVar
 
 from . import connection as _connection, connresource, cursor, types
 from .protocol import protocol as _cprotocol
 
-_Record = TypeVar('_Record', bound=_cprotocol.Record)
+_Record = TypeVar('_Record', bound=_cprotocol.Record, default=_cprotocol.Record)
 
 class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     __slots__ = ('_state', '_query', '_last_status')

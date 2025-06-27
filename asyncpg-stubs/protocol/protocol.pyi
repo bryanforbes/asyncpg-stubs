@@ -11,11 +11,10 @@ from typing import (
     Generic,
     Literal,
     NewType,
-    TypeVar,
     final,
     overload,
 )
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, TypeVar
 
 import asyncpg.pgproto.pgproto
 
@@ -24,7 +23,7 @@ from ..pgproto.pgproto import WriteBuffer
 from ..types import Attribute, Type
 
 _T = TypeVar('_T')
-_Record = TypeVar('_Record', bound=Record)
+_Record = TypeVar('_Record', bound=Record, default=Record)
 _OtherRecord = TypeVar('_OtherRecord', bound=Record)
 _PreparedStatementState = TypeVar(
     '_PreparedStatementState', bound=PreparedStatementState[Any]
