@@ -47,30 +47,39 @@ repos:
       entry: poetry run mypy
       args: [--python-version=3.13]
       files: \.pyi?$
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.402
-    hooks:
-    - id: pyright
+    - id: pyright38
       name: pyright (3.8)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.8]
       files: \.pyi?$
-    - id: pyright
+    - id: pyright39
       name: pyright (3.9)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.9]
       files: \.pyi?$
-    - id: pyright
+    - id: pyright310
       name: pyright (3.10)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.10]
       files: \.pyi?$
-    - id: pyright
+    - id: pyright311
       name: pyright (3.11)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.11]
       files: \.pyi?$
-    - id: pyright
+    - id: pyright312
       name: pyright (3.12)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.12]
       files: \.pyi?$
-    - id: pyright
+    - id: pyright313
       name: pyright (3.13)
+      language: system
+      entry: poetry run pyright
       args: [--pythonversion=3.13]
       files: \.pyi?$
