@@ -1,11 +1,11 @@
 from collections.abc import Generator, Sequence
-from typing import Any, Generic, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Generic, overload
+from typing_extensions import Self, TypeVar
 
 from . import connection as _connection, connresource
 from .protocol import protocol as _cprotocol
 
-_Record = TypeVar('_Record', bound=_cprotocol.Record)
+_Record = TypeVar('_Record', bound=_cprotocol.Record, default=_cprotocol.Record)
 
 class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
     __slots__ = (

@@ -18,10 +18,9 @@ from typing import (
     Literal,
     NamedTuple,
     Protocol,
-    TypeVar,
     overload,
 )
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, TypeVar
 
 from . import (
     connect_utils,
@@ -37,7 +36,7 @@ from .protocol import protocol as _cprotocol
 
 _Connection = TypeVar('_Connection', bound=Connection[Any])
 _Writer: TypeAlias = Callable[[bytes], Coroutine[Any, Any, None]]
-_Record = TypeVar('_Record', bound=protocol.Record)
+_Record = TypeVar('_Record', bound=protocol.Record, default=protocol.Record)
 _OtherRecord = TypeVar('_OtherRecord', bound=protocol.Record)
 
 _SSLStringValues: TypeAlias = Literal[
