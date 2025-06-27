@@ -22,32 +22,18 @@ typing-extensions = "^4.13.0"
 
 [tool.poetry.group.dev.dependencies]
 async-timeout = "5.0.1"
-black = "24.8.0"
 pre-commit = "3.5.0"
 pyright = {version = "1.1.402", extras = ["nodejs"]}
 mypy = "1.14.1"
 ruff = "0.12.1"
 
-[tool.black]
-line-length = 88
-target-version = ["py38"]
-skip-string-normalization = true
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.venv*
-  | external
-)/
-'''
-
 [tool.ruff]
 extend-exclude = [".venv*"]
 line-length = 88
 target-version = "py38"
+
+[tool.ruff.format]
+quote-style = "single"
 
 [tool.ruff.lint]
 select = [

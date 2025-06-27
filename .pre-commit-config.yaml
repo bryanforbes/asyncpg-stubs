@@ -6,10 +6,10 @@ repos:
       language: system
       entry: poetry run ruff check --force-exclude
       files: \.pyi?$
-    - id: black
-      name: black
+    - id: ruff_format
+      name: ruff format
       language: system
-      entry: poetry run black --check
+      entry: poetry run ruff format --force-exclude --check
       files: \.pyi?$
     - id: mypy38
       name: mypy (3.8)
