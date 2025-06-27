@@ -88,7 +88,7 @@ venvPath = "."
 venv = ".venv"
 
 pythonVersion = "3.8"
-enableTypeIgnoreComments = "false"
+enableTypeIgnoreComments = false
 reportUnnecessaryTypeIgnoreComment = "warning"
 typeCheckingMode = "strict"
 reportPrivateUsage = "none"
