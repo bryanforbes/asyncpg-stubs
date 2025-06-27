@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncpg-stubs"
-version = "0.30.2.dev0"
+version = "0.30.2"
 description = "asyncpg stubs"
 homepage = "https://github.com/bryanforbes/asyncpg-stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
