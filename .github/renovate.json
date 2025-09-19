@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>bryanforbes/python-workflows:library.json5"
+    "github>bryanforbes/renovate-presets:python-lib.json5"
   ],
   "packageRules": [
     {
