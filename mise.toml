@@ -3,12 +3,14 @@ experimental = true
 lockfile = true
 
 [tools]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [env]
 _.python.venv = { path = ".venv", create = true }
 
 [hooks]
-postinstall = '''
-poetry install --all-extras
-'''
+postinstall = 'poetry install'
+
+[tasks.stubtest]
+description = "Run stubtest against asyncpg"
+run = 'poetry run stubtest asyncpg --allowlist=stubtest-allow.txt'

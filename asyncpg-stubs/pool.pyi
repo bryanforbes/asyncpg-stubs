@@ -1,4 +1,5 @@
 import contextlib
+from _typeshed import StrPath
 from asyncio import AbstractEventLoop
 from collections.abc import (
     AsyncIterable,
@@ -42,6 +43,8 @@ class _Connect(Protocol[_Record]):
         user: str | None = ...,
         password: connect_utils._PasswordType | None = ...,
         passfile: str | None = ...,
+        service: str | None = ...,
+        servicefile: StrPath | None = ...,
         database: str | None = ...,
         loop: AbstractEventLoop | None = ...,
         timeout: float = ...,
@@ -425,6 +428,8 @@ class Pool(Generic[_Record]):
         user: str | None = ...,
         password: connect_utils._PasswordType | None = ...,
         passfile: str | None = ...,
+        service: str | None = ...,
+        servicefile: StrPath | None = ...,
         database: str | None = ...,
         timeout: float = ...,
         statement_cache_size: int = ...,
@@ -639,6 +644,8 @@ def create_pool(
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
+    service: str | None = ...,
+    servicefile: StrPath | None = ...,
     database: str | None = ...,
     timeout: float = ...,
     statement_cache_size: int = ...,
@@ -646,6 +653,10 @@ def create_pool(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: connection._SSLType | None = ...,
+    direct_tls: bool | None = ...,
+    target_session_attrs: connect_utils.SessionAttribute | None = ...,
+    krbsrvname: str | None = ...,
+    gsslib: connection._GSSLibType | None = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[_Record]: ...
 @overload
@@ -667,6 +678,8 @@ def create_pool(
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
+    service: str | None = ...,
+    servicefile: StrPath | None = ...,
     database: str | None = ...,
     timeout: float = ...,
     statement_cache_size: int = ...,
@@ -674,5 +687,9 @@ def create_pool(
     max_cacheable_statement_size: int = ...,
     command_timeout: float | None = ...,
     ssl: connection._SSLType | None = ...,
+    direct_tls: bool | None = ...,
+    target_session_attrs: connect_utils.SessionAttribute | None = ...,
+    krbsrvname: str | None = ...,
+    gsslib: connection._GSSLibType | None = ...,
     server_settings: dict[str, str] | None = ...,
 ) -> Pool[protocol.Record]: ...

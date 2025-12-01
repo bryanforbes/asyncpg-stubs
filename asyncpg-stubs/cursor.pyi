@@ -3,9 +3,9 @@ from typing import Any, Generic, overload
 from typing_extensions import Self, TypeVar
 
 from . import connection as _connection, connresource
-from .protocol import protocol as _cprotocol
+from .protocol import Record, protocol as _cprotocol
 
-_Record = TypeVar('_Record', bound=_cprotocol.Record, default=_cprotocol.Record)
+_Record = TypeVar('_Record', bound=Record, default=Record)
 
 class CursorFactory(connresource.ConnectionResource, Generic[_Record]):
     __slots__ = (

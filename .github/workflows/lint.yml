@@ -29,12 +29,12 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: '3.14'
           cache: poetry
 
       - name: Install dependencies
         run: |
-          poetry install -v --sync --no-interaction
+          poetry sync -v --no-interaction
 
       - name: Lint
         run: |

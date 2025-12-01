@@ -13,6 +13,7 @@ _ParsedSSLType: TypeAlias = SSLContext | Literal[False]
 _PasswordType: TypeAlias = str | Callable[[], str] | Callable[[], Awaitable[str]]
 
 PGPASSFILE: Final[str]
+PG_SERVICEFILE: Final[str]
 
 class SSLMode(IntEnum):
     disable = 0

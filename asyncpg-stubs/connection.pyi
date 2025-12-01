@@ -1,4 +1,5 @@
 import contextlib
+from _typeshed import StrPath
 from asyncio import AbstractEventLoop
 from collections.abc import (
     AsyncIterable,
@@ -393,6 +394,8 @@ async def connect(
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
+    service: str | None = ...,
+    servicefile: StrPath | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
     timeout: float = ...,
@@ -417,6 +420,8 @@ async def connect(
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
+    service: str | None = ...,
+    servicefile: StrPath | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
     timeout: float = ...,
@@ -442,6 +447,8 @@ async def connect(
     user: str | None = ...,
     password: connect_utils._PasswordType | None = ...,
     passfile: str | None = ...,
+    service: str | None = ...,
+    servicefile: StrPath | None = ...,
     database: str | None = ...,
     loop: AbstractEventLoop | None = ...,
     timeout: float = ...,

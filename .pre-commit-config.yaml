@@ -11,17 +11,11 @@ repos:
       language: system
       entry: poetry run ruff format --force-exclude --check
       files: \.pyi?$
-    - id: mypy38
-      name: mypy (3.8)
-      language: system
-      entry: poetry run mypy
-      args: [--python-version=3.8]
-      files: \.pyi?$
     - id: mypy39
       name: mypy (3.9)
       language: system
       entry: poetry run mypy
-      args: [--python-version=3.10]
+      args: [--python-version=3.9]
       files: \.pyi?$
     - id: mypy310
       name: mypy (3.10)
@@ -47,11 +41,11 @@ repos:
       entry: poetry run mypy
       args: [--python-version=3.13]
       files: \.pyi?$
-    - id: pyright38
-      name: pyright (3.8)
+    - id: mypy314
+      name: mypy (3.14)
       language: system
-      entry: poetry run pyright
-      args: [--pythonversion=3.8]
+      entry: poetry run mypy
+      args: [--python-version=3.14]
       files: \.pyi?$
     - id: pyright39
       name: pyright (3.9)
@@ -82,4 +76,10 @@ repos:
       language: system
       entry: poetry run pyright
       args: [--pythonversion=3.13]
+      files: \.pyi?$
+    - id: pyright314
+      name: pyright (3.14)
+      language: system
+      entry: poetry run pyright
+      args: [--pythonversion=3.14]
       files: \.pyi?$

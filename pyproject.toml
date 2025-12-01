@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncpg-stubs"
-version = "0.30.3.dev0"
+version = "0.31.0.dev0"
 description = "asyncpg stubs"
 homepage = "https://github.com/bryanforbes/asyncpg-stubs"
 authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
@@ -30,7 +30,7 @@ ruff = "0.14.7"
 [tool.ruff]
 extend-exclude = [".venv*"]
 line-length = 88
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.format]
 quote-style = "single"
@@ -64,7 +64,7 @@ parametrize-names-type = "csv"
 inline-quotes = "single"
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 incremental = true
 strict = true
 
@@ -73,7 +73,7 @@ include = ["asyncpg-stubs", "tests"]
 venvPath = "."
 venv = ".venv"
 
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 enableTypeIgnoreComments = false
 reportUnnecessaryTypeIgnoreComment = "warning"
 typeCheckingMode = "strict"

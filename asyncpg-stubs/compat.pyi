@@ -17,9 +17,9 @@ else:
     def markcoroutinefunction(c: Any) -> None: ...
 
 if sys.version_info >= (3, 11):
-    from asyncio import timeout as timeout_ctx
+    from asyncio import timeout as timeout
 else:
-    from async_timeout import timeout as timeout_ctx
+    from async_timeout import timeout as timeout
 
 if sys.version_info >= (3, 11):
     from enum import StrEnum as StrEnum

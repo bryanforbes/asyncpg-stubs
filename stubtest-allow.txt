@@ -1,0 +1,42 @@
+asyncpg.__all__
+
+# These are aliases that point to the same object as the originals.
+asyncpg.connect
+asyncpg.create_pool
+
+asyncpg.compat.StrEnum.__new__
+asyncpg.connect_utils.SSLNegotiation.__new__
+asyncpg.connect_utils.SessionAttribute.__new__
+asyncpg.pool.PoolAcquireContext.__aexit__
+asyncpg.pool.PoolConnectionProxyMeta.__new__
+asyncpg.pool.logger
+asyncpg.exceptions._base.PostgresMessage.message
+asyncpg.exceptions._base.PostgresMessage.sqlstate
+asyncpg.exceptions._base.PostgresMessageMeta.__new__
+asyncpg.exceptions._base.PostgresMessageMeta.get_message_class_for_sqlstate
+
+asyncpg\._testbase\..*
+
+# Cython-generated special methods and attributes
+asyncpg\.(?:pgproto|protocol).*\.__(?:.*_cython|test|pyx_capi)__
+
+# Technically exported but not part of the public API
+asyncpg.pgproto.pgproto.date_from_ordinal
+asyncpg.pgproto.pgproto.infinity_date
+asyncpg.pgproto.pgproto.infinity_datetime
+asyncpg.pgproto.pgproto.negative_infinity_date
+asyncpg.pgproto.pgproto.negative_infinity_datetime
+asyncpg.pgproto.pgproto.pg_UUID
+asyncpg.pgproto.pgproto.pg_epoch_date
+asyncpg.pgproto.pgproto.pg_epoch_datetime
+asyncpg.pgproto.pgproto.pg_epoch_datetime_utc
+asyncpg.pgproto.pgproto.utc
+
+# The stubs can't properly represent these dynamic attributes
+asyncpg.pgproto.types._BitOrderType
+asyncpg.protocol.NO_TIMEOUT
+asyncpg.protocol.protocol.NO_TIMEOUT
+
+asyncpg.protocol.protocol.BaseProtocol.prepare
+asyncpg.protocol.protocol.ConnectionSettings.set_builtin_type_codec
+asyncpg.protocol.protocol.DataCodecConfig.__init__
