@@ -3,5 +3,12 @@
   "extends": [
     "github>bryanforbes/renovate-presets:config-python-lib.json5"
   ],
-  "packageRules": []
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "pre-commit"
+      ],
+      "allowedVersions": "<4.4.0"
+    }
+  ]
 }
