@@ -16,8 +16,8 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-asyncpg = ">=0.30,<0.31"
+python = "^3.9"
+asyncpg = ">=0.31,<0.32"
 typing-extensions = "^4.13.0"
 
 [tool.poetry.group.dev.dependencies]
