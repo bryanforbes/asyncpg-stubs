@@ -1,16 +1,12 @@
-name: Release to PyPI
+name: Release PR
 
 on:
   push:
-    tags:
-      - v[0-9]+.*
-      - test-v[0-9]+.*
+    branches:
+      - master
+      - test/master
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version (without leading v)"
-        required: true
-        type: string
       test_mode:
         description: 'Enable test mode (use test/* branches, skip PyPI publishing)'
         required: false
@@ -22,15 +18,19 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-pr
 
 env:
   MISE_ENV: ci
-  DRY_RUN: ${{ !(startsWith(github.ref_name, 'test-v') || github.event.inputs.test_mode == 'true') }}
-  TEST_MODE: ${{ startsWith(github.ref_name, 'test-v') || github.event.inputs.test_mode == 'true' }}
+  DRY_RUN: ${{ !(github.ref == 'refs/heads/test/master' || github.event.inputs.test_mode == 'true') }}
+  TEST_MODE: ${{ github.ref == 'refs/heads/test/master' || github.event.inputs.test_mode == 'true' }}
 
 jobs:
-  release:
-    name: Release
+  release-pr:
+    name: Create or update release PR
     runs-on: ubuntu-latest
 
     steps:
@@ -51,9 +51,10 @@ jobs:
           virtualenvs-in-project: true
           virtualenvs-path: .venv
 
-      - name: Install dependencies
+      - name: Setup git config
         run: |
-          poetry install -v --only main --no-interaction
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install tools
         uses: jdx/mise-action@v2
@@ -61,12 +62,8 @@ jobs:
           install_args: "cargo-binstall cargo:git-cliff"
           experimental: true
 
-      - name: Build, publish, and bump version
+      - name: Create or update release PR
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG_NAME="${{ github.ref_name }}"
-          if [[ -z "$TAG_NAME" ]]; then
-            TAG_NAME="v${{ inputs.version }}"
-          fi
-          mise run release --tag-name="$TAG_NAME"
+          mise run release-pr

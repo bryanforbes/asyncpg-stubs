@@ -1,0 +1,240 @@
+#!/usr/bin/env bash
+#MISE description="Create or update release PR with version bump and changelog"
+#USAGE flag "--dry-run" negate="--no-dry-run" env="DRY_RUN" default=#true help="Echo commands without executing them (for debugging)"
+#USAGE flag "--test-mode" negate="--no-test-mode" env="TEST_MODE" default=#false help="Test mode: use test/master and test/release branches, create test tags"
+
+# Release script inspired by mise's approach
+# Handles two scenarios:
+# 1. Dev version (with .dev0): Creates/updates release PR with version bump
+# 2. Release version (without .dev0): Tags the release and creates post-release bump commit
+#
+# Test mode: Uses test/* branches instead of master/release, creates test-prefixed tags,
+# and marks PRs as [TEST MODE] to avoid accidental publishing
+
+set -e
+
+# Get flags from usage
+DRY_RUN="${usage_dry_run?}"
+TEST_MODE="${usage_test_mode?}"
+
+if [[ "$DRY_RUN" == "true" ]]; then
+  echo "DRY RUN MODE ENABLED - Commands will be echoed but not executed"
+fi
+
+BASE_BRANCH="master"
+RELEASE_BRANCH="release"
+TAG_PREFIX="v"
+
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "TEST MODE ENABLED - Using test/master and test/release branches"
+  BASE_BRANCH="test/master"
+  RELEASE_BRANCH="test/release"
+  TAG_PREFIX="test-v"
+fi
+
+# Helper function to run or echo commands
+run_cmd() {
+  if [[ "$DRY_RUN" == "true" ]]; then
+    echo "[DRY RUN] $*"
+  else
+    "$@"
+  fi
+}
+
+# Only run in GitHub Actions (unless in dry-run mode for testing)
+if [[ -z "${GITHUB_ACTIONS:-}" ]] && [[ "$DRY_RUN" != "true" ]]; then
+  echo "Error: This script must be run in GitHub Actions"
+  exit 1
+fi
+
+# Check for required tools
+for cmd in git gh poetry git-cliff; do
+  if ! command -v "$cmd" &> /dev/null; then
+    echo "Error: Required command not found: $cmd"
+    exit 1
+  fi
+done
+
+# ============================================================================
+# Step 1: Extract version and handle release versions
+# ============================================================================
+
+CURRENT_VERSION=$(poetry version -s)
+echo "Current version in pyproject.toml: $CURRENT_VERSION"
+
+# Handle release versions (no .dev0 suffix)
+if [[ "$CURRENT_VERSION" != *.dev0 ]]; then
+  echo "Handling release version: $CURRENT_VERSION"
+
+  TAG="$TAG_PREFIX$CURRENT_VERSION"
+  TAGGED_VERSIONS="$(git tag --list)"
+
+  if echo "$TAGGED_VERSIONS" | grep -q "^$TAG$"; then
+    echo "Version $CURRENT_VERSION is already tagged as $TAG"
+    echo "Nothing to do. Exiting."
+    exit 0
+  fi
+
+  # Configure git for commits
+  run_cmd git config user.name "github-actions[bot]"
+  run_cmd git config user.email "github-actions[bot]@users.noreply.github.com"
+
+  # Create the tag
+  run_cmd git tag "$TAG"
+
+  # Push the tag
+  run_cmd git push --tags
+
+  # Create post-release version bump commit
+  # Bump to next patch version with .dev0
+  NEXT_DEV_VERSION="$(poetry version patch --dry-run -s).dev0"
+
+  echo "Bumping to next dev version: $NEXT_DEV_VERSION"
+  run_cmd poetry version "$NEXT_DEV_VERSION"
+
+  # Commit the version bump
+  run_cmd git add pyproject.toml
+  run_cmd git commit -m "chore(release): post-release version bump"
+
+  # Push the commit
+  run_cmd git push origin "$BASE_BRANCH"
+
+  echo "Release version handling completed successfully!"
+  echo "Tagged version: $TAG"
+  echo "Next dev version: $NEXT_DEV_VERSION"
+  if [[ "$TEST_MODE" == "true" ]]; then
+    echo ""
+    echo "⚠️  TEST MODE: Tag created but will NOT trigger publishing"
+    echo "To clean up test artifacts, delete the test-v$CURRENT_VERSION tag and test/* branches"
+  fi
+  exit 0
+fi
+
+# ============================================================================
+# Step 2: Handle Dev Version (create/update release PR)
+# ============================================================================
+
+echo "Handling dev version: $CURRENT_VERSION"
+
+# Check for releasable commits
+echo "Generating changelog to check for releasable commits..."
+
+# Generate changelog for unreleased commits, stripping all formatting
+CHANGELOG=$(git cliff --unreleased --strip all 2>/dev/null || true)
+
+# If there are no releasable commits, we just get "## unreleased"
+# If there are commits, we get "## unreleased\n\n### <Group>\n..."
+if [[ "$CHANGELOG" =~ ^##[[:space:]]*unreleased[[:space:]]*$ ]]; then
+  echo "No releasable commits found. Exiting."
+  exit 0
+fi
+
+echo "Found releasable commits:"
+echo "$CHANGELOG"
+
+# ============================================================================
+# Step 3: Determine version bump based on changelog
+# ============================================================================
+
+# Check if changelog contains asyncpg version bump
+# If lower bound is major.minor only (>=0.31,<...), it's a minor bump → reset to major.minor.0
+# If lower bound has patch (>=0.31.1,<...), it's a patch bump → normal patch increment
+if echo "$CHANGELOG" | grep -qE 'update dependency asyncpg to >=[0-9]+\.[0-9]+,<'; then
+  # Extract version from message: "update dependency asyncpg to >=0.32,<0.33"
+  ASYNCPG_VERSION=$(echo "$CHANGELOG" | grep 'update dependency asyncpg to >=' | head -1 | sed -E 's/.*>=([0-9]+\.[0-9]+).*/\1/')
+  echo "Asyncpg version bump detected: $ASYNCPG_VERSION"
+  NEW_VERSION="$ASYNCPG_VERSION.0"
+  echo "Setting stubs version to: $NEW_VERSION"
+else
+  # Only feat/fix/doc commits: bump patch only
+  NEW_VERSION=$(poetry version patch --dry-run -s)
+  echo "Bumping patch version to: $NEW_VERSION"
+fi
+
+# ============================================================================
+# Step 4: Update pyproject.toml
+# ============================================================================
+
+echo "Updating pyproject.toml with version: $NEW_VERSION"
+run_cmd poetry version "$NEW_VERSION"
+
+# ============================================================================
+# Step 5: Update CHANGELOG.md
+# ============================================================================
+
+echo "Updating CHANGELOG.md with git-cliff..."
+run_cmd git cliff --tag "v$NEW_VERSION" --unreleased --prepend CHANGELOG.md
+
+# ============================================================================
+# Step 6: Create or update release branch and PR
+# ============================================================================
+
+# Configure git for commits
+run_cmd git config user.name "github-actions[bot]"
+run_cmd git config user.email "github-actions[bot]@users.noreply.github.com"
+
+# Create or reset release branch
+run_cmd git checkout -B "$RELEASE_BRANCH"
+
+# Commit changes
+echo "Committing release changes..."
+run_cmd git add pyproject.toml CHANGELOG.md
+run_cmd git commit -m "chore(release): $NEW_VERSION" || echo "Note: No changes to commit"
+
+# Force-push to release branch
+echo "Force-pushing to $RELEASE_BRANCH branch..."
+run_cmd git push origin "$RELEASE_BRANCH" --force
+
+# ============================================================================
+# Step 7: Create or update PR
+# ============================================================================
+
+echo "Creating or updating release PR..."
+
+# Generate PR body from changelog
+PR_BODY=$(git cliff --tag "v$NEW_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $NEW_VERSION")
+
+# Create PR title
+if [[ "$TEST_MODE" == "true" ]]; then
+  PR_TITLE="[TEST MODE] chore(release): $NEW_VERSION"
+  # Prepend test mode warning to body
+  PR_BODY="⚠️ **TEST MODE** - This is a test release and will not be published to PyPI.$(echo)$(echo)$PR_BODY"
+else
+  PR_TITLE="chore(release): $NEW_VERSION"
+fi
+
+# Check if PR already exists
+EXISTING_PR=$(gh pr list \
+  --state open \
+  --head "$RELEASE_BRANCH" \
+  --base "$BASE_BRANCH" \
+  --json number \
+  --jq '.[0].number' 2>/dev/null || echo "")
+
+if [[ -n "$EXISTING_PR" ]]; then
+  echo "Updating existing PR #$EXISTING_PR..."
+  run_cmd gh pr edit "$EXISTING_PR" \
+    --title "$PR_TITLE" \
+    --body "$PR_BODY" \
+    --add-label "release" || echo "Warning: Could not update PR, may already have release label"
+else
+  echo "Creating new PR..."
+  run_cmd gh pr create \
+    --title "$PR_TITLE" \
+    --body "$PR_BODY" \
+    --head "$RELEASE_BRANCH" \
+    --base "$BASE_BRANCH" \
+    --label "release" || echo "Warning: Could not create PR, may already exist"
+fi
+
+echo "Release script completed successfully!"
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "Release version: $TAG_PREFIX$NEW_VERSION (test mode)"
+  echo ""
+  echo "⚠️  TEST MODE CLEANUP:"
+  echo "   - Delete the test PR when done"
+  echo "   - Delete tags: git push origin --delete-refs refs/tags/$TAG_PREFIX*"
+  echo "   - Delete branches: git push origin --delete test/master test/release"
+else
+  echo "Release version: v$NEW_VERSION"
+fi

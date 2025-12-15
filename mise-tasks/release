@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+#MISE description="Build, publish to PyPI, and create GitHub release"
+#USAGE flag "--dry-run" negate="--no-dry-run" env="DRY_RUN" default=#true help="Echo commands without executing them (for debugging)"
+#USAGE flag "--test-mode" negate="--no-test-mode" env="TEST_MODE" default=#false help="Test mode: build and create release, but skip PyPI publishing"
+#USAGE flag "--tag-name <tag>" help="Tag name for the release (should be set in GitHub Actions on tag push or workflow dispatch)"
+
+# Release script to handle the complete publication workflow
+# Runs after release PR is merged with a tag created
+# Builds package, creates GitHub release, and publishes to PyPI
+#
+# Test mode: Builds package, creates GitHub release marked as test, but skips PyPI publishing
+
+set -e
+
+# Get flags from usage
+DRY_RUN="${usage_dry_run?}"
+TEST_MODE="${usage_test_mode?}"
+
+echo "DRY_RUN is set to: $DRY_RUN"
+
+if [[ "$DRY_RUN" == "true" ]]; then
+  echo "DRY RUN MODE ENABLED - Commands will be echoed but not executed"
+fi
+
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "TEST MODE ENABLED - Will skip PyPI publishing"
+fi
+
+# Helper function to run or echo commands
+run_cmd() {
+  if [[ "$DRY_RUN" == "true" ]]; then
+    echo "[DRY RUN] $*"
+  else
+    "$@"
+  fi
+}
+
+# Check for required tools
+for cmd in git gh poetry git-cliff; do
+  if ! command -v "$cmd" &> /dev/null; then
+    echo "Error: Required command not found: $cmd"
+    exit 1
+  fi
+done
+
+# Get the tag name (version)
+TAG_NAME="${usage_tag_name:?}"
+
+echo "Building release for tag: $TAG_NAME"
+
+# ============================================================================
+# Step 1: Build package
+# ============================================================================
+
+echo "Building package..."
+run_cmd poetry build -vvv
+
+# ============================================================================
+# Step 2: Publish to PyPI
+# ============================================================================
+
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "⚠️  TEST MODE: Skipping PyPI publishing"
+else
+  echo "Publishing to PyPI..."
+  run_cmd poetry publish -n
+fi
+
+# ============================================================================
+# Step 3: Create GitHub release
+# ============================================================================
+
+echo "Creating GitHub release..."
+
+# Get release notes from tag
+git cliff --latest --strip header 2>/dev/null > /tmp/release-notes.md && cat /tmp/release-notes.md
+
+# Add test mode indicator to release title
+RELEASE_TITLE="$TAG_NAME"
+if [[ "$TEST_MODE" == "true" ]]; then
+  RELEASE_TITLE="[TEST MODE] $TAG_NAME"
+fi
+
+# Add test mode warning to release notes
+RELEASE_NOTES_FILE="/tmp/release-notes.md"
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "⚠️ **TEST MODE** - This is a test release and was NOT published to PyPI" > /tmp/release-notes-test.md
+  echo "" >> /tmp/release-notes-test.md
+  cat "$RELEASE_NOTES_FILE" >> /tmp/release-notes-test.md
+  RELEASE_NOTES_FILE="/tmp/release-notes-test.md"
+fi
+
+run_cmd gh release create "$TAG_NAME" \
+  --title "$RELEASE_TITLE" \
+  --notes-file "$RELEASE_NOTES_FILE" \
+  dist/*
+
+echo "Release completed successfully!"
+if [[ "$TEST_MODE" == "true" ]]; then
+  echo "Test version: $TAG_NAME (NOT published to PyPI)"
+else
+  echo "Published version: $TAG_NAME"
+fi

@@ -6,13 +6,20 @@ lockfile = true
 venv_stdlib = true
 
 [tools]
+cargo-binstall = "latest"
+"cargo:git-cliff" = "latest"
+poetry = "latest"
 python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [env]
 _.python.venv = { path = ".venv", create = true }
 
 [hooks]
-postinstall = 'poetry install'
+postinstall = '''
+{% if mise_env is not containing("ci") %}
+  poetry install --all-extras
+{% endif %}
+'''
 
 [tasks.stubtest]
 description = "Run stubtest against asyncpg"
