@@ -73,7 +73,8 @@ fi
 echo "Creating GitHub release..."
 
 # Get release notes from tag
-git cliff --latest --strip header 2>/dev/null > /tmp/release-notes.md && cat /tmp/release-notes.md
+RELEASE_NOTES_FILE="/tmp/release-notes.md"
+git cliff --latest --strip header 2>/dev/null > "$RELEASE_NOTES_FILE" && cat "$RELEASE_NOTES_FILE"
 
 # Add test mode indicator to release title
 RELEASE_TITLE="$TAG_NAME"
@@ -82,7 +83,6 @@ if [[ "$TEST_MODE" == "true" ]]; then
 fi
 
 # Add test mode warning to release notes
-RELEASE_NOTES_FILE="/tmp/release-notes.md"
 if [[ "$TEST_MODE" == "true" ]]; then
   echo "⚠️ **TEST MODE** - This is a test release and was NOT published to PyPI" > /tmp/release-notes-test.md
   echo "" >> /tmp/release-notes-test.md
