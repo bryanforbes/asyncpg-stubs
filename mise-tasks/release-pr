@@ -195,12 +195,12 @@ echo "Creating or updating release PR..."
 PR_BODY=$(git cliff --tag "v$NEW_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $NEW_VERSION")
 
 # Create PR title
+PR_TITLE="chore(release): $NEW_VERSION"
+
 if [[ "$TEST_MODE" == "true" ]]; then
-  PR_TITLE="[TEST MODE] chore(release): $NEW_VERSION"
+  PR_TITLE="[TEST MODE] $PR_TITLE"
   # Prepend test mode warning to body
-  PR_BODY="⚠️ **TEST MODE** - This is a test release and will not be published to PyPI.$(echo)$(echo)$PR_BODY"
-else
-  PR_TITLE="chore(release): $NEW_VERSION"
+  PR_BODY="⚠️ **TEST MODE** - This is a test release and will not be published to PyPI.\n\n$PR_BODY"
 fi
 
 # Check if PR already exists
