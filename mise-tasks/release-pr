@@ -215,16 +215,14 @@ if [[ -n "$EXISTING_PR" ]]; then
   echo "Updating existing PR #$EXISTING_PR..."
   run_cmd gh pr edit "$EXISTING_PR" \
     --title "$PR_TITLE" \
-    --body "$PR_BODY" \
-    --add-label "release" || echo "Warning: Could not update PR, may already have release label"
+    --body "$PR_BODY" || echo "Warning: Could not update PR"
 else
   echo "Creating new PR..."
   run_cmd gh pr create \
     --title "$PR_TITLE" \
     --body "$PR_BODY" \
     --head "$RELEASE_BRANCH" \
-    --base "$BASE_BRANCH" \
-    --label "release" || echo "Warning: Could not create PR, may already exist"
+    --base "$BASE_BRANCH" || echo "Warning: Could not create PR, may already exist"
 fi
 
 echo "Release script completed successfully!"
