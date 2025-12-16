@@ -22,7 +22,7 @@ class PreparedStatement(connresource.ConnectionResource, Generic[_Record]):
     def get_attributes(self) -> tuple[types.Attribute, ...]: ...
     def cursor(
         self,
-        *args: Any,
+        *args: object,
         prefetch: int | None = ...,
         timeout: float | None = ...,
     ) -> cursor.CursorFactory[_Record]: ...
