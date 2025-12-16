@@ -81,7 +81,7 @@ if [[ "$CURRENT_VERSION" != *.dev0 ]]; then
 
   # Create the tag
   TAG_MESSAGE="$(git cliff --tag "v$CURRENT_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $CURRENT_VERSION")"
-  run_cmd git tag "$TAG" -s -m "$TAG_MESSAGE"
+  run_cmd git tag "$TAG" -a -m "$TAG_MESSAGE"
 
   # Push the tag
   run_cmd git push origin "$TAG"
