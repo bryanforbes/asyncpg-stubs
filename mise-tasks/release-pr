@@ -80,10 +80,11 @@ if [[ "$CURRENT_VERSION" != *.dev0 ]]; then
   run_cmd git config user.email "github-actions[bot]@users.noreply.github.com"
 
   # Create the tag
-  run_cmd git tag "$TAG"
+  TAG_MESSAGE="$(git cliff --tag "v$CURRENT_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $CURRENT_VERSION")"
+  run_cmd git tag "$TAG" -s -m "$TAG_MESSAGE"
 
   # Push the tag
-  run_cmd git push --tags
+  run_cmd git push origin "$TAG"
 
   # Create post-release version bump commit
   # Bump to next patch version with .dev0

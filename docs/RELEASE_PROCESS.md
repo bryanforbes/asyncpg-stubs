@@ -130,7 +130,7 @@ Review the release PR:
    - If tag missing: Continue
 
 4. **Create and Push Tag**
-   - Create lightweight tag: `v<VERSION>`
+   - Create annotated tag: `v<VERSION>`
    - Push tags to origin (automatically triggers `release.yml`)
 
 5. **Post-Release Version Bump**
