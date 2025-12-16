@@ -192,15 +192,19 @@ run_cmd git push origin "$RELEASE_BRANCH" --force
 echo "Creating or updating release PR..."
 
 # Generate PR body from changelog
-PR_BODY=$(git cliff --tag "v$NEW_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $NEW_VERSION")
+PR_BODY_FILE="/tmp/pr-body.md"
+(git cliff --tag "v$NEW_VERSION" --unreleased --strip header 2>/dev/null | tail -n +3 || echo "Release $NEW_VERSION") > "$PR_BODY_FILE"
 
 # Create PR title
+PR_TITLE="chore(release): $NEW_VERSION"
 if [[ "$TEST_MODE" == "true" ]]; then
-  PR_TITLE="[TEST MODE] chore(release): $NEW_VERSION"
+  PR_TITLE="[TEST MODE] $PR_TITLE"
+
   # Prepend test mode warning to body
-  PR_BODY="⚠️ **TEST MODE** - This is a test release and will not be published to PyPI.$(echo)$(echo)$PR_BODY"
-else
-  PR_TITLE="chore(release): $NEW_VERSION"
+  echo "⚠️ **TEST MODE** - This is a test release and will not be published to PyPI." > /tmp/pr-body-test.md
+  echo "" >> /tmp/pr-body-test.md
+  cat "$PR_BODY_FILE" >> /tmp/pr-body-test.md
+  PR_BODY_FILE="/tmp/pr-body-test.md"
 fi
 
 # Check if PR already exists
@@ -215,16 +219,14 @@ if [[ -n "$EXISTING_PR" ]]; then
   echo "Updating existing PR #$EXISTING_PR..."
   run_cmd gh pr edit "$EXISTING_PR" \
     --title "$PR_TITLE" \
-    --body "$PR_BODY" \
-    --add-label "release" || echo "Warning: Could not update PR, may already have release label"
+    --body-file "$PR_BODY_FILE" || echo "Warning: Could not update PR, may already have release label"
 else
   echo "Creating new PR..."
   run_cmd gh pr create \
     --title "$PR_TITLE" \
-    --body "$PR_BODY" \
+    --body-file "$PR_BODY_FILE" \
     --head "$RELEASE_BRANCH" \
-    --base "$BASE_BRANCH" \
-    --label "release" || echo "Warning: Could not create PR, may already exist"
+    --base "$BASE_BRANCH" || echo "Warning: Could not create PR, may already exist"
 fi
 
 echo "Release script completed successfully!"
