@@ -24,8 +24,8 @@ typing-extensions = "^4.13.0"
 async-timeout = "5.0.1"
 pre-commit = "4.3.0"
 pyright = {version = "1.1.407", extras = ["nodejs"]}
-mypy = "1.19.0"
-ruff = "0.14.8"
+mypy = "1.19.1"
+ruff = "0.14.9"
 
 [tool.ruff]
 extend-exclude = [".venv*"]
