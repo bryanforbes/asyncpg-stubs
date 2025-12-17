@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.2](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.1..v0.31.2) - 2025-12-17
+
+### Bug Fixes
+
+- **prepared_stmt** test commit ([97023e8](https://github.com/bryanforbes/asyncpg-stubs/commit/97023e84b6b5cb20e4b4de6bb00a0d6cffc5a4c2))
+- **prepared_stmt** revert test commit ([a20aabd](https://github.com/bryanforbes/asyncpg-stubs/commit/a20aabde67c674b6be4b931cef66b7fea60b765f))
+
 ## [0.31.1](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.0..v0.31.1) - 2025-12-10
 
 ### Bug Fixes
