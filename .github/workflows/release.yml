@@ -37,6 +37,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
+          token: ${{ secrets.ASYNCPG_STUBS_GH_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Python
@@ -63,6 +64,7 @@ jobs:
 
       - name: Build, publish, and bump version
         env:
+          GITHUB_TOKEN: ${{ secrets.ASYNCPG_STUBS_GH_TOKEN }}
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
           TAG_NAME="${{ github.ref_name }}"

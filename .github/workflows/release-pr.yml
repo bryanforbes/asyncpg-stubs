@@ -37,6 +37,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
+          token: ${{ secrets.ASYNCPG_STUBS_GH_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Python
@@ -64,6 +65,6 @@ jobs:
 
       - name: Create or update release PR
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ASYNCPG_STUBS_GH_TOKEN }}
         run: |
           mise run release-pr
