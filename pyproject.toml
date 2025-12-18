@@ -1,32 +1,41 @@
-[tool.poetry]
+[project]
 name = "asyncpg-stubs"
 version = "0.31.2.dev0"
 description = "asyncpg stubs"
-homepage = "https://github.com/bryanforbes/asyncpg-stubs"
-authors = ["Bryan Forbes <bryan@reigndropsfall.net>"]
+authors = [
+  {name = "Bryan Forbes", email = "bryan@reigndropsfall.net"},
+]
 license = "BSD-3-Clause"
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
+dynamic = ["classifiers"]
+requires-python = ">=3.9,<4.0"
+dependencies = [
+  "asyncpg >=0.31, <0.32",
+  "typing-extensions >=4.13.0, <5.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/bryanforbes/asyncpg-stubs"
+
+[dependency-groups]
+dev = [
+  "async-timeout ==5.0.1",
+  # Mark this as 3.10+ to get the latest version
+  "pre-commit ==4.5.1 ; python_version >= '3.10' and python_version < '4.0'",
+  "pyright[nodejs] ==1.1.407",
+  "mypy ==1.19.1",
+  "ruff ==0.14.9",
+]
+
+[tool.poetry]
 packages = [
-  { include = "asyncpg-stubs" }
+  { include = "asyncpg-stubs" },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
-  "Typing :: Typed"
+  "Typing :: Typed",
 ]
-
-[tool.poetry.dependencies]
-python = "^3.9"
-asyncpg = ">=0.31,<0.32"
-typing-extensions = "^4.13.0"
-
-[tool.poetry.group.dev.dependencies]
-async-timeout = "5.0.1"
-# Mark this as 3.10+ to get the latest version
-pre-commit = {version = "4.5.1", python = "^3.10"}
-pyright = {version = "1.1.407", extras = ["nodejs"]}
-mypy = "1.19.1"
-ruff = "0.14.9"
 
 [tool.ruff]
 extend-exclude = [".venv*"]
@@ -84,5 +93,5 @@ reportUnusedVariable = "none"
 reportImportCycles = "none"
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
