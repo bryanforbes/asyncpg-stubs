@@ -227,7 +227,8 @@ else
     --title "$PR_TITLE" \
     --body-file "$PR_BODY_FILE" \
     --head "$RELEASE_BRANCH" \
-    --base "$BASE_BRANCH" || echo "Warning: Could not create PR, may already exist"
+    --base "$BASE_BRANCH" \
+    --label "release" || echo "Warning: Could not create PR, may already exist"
 fi
 
 echo "Release script completed successfully!"

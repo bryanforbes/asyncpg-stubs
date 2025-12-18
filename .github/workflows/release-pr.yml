@@ -25,7 +25,7 @@ concurrency:
 
 env:
   MISE_ENV: ci
-  DRY_RUN: ${{ !(github.ref == 'refs/heads/test/master' || github.event.inputs.test_mode == 'true') }}
+  DRY_RUN: 'false'
   TEST_MODE: ${{ github.ref == 'refs/heads/test/master' || github.event.inputs.test_mode == 'true' }}
 
 jobs:
@@ -51,11 +51,6 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
           virtualenvs-path: .venv
-
-      - name: Setup git config
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install tools
         uses: jdx/mise-action@v2
