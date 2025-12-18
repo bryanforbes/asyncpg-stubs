@@ -81,18 +81,16 @@ protect_breaking_commits = false
 # Assigns commits to groups.
 # Optionally sets the commit's scope and can decide to exclude commits from further processing.
 commit_parsers = [
-    { message = '^release:', skip = true },
-    { message = '^Post release version bump', skip = true },
-    { message = '^chore\(release\):', skip = true },
-    { message = '^ci', skip = true },
-    { message = '^chore\(pr\)', skip = true },
-    { message = '^chore\(pull\)', skip = true },
-    { message = '^chore\(dev\)', skip = true },
-    { message = '[lL]ock ?[fF]ile', skip = true },
     # asyncpg version updates (major/minor) are releasable
     { message = '^chore\(deps\): update dependency asyncpg', group = "<!-- 98 -->Dependency Updates" },
-    # skip all other chore(deps) commits (typing-extensions, etc.)
-    { message = '^chore\(deps\)', skip = true },
+    { body = ".*security", group = "<!-- 08 -->Security" },
+    # skip all other chore commits
+    { message = '^chore', skip = true },
+
+    { message = '^release:', skip = true },
+    { message = '^Post release version bump', skip = true },
+    { message = '^ci', skip = true },
+    { message = '[lL]ock ?[fF]ile', skip = true },
     { message = "^feat", group = "<!-- 01 -->Features" },
     { message = "^fix", group = "<!-- 02 -->Bug Fixes" },
     { message = "^refactor", group = "<!-- 03 -->Refactor" },
@@ -100,7 +98,6 @@ commit_parsers = [
     { message = "^perf", group = "<!-- 05 -->Performance" },
     { message = "^style", group = "<!-- 06 -->Styling" },
     { message = "^test", group = "<!-- 07 -->Testing" },
-    { body = ".*security", group = "<!-- 08 -->Security" },
     { message = "^[Rr]evert", group = "<!-- 09 -->Revert" },
     { message = '.*', group = "<!-- 99 -->Miscellaneous" },
 ]
