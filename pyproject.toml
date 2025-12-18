@@ -22,7 +22,8 @@ typing-extensions = "^4.13.0"
 
 [tool.poetry.group.dev.dependencies]
 async-timeout = "5.0.1"
-pre-commit = "4.3.0"
+# Mark this as 3.10+ to get the latest version
+pre-commit = {version = "4.3.0", python = "^3.10"}
 pyright = {version = "1.1.407", extras = ["nodejs"]}
 mypy = "1.19.1"
 ruff = "0.14.9"

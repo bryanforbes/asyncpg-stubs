@@ -9,7 +9,8 @@ venv_stdlib = true
 cargo-binstall = "latest"
 "cargo:git-cliff" = "latest"
 poetry = "latest"
-python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+# 3.9 is after 3.10 so the virtualenv gets created with 3.10 by default
+python = ["3.10", "3.9", "3.11", "3.12", "3.13", "3.14"]
 
 [env]
 _.python.venv = { path = ".venv", create = true }
