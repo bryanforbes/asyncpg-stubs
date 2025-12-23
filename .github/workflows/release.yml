@@ -1,4 +1,4 @@
-name: Release to PyPI
+name: release
 
 on:
   push:
@@ -30,8 +30,8 @@ env:
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
+    if: ${{ github.repository == 'bryanforbes/asyncpg-stubs' }}
 
     steps:
       - name: Checkout repo

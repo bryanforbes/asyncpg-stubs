@@ -1,4 +1,4 @@
-name: Release PR
+name: release-pr
 
 on:
   push:
@@ -30,8 +30,8 @@ env:
 
 jobs:
   release-pr:
-    name: Create or update release PR
     runs-on: ubuntu-latest
+    if: ${{ github.repository == 'bryanforbes/asyncpg-stubs' }}
 
     steps:
       - name: Checkout repo
