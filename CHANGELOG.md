@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-- **prepared_stmt** `fetchmany()` and `execute()` signatures ([#405](https://github.com/bryanforbes/asyncpg-stubs/pull/405))
+- **(prepared_stmt)** `fetchmany()` and `execute()` signatures ([#405](https://github.com/bryanforbes/asyncpg-stubs/pull/405))
 
 ## [0.31.0](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.30.2..v0.31.0) - 2025-12-01
 
