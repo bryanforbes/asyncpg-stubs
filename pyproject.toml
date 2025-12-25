@@ -1,6 +1,6 @@
 [project]
 name = "asyncpg-stubs"
-version = "0.31.2.dev0"
+version = "0.31.2"
 description = "asyncpg stubs"
 authors = [
   {name = "Bryan Forbes", email = "bryan@reigndropsfall.net"},

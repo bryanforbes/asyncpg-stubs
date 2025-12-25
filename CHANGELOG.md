@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.31.2](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.1..v0.31.2) - 2025-12-25
+
+### Features
+
+- update pyproject.toml to modern syntax ([a14d779](https://github.com/bryanforbes/asyncpg-stubs/commit/a14d77970052d39aa19fc98fe9c045b2d1be5ae2))
+
 ## [0.31.1](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.0..v0.31.1) - 2025-12-10
 
 ### Bug Fixes
