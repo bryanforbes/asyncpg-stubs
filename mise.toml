@@ -5,7 +5,7 @@ lockfile = true
 venv_stdlib = true
 
 [tools]
-cargo-binstall = "1.17.5"
+"aqua:cargo-binstall" = "1.17.5"
 "cargo:git-cliff" = "2.12.0"
 poetry = "2.3.2"
 # 3.9 is after 3.10 so the virtualenv gets created with 3.10 by default
