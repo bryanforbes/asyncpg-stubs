@@ -1,40 +1,70 @@
 [[tools.cargo-binstall]]
-version = "1.16.5"
+version = "1.17.5"
 backend = "aqua:cargo-bins/cargo-binstall"
-"platforms.linux-arm64" = { checksum = "sha256:82ec0ab49395a76f66ee5bff4be720bcb9b196116a7a687246aab84d3ae02588", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.16.5/cargo-binstall-aarch64-unknown-linux-musl.tgz"}
-"platforms.linux-x64" = { checksum = "sha256:474fde0655d2895175cfa0ac10d332c4d6c8489992fa98b17726ec56d872254b", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.16.5/cargo-binstall-x86_64-unknown-linux-musl.tgz"}
-"platforms.macos-arm64" = { checksum = "sha256:c0ef1a0ed64689f56191a7892fa4c30795a2923d524c4b66e5ba174c44db6a83", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.16.5/cargo-binstall-aarch64-apple-darwin.zip"}
-"platforms.macos-x64" = { checksum = "sha256:e1622d3763bf96e64d980e7510898f66a461a3a346bfff6fd85154feeca194d3", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.16.5/cargo-binstall-x86_64-apple-darwin.zip"}
-"platforms.windows-x64" = { checksum = "sha256:913f5c0d676d0df5d0d527f418c6d9b300e8296bd0771ab04ff94fa95f425642", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.16.5/cargo-binstall-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:6a82fd5207e0647fcb28fc8db30b0186a2e6223aaa5411a588f0573c77d620e3", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.17.5/cargo-binstall-aarch64-unknown-linux-musl.tgz"}
+"platforms.linux-x64" = { checksum = "sha256:c0f247726165afc445076a9d58cf3795512b6e5787ae469297a39b8c9e30a51f", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.17.5/cargo-binstall-x86_64-unknown-linux-musl.tgz"}
+"platforms.macos-arm64" = { checksum = "sha256:896e75a79773a11ad651649dce449a223ddd1dc718e687301988b46ee26fe58f", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.17.5/cargo-binstall-aarch64-apple-darwin.zip"}
+"platforms.macos-x64" = { checksum = "sha256:2471743078bbf1685e8493121b03c6555042690ea10661e0fddba647bceac13c", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.17.5/cargo-binstall-x86_64-apple-darwin.zip"}
+"platforms.windows-x64" = { checksum = "sha256:501697fe946b691d215600d144b53b696cc6fb03f3e1773f582b375672c26be6", url = "https://github.com/cargo-bins/cargo-binstall/releases/download/v1.17.5/cargo-binstall-x86_64-pc-windows-msvc.zip"}
 
 [[tools."cargo:git-cliff"]]
-version = "2.11.0"
+version = "2.12.0"
 backend = "cargo:git-cliff"
 
 [[tools.poetry]]
-version = "2.2.1"
+version = "2.3.2"
 backend = "vfox:poetry"
 
 [[tools.python]]
 version = "3.10.19"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:f2916a20f3de5500df5129e37dd0a213281dea29e226ec1ffe7fecdb10955533", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.10.19+20260211-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:d71df61d1cdb59af4443912da8eeca744a52e782ff5deefa966ead893235a39e", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.10.19+20260211-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:e6634b06afa2ae79e664cf34174dad5d31b30117f90a01d533de3f4e9db6974e", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.10.19+20260211-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:8d08ff2d9bb20566223f20307c8d9c31bdf020b1f1a237c2aa6efd1de651bf7b", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.10.19+20260211-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:b892f2c7eb0a04611688d6df7567a2745a204aac694d6d1c56c75b0717dab2d6", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.10.19+20260211-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
 
 [[tools.python]]
 version = "3.11.14"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:2f0ddbf14af77bb8c2348f51dcdf1d59e5ff5f569ea4333e39253fbe76d37597", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.11.14+20260211-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:1fb6a89daa750f7eff00eb65d901c3c236713812eb9c8c7e07ecdfcd78203c8e", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.11.14+20260211-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:d5f10f6fdc6f4afb5d251578edb89d8c0ece8f9f56e38b0019e2a94e8f0f4852", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.11.14+20260211-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:7d335ad1c055fcc307723ae016018d8f861b0d49a80f43d5d4d595e7092dcae5", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.11.14+20260211-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:db4a7b6389961f194ef5c1cb21a46c023dbc13703ac51f7bd7eaa1088740ca72", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.11.14+20260211-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
 
 [[tools.python]]
 version = "3.12.12"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:85fdc64fe672de7337198a63d89918037bf93bdb03480404d90f8f601abef1dd", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.12.12+20260211-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:1dbaa624a09e15afe7efbdac08d42993135a68db8d34f986ef6977a6d77bdc3c", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.12.12+20260211-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:22625deaf5757e7c266cf1a096c9151a06b598b1e14632a2ec9993d58ec5fe84", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.12.12+20260211-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:a84ac7a36d465bc6eb68db84540fdb5da04333900e2c3cb34b5d454f2022048c", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.12.12+20260211-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:93bf8e8c05ede0077b197a29c99ebdaf253497f27190097494265150b4e70ba8", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.12.12+20260211-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
 
 [[tools.python]]
-version = "3.13.11"
+version = "3.13.12"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:180918f7fe5384bc09cf836103a5318a94a15725fa64df2005caedd56c36d64c", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.13.12+20260211-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:bab0e2aeec8a32a7f5cb62240d088d50ea468ef6d7522681bc171d527a5ba6f8", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.13.12+20260211-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:fdf98aad59d6fb99a0fc42a0392956bd7f246793003c1789b798f20e38b8ae75", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.13.12+20260211-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:a43f811568fba89d788fa822d85b7f18822f695d76f96709dca017dc9b86b263", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.13.12+20260211-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:b73415a86dcf298a2f4a585c5371fb1cf003576d2bdc2b80a34d5321284b2ed4", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.13.12+20260211-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
 
 [[tools.python]]
-version = "3.14.2"
+version = "3.14.3"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:e9b0aef9baafb6b9e7a4d47b82d6d9778eeafb2c95d23fb5247d3a5f8e52c5a5", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.14.3+20260211-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:759457004082459a402f369225b82565d88ca8257d9fd11c642a1c76ab0cb1cc", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.14.3+20260211-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:348647e4c13b662f7b0d218ccf472688038679815fb1a429ca664b7dce324237", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.14.3+20260211-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:107c71b272b5eeecd7b7b607c4fac0796b0f221bc3391e6155a349789cc7eb17", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.14.3+20260211-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:dc5feea0e16807e7c7b2d20af3f2c18c7153f9cbd4b54063172553fda60c5a1f", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260211/cpython-3.14.3+20260211-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
 
 [[tools.python]]
 version = "3.9.25"
 backend = "core:python"
+"platforms.linux-arm64" = { checksum = "sha256:2f17406709afd0f07674dd3ce92a4b23c6adf8baac3f402555d192e0f3333bef", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25+20251031-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:fe04e8b27bd69ca2144fc542428f8b9b5287b6a2e45516a4acfe2c2bc3102773", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25+20251031-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:1dca0e37d56b7da3ec6a7d2f75cc72a2df3bd05751606300934b2dc6fd7026ea", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25+20251031-aarch64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:ae1f63f9597a9c29c83a550bc34a6a0f6e1e4d380244557d803e6d3aace31069", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25+20251031-x86_64-apple-darwin-install_only_stripped.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:6898722ab4242e304daf1490e2545bee7e7befacef82a9362f9496c0ee616ece", url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25+20251031-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"}
