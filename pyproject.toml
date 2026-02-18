@@ -22,9 +22,9 @@ dev = [
   "async-timeout ==5.0.1",
   # Mark this as 3.10+ to get the latest version
   "pre-commit ==4.5.1 ; python_version >= '3.10' and python_version < '4.0'",
-  "pyright[nodejs] ==1.1.407",
+  "pyright[nodejs] ==1.1.408",
   "mypy ==1.19.1",
-  "ruff ==0.14.10",
+  "ruff ==0.15.1",
 ]
 
 [tool.poetry]
