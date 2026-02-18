@@ -62,7 +62,7 @@ class _Listener(Protocol):
         channel: str,
         payload: object,
         /,
-    ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
+    ) -> Awaitable[None] | Generator[Any] | None: ...
 
 class _LogListener(Protocol):
     def __call__(
@@ -70,17 +70,17 @@ class _LogListener(Protocol):
         con_ref: Connection[Any] | pool.PoolConnectionProxy[Any],
         message: exceptions.PostgresLogMessage,
         /,
-    ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
+    ) -> Awaitable[None] | Generator[Any] | None: ...
 
 class _TerminationListener(Protocol):
     def __call__(
         self, con_ref: Connection[Any] | pool.PoolConnectionProxy[Any], /
-    ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
+    ) -> Awaitable[None] | Generator[Any] | None: ...
 
 class _QueryLogger(Protocol):
     def __call__(
         self, record: LoggedQuery, /
-    ) -> Awaitable[None] | Generator[Any, None, None] | None: ...
+    ) -> Awaitable[None] | Generator[Any] | None: ...
 
 class ConnectionMeta(type):
     def __instancecheck__(cls, instance: object) -> bool: ...
