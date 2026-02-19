@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.31.3](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.2..v0.31.3) - 2026-02-19
+
+### Bug Fixes
+
+- add a comment for test ([0c6caa2](https://github.com/bryanforbes/asyncpg-stubs/commit/0c6caa2127e1bc9041ad3f1ebd7320c8318bc119))
+
 ## [0.31.2](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.1..v0.31.2) - 2026-02-19
 
 ### Features
