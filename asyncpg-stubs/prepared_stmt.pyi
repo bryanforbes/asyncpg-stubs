@@ -1,3 +1,4 @@
+# Some comment
 from collections.abc import Iterable, Sequence
 from typing import Any, Generic
 from typing_extensions import TypeVar
