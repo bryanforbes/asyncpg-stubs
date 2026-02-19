@@ -106,7 +106,13 @@ if [[ "$CURRENT_VERSION" != *.dev0 ]]; then
   if [[ "$TEST_MODE" == "true" ]]; then
     echo ""
     echo "⚠️  TEST MODE: Tag created but will NOT trigger publishing"
-    echo "To clean up test artifacts, delete the test-v$CURRENT_VERSION tag and test/* branches"
+    echo ""
+    echo "⚠️  TEST MODE CLEANUP:"
+    echo "   - Delete tags: git push origin --delete tag $TAG_PREFIX$NEW_VERSION"
+    echo "   - Delete local tags: git tag --delete $TAG_PREFIX$NEW_VERSION"
+    echo "   - Delete branches: git push origin --delete test/master"
+    echo "   - Delete local branches: git branch --delete --force test/master"
+    echo "   - Delete releases: gh release delete $TAG_PREFIX$NEW_VERSION"
   fi
   exit 0
 fi
@@ -237,8 +243,10 @@ if [[ "$TEST_MODE" == "true" ]]; then
   echo ""
   echo "⚠️  TEST MODE CLEANUP:"
   echo "   - Delete the test PR when done"
-  echo "   - Delete tags: git push origin --delete-refs refs/tags/$TAG_PREFIX*"
+  echo "   - Delete tags: git push origin --delete tag $TAG_PREFIX$NEW_VERSION"
+  echo "   - Delete local tags: git tag --delete $TAG_PREFIX$NEW_VERSION"
   echo "   - Delete branches: git push origin --delete test/master test/release"
+  echo "   - Delete local branches: git branch --delete --force test/master test/release"
 else
   echo "Release version: v$NEW_VERSION"
 fi
