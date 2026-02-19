@@ -1,4 +1,5 @@
 [settings]
+experimental = true
 lockfile = true
 
 [settings.python]
@@ -15,11 +16,7 @@ python = ["3.10", "3.9", "3.11", "3.12", "3.13", "3.14"]
 _.python.venv = { path = ".venv", create = true }
 
 [hooks]
-postinstall = '''
-{% if mise_env is not containing("ci") %}
-  poetry install --all-extras
-{% endif %}
-'''
+postinstall = 'poetry install --all-extras'
 
 [tasks.stubtest]
 description = "Run stubtest against asyncpg"

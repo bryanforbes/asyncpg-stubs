@@ -1,3 +1,8 @@
+[settings]
+auto_install_disable_tools = ["poetry", "python"]
+disable_tools = ["poetry", "python"]
+no_hooks = true
+
 [tools]
 python = "3.14"
 
