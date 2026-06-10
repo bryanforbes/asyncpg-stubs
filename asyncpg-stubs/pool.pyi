@@ -6,7 +6,6 @@ from collections.abc import (
     Callable,
     Generator,
     Iterable,
-    Iterator,
     Sequence,
 )
 from typing import Any, Generic, Protocol, overload
@@ -341,7 +340,7 @@ class PoolConnectionProxy(
     def get_reset_query(self) -> str: ...
     async def reload_schema_state(self) -> None: ...
     @contextlib.contextmanager
-    def query_logger(self, callback: connection._QueryLogger) -> Iterator[None]: ...
+    def query_logger(self, callback: connection._QueryLogger) -> Generator[None]: ...
 
 class PoolConnectionHolder(Generic[_Record]):
     __slots__ = (
