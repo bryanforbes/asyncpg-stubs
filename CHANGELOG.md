@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.31.3](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.2..v0.31.3) - 2026-06-10
+
+### Bug Fixes
+
+- use `Generator` for context managers ([8cb4973](https://github.com/bryanforbes/asyncpg-stubs/commit/8cb4973c1922b096f828c8aebfd2d2f1a53d9864))
+
 ## [0.31.2](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.1..v0.31.2) - 2026-02-19
 
 ### Features
