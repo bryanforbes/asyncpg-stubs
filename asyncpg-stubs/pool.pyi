@@ -670,7 +670,8 @@ def create_pool(
     setup: _SetupCallback[protocol.Record] | None = ...,
     connect: _Connect[protocol.Record] | None = None,
     init: _InitCallback[protocol.Record] | None = ...,
-    reset: Callable[[connection.Connection[protocol.Record]], Awaitable[None]] | None = None,
+    reset: Callable[[connection.Connection[protocol.Record]], Awaitable[None]]
+    | None = None,
     loop: AbstractEventLoop | None = ...,
     connection_class: type[connection.Connection[protocol.Record]] = ...,
     host: connection._HostType | None = ...,
