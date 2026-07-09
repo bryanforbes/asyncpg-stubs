@@ -3,6 +3,7 @@ from _typeshed import StrPath
 from asyncio import AbstractEventLoop
 from collections.abc import (
     AsyncIterable,
+    Awaitable,
     Callable,
     Generator,
     Iterable,
@@ -407,7 +408,7 @@ class Pool(Generic[_Record]):
         connect: _Connect[_Record] | None = None,
         setup: _SetupCallback[_Record] | None = None,
         init: _InitCallback[_Record] | None = None,
-        reset: Callable[[_Connection], None] | None = None,
+        reset: Callable[[_Connection], Awaitable[None]] | None = None,
         loop: AbstractEventLoop | None,
         connection_class: type[_Connection],
         record_class: type[_Record],
@@ -635,7 +636,7 @@ def create_pool(
     init: _InitCallback[_Record] | None = ...,
     loop: AbstractEventLoop | None = ...,
     connect: _Connect[_Record] | None = None,
-    reset: Callable[[connection.Connection[_Record]], None] | None = None,
+    reset: Callable[[connection.Connection[_Record]], Awaitable[None]] | None = None,
     connection_class: type[connection.Connection[_Record]] = ...,
     record_class: type[_Record],
     host: connection._HostType | None = ...,
@@ -669,7 +670,8 @@ def create_pool(
     setup: _SetupCallback[protocol.Record] | None = ...,
     connect: _Connect[protocol.Record] | None = None,
     init: _InitCallback[protocol.Record] | None = ...,
-    reset: Callable[[connection.Connection[protocol.Record]], None] | None = None,
+    reset: Callable[[connection.Connection[protocol.Record]], Awaitable[None]]
+    | None = None,
     loop: AbstractEventLoop | None = ...,
     connection_class: type[connection.Connection[protocol.Record]] = ...,
     host: connection._HostType | None = ...,
