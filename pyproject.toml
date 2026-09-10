@@ -21,11 +21,11 @@ Homepage = "https://github.com/bryanforbes/asyncpg-stubs"
 dev = [
   "async-timeout ==5.0.1",
   # Mark this as 3.10+ to get the latest version
-  "pre-commit ==4.6.0; python_version >= '3.10' and python_version < '4.0'",
-  "pyright[nodejs] ==1.1.410",
+  "pre-commit ==4.6.2; python_version >= '3.10' and python_version < '4.0'",
+  "pyright[nodejs] ==1.1.413",
   # Mark this as 3.10+ to get the latest version
   "mypy ==1.19.1",
-  "ruff ==0.15.16",
+  "ruff ==0.16.6",
 ]
 
 [tool.poetry]
