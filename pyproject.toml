@@ -1,6 +1,6 @@
 [project]
 name = "asyncpg-stubs"
-version = "0.31.4.dev0"
+version = "0.32.0.dev0"
 description = "asyncpg stubs"
 authors = [
   {name = "Bryan Forbes", email = "bryan@reigndropsfall.net"},
@@ -10,7 +10,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 dynamic = ["classifiers"]
 requires-python = ">=3.9,<4.0"
 dependencies = [
-  "asyncpg >=0.31, <0.32",
+  "asyncpg >=0.32, <0.33",
   "typing-extensions >=4.13.0, <5.0.0",
 ]
 

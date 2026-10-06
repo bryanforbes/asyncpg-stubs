@@ -1,8 +1,9 @@
 import uuid
 from codecs import CodecInfo
 from typing import AnyStr
-from typing_extensions import final
+from typing_extensions import disjoint_base, final
 
+@disjoint_base
 class CodecContext:
     def get_text_codec(self) -> CodecInfo: ...
     def get_json_decoder(self) -> object: ...

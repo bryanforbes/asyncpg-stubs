@@ -121,3 +121,11 @@ async def main(record_class: type[MyRecord] | None) -> None:
             assert_type(
                 await conn.cursor('', record_class=MyOtherRecord), Cursor[MyOtherRecord]
             )
+
+    async with asyncpg.create_pool(init_size=10) as pool:
+        assert_type(pool.get_init_size(), int)
+
+    async with asyncpg.create_pool(
+        init_size=10, record_class=MyRecord
+    ) as myrecord_pool:
+        assert_type(myrecord_pool.get_init_size(), int)

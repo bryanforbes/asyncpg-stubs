@@ -1,5 +1,7 @@
+import asyncio
 import socket
 from asyncio import AbstractEventLoop, Event, Future, Task
+from ssl import SSLContext
 from threading import Thread
 from typing import Any
 
@@ -20,6 +22,7 @@ class TCPFuzzingProxy:
     connections: dict[Connection, Task[Any]]
     sock: socket.socket | None
     listen_task: Future[Any] | None
+    connection_factory: type[Connection]
     def __init__(
         self,
         *,
@@ -48,12 +51,19 @@ class Connection:
     proxy_to_backend_task: Future[Any] | None
     proxy_from_backend_task: Future[Any] | None
     is_closed: bool
+    client_reader: asyncio.StreamReader | None
+    client_writer: asyncio.StreamWriter | None
     def __init__(
         self,
         client_sock: socket.socket,
         backend_sock: socket.socket,
         proxy: TCPFuzzingProxy,
     ) -> None: ...
+    async def prepare(self) -> bool: ...
+    async def use_client_stream(
+        self, ssl_context: SSLContext | None = None
+    ) -> None: ...
+    async def start_tls(self, ssl_context: SSLContext) -> None: ...
     def close(self) -> None: ...
     async def handle(self) -> None: ...
     async def proxy_to_backend(self) -> None: ...

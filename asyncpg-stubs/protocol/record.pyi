@@ -1,10 +1,11 @@
 from collections.abc import Iterator
 from typing import Any, final, overload
-from typing_extensions import Self, TypeVar
+from typing_extensions import Self, TypeVar, disjoint_base
 
 _T = TypeVar('_T')
 _Record = TypeVar('_Record', bound=Record, default=Record)
 
+@disjoint_base
 class Record:
     @overload
     def get(self, key: str) -> Any | None: ...

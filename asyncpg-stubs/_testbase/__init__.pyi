@@ -27,6 +27,7 @@ class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
 def create_pool(
     dsn: Any | None = ...,
     *,
+    init_size: int | None = None,
     min_size: int = ...,
     max_size: int = ...,
     max_queries: int = ...,

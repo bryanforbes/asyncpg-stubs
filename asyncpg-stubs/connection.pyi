@@ -108,6 +108,7 @@ class Connection(Generic[_Record], metaclass=ConnectionMeta):
         '_log_listeners',
         '_termination_listeners',
         '_cancellations',
+        '_pool_holder',
         '_source_traceback',
         '_query_loggers',
         '__weakref__',

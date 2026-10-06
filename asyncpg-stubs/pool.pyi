@@ -356,6 +356,7 @@ class PoolConnectionHolder(Generic[_Record]):
         '_inactive_callback',
         '_timeout',
         '_generation',
+        '__weakref__',
     )
     _pool: Pool[_Record]
     def __init__(
@@ -379,6 +380,7 @@ class Pool(Generic[_Record]):
     __slots__ = (
         '_queue',
         '_loop',
+        '_initsize',
         '_minsize',
         '_maxsize',
         '_init',
@@ -397,10 +399,12 @@ class Pool(Generic[_Record]):
         '_setup',
         '_max_queries',
         '_max_inactive_connection_lifetime',
+        '_maintenance_task',
     )
     def __init__(
         self,
         *connect_args: object,
+        init_size: int | None = None,
         min_size: int,
         max_size: int,
         max_queries: int,
@@ -416,6 +420,7 @@ class Pool(Generic[_Record]):
     ) -> None: ...
     def is_closing(self) -> bool: ...
     def get_size(self) -> int: ...
+    def get_init_size(self) -> int: ...
     def get_min_size(self) -> int: ...
     def get_max_size(self) -> int: ...
     def get_idle_size(self) -> int: ...
@@ -628,6 +633,7 @@ class PoolAcquireContext(Generic[_Record]):
 def create_pool(
     dsn: str | None = ...,
     *,
+    init_size: int | None = None,
     min_size: int = ...,
     max_size: int = ...,
     max_queries: int = ...,
@@ -663,6 +669,7 @@ def create_pool(
 def create_pool(
     dsn: str | None = ...,
     *,
+    init_size: int | None = None,
     min_size: int = ...,
     max_size: int = ...,
     max_queries: int = ...,
