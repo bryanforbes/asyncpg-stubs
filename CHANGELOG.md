@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.32.0](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.3..v0.32.0) - 2026-10-06
+
+### Features
+
+- updates for v0.32.0 ([777c3a5](https://github.com/bryanforbes/asyncpg-stubs/commit/777c3a5254d2b3c866765575269ec259f1c47d0c))
+
+### Bug Fixes
+
+- bump `typing_extensions` for `disjoint_base` ([8d1e81f](https://github.com/bryanforbes/asyncpg-stubs/commit/8d1e81f55d86ad64473175e86096453fd2b28f7d))
+
 ## [0.31.3](https://github.com/bryanforbes/asyncpg-stubs/compare/v0.31.2..v0.31.3) - 2026-07-09
 
 ### Bug Fixes
