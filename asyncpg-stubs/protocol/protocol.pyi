@@ -30,7 +30,7 @@ _PreparedStatementState = TypeVar(
 )
 
 _NoTimeoutType = NewType('_NoTimeoutType', object)
-_TimeoutType: TypeAlias = float | None | _NoTimeoutType
+_TimeoutType: TypeAlias = float | _NoTimeoutType | None
 
 AUTH_METHOD_NAME: Final[dict[int, str]]
 BUILTIN_TYPE_NAME_MAP: Final[dict[str, int]]

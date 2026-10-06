@@ -904,7 +904,7 @@ __all__: tuple[str, ...] = (
     'ImplicitZeroBitPadding',
     'InFailedSQLTransactionError',
     'InappropriateAccessModeForBranchTransactionError',
-    'InappropriateIsolationLevelForBranchTransactionError',  # noqa: PYI053
+    'InappropriateIsolationLevelForBranchTransactionError',
     'IndeterminateCollationError',
     'IndeterminateDatatypeError',
     'IndexCorruptedError',
@@ -1011,7 +1011,7 @@ __all__: tuple[str, ...] = (
     'PrivilegeNotGranted',
     'PrivilegeNotRevoked',
     'ProgramLimitExceededError',
-    'ProhibitedExternalRoutineSQLStatementAttemptedError',  # noqa: PYI053
+    'ProhibitedExternalRoutineSQLStatementAttemptedError',
     'ProhibitedSQLStatementAttemptedError',
     'ProtocolViolationError',
     'QueryCanceledError',
@@ -1036,7 +1036,7 @@ __all__: tuple[str, ...] = (
     'SingletonSQLJsonItemRequiredError',
     'SnapshotTooOldError',
     'SrfProtocolViolatedError',
-    'StackedDiagnosticsAccessedWithoutActiveHandlerError',  # noqa: PYI053
+    'StackedDiagnosticsAccessedWithoutActiveHandlerError',
     'StatementCompletionUnknownError',
     'StatementTooComplexError',
     'StringDataLengthMismatchError',
