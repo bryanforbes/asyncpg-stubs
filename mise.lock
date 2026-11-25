@@ -43,9 +43,9 @@ backend = "cargo:git-cliff"
 specifiers = ["2.14.2"]
 
 [[tools.poetry]]
-version = "2.5.1"
+version = "2.5.2"
 backend = "vfox:poetry"
-specifiers = ["2.5.1"]
+specifiers = ["2.5.2"]
 
 [[tools.python]]
 version = "3.10.22"
